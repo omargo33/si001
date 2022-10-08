@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description"
+	content="Sistema de Informacion TIZEN webapp version 1.0.0" />
+
+<meta http-equiv="refresh" content="10; url=/paginas/presentacion.html">	
+	
+<title>QAPAQ</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+</head>
+<body>
+	<header>
+		<hgroup>
+			<h1>Sistema de Información</h1>
+			<h2>TIZEN webapp versión 1.0.0</h2>
+		</hgroup>
+	</header>
+
+	<div class="row">
+		<div class="column" style="background: rgba(45, 49, 66, 0.40)">
+			<header>
+				<h1>Seguridad</h1>
+			</header>
+			<img alt=""
+				src="images/7228390_cloud_password_security_login_privacy_icon.svg" />
+
+			<form action="">
+				<div class="col-md-8">
+					<label class="titulo">Autorizacion:</label> <label
+						id="autorizacion">Denegado</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Autorizador:</label> <label id="autorizacion">www.qapaq.io</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Sincronizado:</label> <label
+						id="autorizacion">No</label>
+				</div>
+				<div class="col-md-8">
+
+					<label class="titulo">Repositorio:</label> <label id="autorizacion">inactivo</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Nota:</label> <label id="notaSeguridad">Error</label>
+				</div>
+			</form>
+		</div>
+
+		<div class="column">
+			<header>
+				<h1>Almacenamiento</h1>
+			</header>
+			<img alt=""
+				src="images/858730_drive_pen_pen drive_pen drive icon_pen drive line icon_icon.svg">
+			<form action="">
+				<div class="col-md-8">
+					<label class="titulo">Estado:</label> <label id="estado">no
+						determinado</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Nombre:</label> <label id="usb">no
+						encontrado</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Path:</label> <label id="path">no
+						determinado</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Capacidad:</label> <label id="capacidad">0
+						GB</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Espacio libre:</label> <label id="libre">O</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Nota:</label> <label id="nota">Ok</label>
+				</div>
+			</form>
+		</div>
+		<div class="column" style="background: rgba(45, 49, 66, 0.70)">
+			<header>
+				<h1>Conectividad</h1>
+			</header>
+			<img alt=""
+				src="images/858717_data cable_data cable icon_data cable line icon_icon.svg">
+
+			<form action="">
+				<div class="col-md-8">
+					<label class="titulo">Ip Wifi:</label> <label id="ipWifi">0.0.0.0</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Mac address:</label> <label id="macWifi">00-00-00-00-00-00</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Red:</label> <label id="ssid">no
+						conocido</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">RJ45 Wifi:</label> <label id="ipNet">0.0.0.0</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">RJ45 address:</label> <label id="macNet">00-00-00-00-00-00</label>
+				</div>
+				<div class="col-md-8">
+					<label class="titulo">Estado:</label> <label id="estadoNet">DESCONECTADO</label>
+				</div>
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Nota:</label> <label id="notaConect">Ok</label>
+				</div>
+
+			</form>
+
+		</div>
+		<div class="column" style="background: rgba(45, 49, 66, 0.50)">
+
+			<header>
+				<h1>Dispositivo</h1>
+			</header>
+			<img alt=""
+				src="images/858713_desktop_desktop computer_desktop computer icon_desktop icon_desktop line icon_icon.svg" />
+			<form action="">
+
+
+				<div class="col-md-8">
+					<label class="titulo">Ancho:</label> <label id="ancho">0 px</label>
+				</div>
+
+				<div class="col-md-8">
+					<label class="titulo">Largo:</label> <label id="largo">0 px</label>
+				</div>
+
+				<br />
+
+				<div class="col-md-8">
+					<label class="titulo">Orientacion:</label> <label id="orientacion">Horizontal</label>
+				</div>
+
+				<br />
+				<div class="col-md-8">
+					<label class="titulo">Nota:</label> <label id="notaDispositivo">Ok</label>
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer>
+		<p>&copy; 2022 www.qapaq.io All rights reserved.</p>
+	</footer>
+</body>
+<script src="js/index/almacenamiento.js"></script>
+<script src="js/index/conectividad.js"></script>
+<script src="js/index/dispositivo.js"></script>
+</html>

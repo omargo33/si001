@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta charset="UTF-8">
+
+</head>
+<body style="background-color: red; margin: 0px">
+	<video id="video" src="/opt/media/USBDriveA1/videos/video001.mp4"
+		width="1920" height="1080" autoplay="autoplay" preload="auto"
+		controls="nodownload, nofullscreen, noremoteplayback"
+		style="outline: none; border: none;">
+	</video>
+	<img src="file:///opt/media/USBDriveA1/images/info001.jpg" width="1920"
+		height="1080">
+</body>
+<script src="js/presentacion/presentacion.js"></script>
+</html>

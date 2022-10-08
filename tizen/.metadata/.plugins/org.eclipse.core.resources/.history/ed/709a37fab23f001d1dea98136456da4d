@@ -1,0 +1,24 @@
+/**
+ * Script para leer archivo de datos de presentacion
+ * 
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2022-09-25
+ * 
+ */
+
+var pathConfig = "";
+
+/**
+ * Metodo para conocer el paht real del sistema.
+ * 
+ * @param nombreVirtualDir
+ */
+function buscarPath(nombreVirtualDir) {
+	tizen.filesystem.resolve(nombreVirtualDir, function(dir) {
+		documentsDir = dir;
+		pathConfig = documentsDir.fullPath + "/config/orden.json";		
+	}, function(error) {
+		alert("file no encontrado")
+	}, "rw");
+}

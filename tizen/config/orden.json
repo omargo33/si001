@@ -1,0 +1,46 @@
+{
+    "productos": [
+        {
+            "indice": "video001",
+            "tipo_documento": ".mp4",
+            "duracion": 120000,
+            "tipo_orientacion": "H",
+            "sonido": 80,
+            "brillo": 50,
+            "relacion": "16:9",
+            "definicion": 1920,
+            "qr": "0",
+            "qr_posicion_x": "0",
+            "qr_posicion_y": "0",
+            "orden": 0
+        },
+        {
+            "indice": "info001",
+            "tipo_documento": ".jpeg",
+            "duracion": 1200,
+            "tipo_orientacion": "H",
+            "sonido": 0,
+            "brillo": 0,
+            "relacion": "16:9",
+            "definicion": 1920,
+            "qr": "0",
+            "qr_posicion_x": "0",
+            "qr_posicion_y": "0",
+            "orden": 1
+        },
+        {
+            "indice": "video002",
+            "tipo_documento": ".mp4",
+            "duracion": 120000,
+            "tipo_orientacion": "H",
+            "sonido": 80,
+            "brillo": 50,
+            "relacion": "16:9",
+            "definicion": 1920,
+            "qr": "0",
+            "qr_posicion_x": "0",
+            "qr_posicion_y": "0",
+            "orden": 2
+        }
+    ]
+}

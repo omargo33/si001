@@ -1,0 +1,11 @@
+1664422614624	Delete element
+1664424445560	Move 'presentacion.html' to 'paginas'
+1664424886003	Move 'clima.js' to 'clima'
+1664424898716	Move 'presentacion.js' to 'presentacion'
+1664424954944	Move 'fileSystem.js' to 'index'
+1664424959013	Move 'network.js' to 'index'
+1664424964123	Move 'dispositivo.js' to 'index'
+1664424965965	Move 'power.js' to 'index'
+1664425871748	Rename resource 'power.js'
+1664425920384	Rename resource 'fileSystem.js'
+1664425941821	Rename resource 'network.js'

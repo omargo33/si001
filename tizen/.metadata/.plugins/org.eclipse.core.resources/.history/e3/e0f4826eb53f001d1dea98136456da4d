@@ -1,0 +1,74 @@
+/**
+ * Script para leer archivo de datos de presentacion
+ * 
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2022-09-25
+ * 
+ */
+
+var pathConfig = "";
+var documentsDir;
+
+/**
+ * Funcion obtener la unidad externa.
+ */
+function buscarExternal(storages) {	
+	for (var i = 0; i < storages.length; i++) {
+		if (storages[i].type === "EXTERNAL") {
+			buscarArchivoConfig(storages[i].label);
+		}
+	}
+	
+}
+
+/**
+ * Metodo para conocer el paht real del sistema.
+ * 
+ * @param nombreVirtualDir
+ */
+function buscarArchivoConfig(nombreVirtualDir) {
+	tizen.filesystem.resolve(nombreVirtualDir, function(dir) {
+		documentsDir = dir;
+		pathConfig = documentsDir.fullPath + "/config/orden.json";
+		alert("file a procesar " + pathConfig );
+		leer(pathConfig);
+	}, function(error) {
+		alert("file no encontrado");
+	}, "rw");
+}
+
+
+function leer(path){ 
+               var file = dir.resolve(path);
+               file.openStream(
+                    "r", 
+                    function(fs) {
+                        text = fs.read(file.fileSize);       
+                        fs.close();
+                        obj  = JSON.parse(text);
+                        alert("Test read --> value on data2:" +obj.data2);
+                        alert("Test read --> value on data3:" +obj.data3);
+                    }, function(e) {
+                        console.log("Error " + e.message);
+                    }, "UTF-8");
+}
+
+
+
+/**
+ * Funcion para ejecutar el listado de storage
+ */
+function ejecutarFileSystem() {
+	try {
+		tizen.filesystem.listStorages(buscarExternal);
+	} catch (error) {
+		
+	}
+}
+
+
+/**
+ * Lanzado al inicio.
+ */
+setTimeout(ejecutarFileSystem, 500);

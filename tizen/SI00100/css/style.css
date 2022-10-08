@@ -1,0 +1,122 @@
+@import "compass/css3";
+
+* {
+	font-family: Lucida Sans, Arial, Helvetica, sans-serif;
+}
+
+*, *:before, *:after {
+	box-sizing: border-box !important;
+}
+
+:root { 
+	--spaceCadet: #2D3142; 
+	--blackCoral: #4F5D75; 
+	--silver: #BFC0C0; 
+	--white: #FFFFFF; 
+	--mandarin: #EF8354;
+}
+
+body {
+	margin: 50px auto;
+	background-color: var(--blackCoral);
+}
+
+header h1 {
+	font-size: 3.9em;
+	font-weight: bolder;
+	margin: 2%;
+	color: var(--spaceCadet);
+}
+
+header h2 {
+	font-size: 2.5em;
+	margin: 2%;
+	color: var(--silver);
+}
+
+.row {
+	margin-left: 2%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.row:after {
+	content: "";
+}
+
+.column {
+	float: left;
+	height: 40em;
+	background: var(--spaceCadet);
+	margin-right: 2%;
+	border-radius: 20px;
+	flex-grow: 0.25;
+}
+
+.column>header h1 {
+	font-size: 2.0em;
+	margin-top: 3%;
+	margin-left: 4%;
+	align-content: flex-start;
+	color: var(--mandarin);
+}
+
+.column>form {
+	margin: 3%;
+}
+
+.column>form label {
+	font-size: 1.5em;
+	font-weight: normal;
+	color: var(--silver);
+}
+
+.column>form .titulo {
+	color: var(--white);
+	font-weight: bolder;		
+}
+
+.column>img {
+	display: block;
+	margin: auto;
+	margin-top: 12%;
+	margin-bottom: 12%;
+	width: 30%;
+}
+
+@media ( max-width : 1920px) {
+	.column {
+		width: calc(23% - 2px);		
+	}
+}
+
+@media ( max-width : 1440px) {
+	.column {
+		width: calc(48% - 2px);
+		margin-bottom: 3%;
+		height: 44em;
+	}
+}
+
+@media ( max-width : 720px) {
+	.column {
+		width: calc(73% - 2px);
+		margin-bottom: 3%;
+	}
+}
+
+@media ( max-width : 360px) {
+	.column {
+		width: calc(100% - 2px);
+		margin-bottom: 3%;
+	}
+}
+
+footer p {
+	text-align: center;
+	font-size: 1.7em;
+	font-weight: bolder;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	color: var(--silver);
+}

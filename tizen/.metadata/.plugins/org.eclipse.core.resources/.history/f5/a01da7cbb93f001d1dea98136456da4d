@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta charset="UTF-8">
+
+</head>
+<body style=" background-color: #E6E6FA;">
+<video id="video" src="/opt/media/USBDriveA1/videos/video002.mp4" 
+       width="1536" height="864" autoplay="autoplay"
+       preload="auto" controls="nodownload, nofullscreen, noremoteplayback" >
+</video>
+		
+		
+</body>
+<script src="js/presentacion/presentacion.js"></script>
+</html>

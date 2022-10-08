@@ -1,0 +1,26 @@
+/**
+ * Script para leer archivo de datos de presentacion
+ * 
+ * Dispositivo
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2022-08-25
+ * 
+ */
+
+
+
+/**
+ * Metodo para conocer el paht real del sistema.
+ * 
+ * @param nombreVirtualDir
+ */
+function buscarPath(nombreVirtualDir) {
+	tizen.filesystem.resolve(nombreVirtualDir, function(dir) {
+		documentsDir = dir;
+		document.getElementById('path').innerHTML = documentsDir.fullPath;
+		calculosArchivos();
+	}, function(error) {
+		document.getElementById('nota').innerHTML = "Error Path " + error.message + " " + nombreVirtualDir;
+	}, "rw");
+}

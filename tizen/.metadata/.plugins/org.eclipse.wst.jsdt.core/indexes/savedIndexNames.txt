@@ -1,0 +1,12 @@
+INDEX VERSION 1.3+/home/omarv/.respaldo/Documentos/clientes/QAPAQ/señalizacionInteligente/tizen/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2228682929.index
+1484045057.index
+1860556126.index
+776641884.index
+4062367426.index
+2785345834.index
+3096473152.index
+2349810371.index
+4128361259.index
+26814248.index
+1669294461.index
