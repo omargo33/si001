@@ -453,3 +453,15 @@ tizen/usb/videos/video001.mp4
 tizen/usb/videos/video002.mp4
 tizen/usb/images/info001.jpg
 tizen/usb/images/info002.jpg
+java/tools/target/tools-1.0.0.jar
+java/tools/target/archive-tmp/tools-1.0.0.jar
+java/tools/target/classes/com/qapaq/bundle/BundleFactory.class
+java/tools/target/classes/com/qapaq/bundle/Bundles.class
+java/tools/target/classes/com/qapaq/servicios/SolicitarRESTURL.class
+java/tools/target/classes/com/qapaq/servicios/SolicitarRESTURL$1.class
+java/tools/target/classes/com/qapaq/servicios/SolicitarRESTURL$2.class
+java/tools/target/classes/com/qapaq/validaciones/Validaciones.class
+java/tools/target/maven-archiver/pom.properties
+java/tools/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+java/tools/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+java/tools/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst

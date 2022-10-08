@@ -1,0 +1,8 @@
+##
+## o.velez@qapaq.io
+## no se pasan datos solo configuraciones
+/postgresql/conf
+/postgresql/data
+/sonarqube/data
+/sonarqube/logs
+/sonarqube/extensions
