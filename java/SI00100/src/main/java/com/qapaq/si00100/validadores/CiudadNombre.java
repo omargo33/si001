@@ -26,5 +26,5 @@ public @interface CiudadNombre {
 
     Class<?>[] groups() default {};
 
-    Class<?>[] payload() default {};
+    Class<? extends javax.validation.Payload>[] payload() default {};
 }

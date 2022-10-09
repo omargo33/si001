@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.qapaq.si00100.jpa.model.Ciudad;
 import com.qapaq.si00100.servicio.CiudadServicio;
 
-
 /**
  * Clase para validar que el nombre de la ciudad no exista.
  * 
@@ -35,16 +34,16 @@ public class CiudadNombreValidator implements ConstraintValidator<CiudadNombre, 
      */
     @Override
     public boolean isValid(Ciudad ciudad, ConstraintValidatorContext context) { 
-        if (ciudad.getNombre() == null || ciudad.getNombre().isEmpty()) {
-            return true;
-        }       
-
         if(ciudadServicio == null) {
             return true;
         }
-        
-        if (ciudad.getNombre().length() > 0) {            
-            return !ciudadServicio.isCiudadUnico( ciudad.getNombre());
+
+        if (ciudad.getNombre() == null || ciudad.getNombre().isEmpty()) {
+            return true;
+        }
+
+        if (ciudad.getIdCiudad() == null ||  ciudad.getIdCiudad() <= 0) {                        
+            return !ciudadServicio.isCiudadUnico(ciudad.getNombre());
         }
 
         return !ciudadServicio.isCiudadUnico(ciudad.getNombre(), ciudad.getIdCiudad());

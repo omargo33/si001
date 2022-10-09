@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +54,8 @@ public class CiudadServicio {
      * @param pageable
      * @return
      */
-    public void deleteCiudadById(Long id) {
-        ciudadRepositorio.deleteById(id);
+    public void deleteCiudadById(Long id) {        
+        ciudadRepositorio.deleteById(id);        
     }
 
     /**

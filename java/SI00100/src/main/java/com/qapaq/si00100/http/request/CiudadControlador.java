@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.si00100.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Ciudad;
 import com.qapaq.si00100.servicio.CiudadServicio;
 
@@ -30,7 +31,7 @@ import com.qapaq.si00100.servicio.CiudadServicio;
  * 
  */
 @RestController
-@RequestMapping(value = "/ciudad")
+@RequestMapping(value = "/ciudades")
 public class CiudadControlador extends ComonControlador{
     private CiudadServicio ciudadServicio;
 
@@ -105,7 +106,7 @@ public class CiudadControlador extends ComonControlador{
      */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCiudad(@PathVariable Long id) {
+    public void deleteCiudad(@PathVariable Long id) throws ForeignKeyException{
         ciudadServicio.deleteCiudadById(id);
     }
 }

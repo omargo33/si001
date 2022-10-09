@@ -17,9 +17,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.qapaq.si00100.Constantes;
+import com.qapaq.si00100.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.validadores.CiudadNombre;
 
 import lombok.Getter;
@@ -46,64 +49,68 @@ import lombok.ToString;
 @CiudadNombre(titulo = "nombre", message = "E-SI00100-6")
 @JsonIgnoreProperties({ "idModulo", "estado", "usuario", "usuarioFecha" })
 public class Ciudad implements Serializable {
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id_ciudad")
-        private Long idCiudad;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ciudad")
+	private Long idCiudad;
 
-        @Transient
-        @JsonProperty("idxModulo")
-        private String idxModulo;
+	@Transient
+	@JsonProperty("idxModulo")
+	private String idxModulo;
 
-        @NotNull(message = "E-SI00100-2")
-        @Column(name = "nombre", length = 128)
-        private String nombre;
+	@NotNull(message = "E-SI00100-2")
+	@Column(name = "nombre", length = 128)
+	private String nombre;
 
-        @NotNull(message = "E-SI00100-2")
-        @Column(name = "latitud", length = 64)
-        private String latitud;
+	@NotNull(message = "E-SI00100-2")
+	
+	@Pattern(regexp = Constantes.LATITUDE_PATTERN, message = "E-SI00100-9")
+	@Column(name = "latitud", length = 64)
+	private String latitud;
 
-        @NotNull(message = "E-SI00100-2")
-        @Column(name = "longitud", length = 64)
-        private String longitud;
+	@NotNull(message = "E-SI00100-2")	
+	@Pattern(regexp = Constantes.LONGITUDE_PATTERN, message = "E-SI00100-10")
+	@Column(name = "longitud", length = 64)
+	private String longitud;
 
-        @Column(name = "usuario", length = 128)
-        private String usuario;
+	@Column(name = "usuario", length = 128)
+	private String usuario;
 
-        @Column(name = "usuario_fecha")
-        @Temporal(TemporalType.TIMESTAMP)
-        private Date usuarioFecha;
+	@Column(name = "usuario_fecha")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date usuarioFecha;
 
-        @Column(name = "usuario_programa", length = 256)
-        private String usuarioPrograma;
+	@Column(name = "usuario_programa", length = 256)
+	private String usuarioPrograma;
 
-        /**
-         * Relacion con Ciudad-Clima
-         */
-        @OneToMany(targetEntity = Clima.class, orphanRemoval = true)
-        @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
-        private List<Clima> climaList;
+	/**
+	 * Relacion con Ciudad-Clima
+	 */
+	@OneToMany(targetEntity = Clima.class)
+	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
+	private List<Clima> climaList;
 
-        /**
-         * Relacion con Ciudad-Localizacion
-         */
-        @OneToMany(targetEntity = Localizacion.class)
-        @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
-        private List<Localizacion> localizacionList;
+	/**
+	 * Relacion con Ciudad-Localizacion
+	 */
+	@OneToMany(targetEntity = Localizacion.class)
+	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
+	private List<Localizacion> localizacionList;
 
-        /**
-         * No se puede borrar si hay registros de clima asociados.
-         */
-        @PreRemove
-        public void preRemove() {
-                if (climaList != null && !climaList.isEmpty()) {
-                        throw new RuntimeException("E-SI00100-7");
-                }
+	/**
+	 * No se puede borrar si hay registros de clima asociados.
+	 * @throws ForeignKeyException
+	 */
+	@PreRemove
+	public void preRemove() throws ForeignKeyException {
+		if (climaList != null && !climaList.isEmpty()) {
+			throw new ForeignKeyException("E-SI00100-7");
+		}
 
-                if (localizacionList != null && !localizacionList.isEmpty()) {
-                        throw new RuntimeException("E-SI00100-7");
-                }
-        }
+		if (localizacionList != null && !localizacionList.isEmpty()) {
+			throw new ForeignKeyException("E-SI00100-7");
+		}
+	}
 }
