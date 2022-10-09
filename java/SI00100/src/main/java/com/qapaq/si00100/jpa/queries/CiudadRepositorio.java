@@ -27,7 +27,7 @@ public interface CiudadRepositorio extends PagingAndSortingRepository<Ciudad, Lo
      * Busqueda de ciudades por id_ciudad.
      */
     @Query("SELECT c FROM Ciudad c WHERE c.idCiudad = ?1")
-    Ciudad findAllByIdCiudad(Long id);
+    Ciudad findByIdCiudad(Long id);
 
     /**
      * Busqueda de ciudades por like nombre y paginado.
@@ -46,5 +46,11 @@ public interface CiudadRepositorio extends PagingAndSortingRepository<Ciudad, Lo
      */
     @Query("SELECT c FROM Ciudad c WHERE c.nombre = ?1 AND c.idCiudad <> ?2")
     boolean existsByNombreAndIdCiudad(String nombre, Long idCiudad);
+
+    /**
+     * Metodo para borrado por id_ciudad.
+     */
+    @Query("DELETE FROM Ciudad c WHERE c.idCiudad = ?1")
+    void deleteByIdCiudad(Long idCiudad);
     
 }

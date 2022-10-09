@@ -85,7 +85,7 @@ public class ClienteControlador extends ComonControlador {
     }
 
     /**
-     * Metodo para obtener clientes por razon social.
+     * Metodo para obtener clientes por identificacion.
      * 
      * @param razonSocial
      * @return

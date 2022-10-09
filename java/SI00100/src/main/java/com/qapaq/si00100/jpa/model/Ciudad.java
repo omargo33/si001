@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -81,7 +82,7 @@ public class Ciudad implements Serializable {
         /**
          * Relacion con Ciudad-Clima
          */
-        @OneToMany(targetEntity = Clima.class)
+        @OneToMany(targetEntity = Clima.class, orphanRemoval = true)
         @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
         private List<Clima> climaList;
 
@@ -91,4 +92,18 @@ public class Ciudad implements Serializable {
         @OneToMany(targetEntity = Localizacion.class)
         @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
         private List<Localizacion> localizacionList;
+
+        /**
+         * No se puede borrar si hay registros de clima asociados.
+         */
+        @PreRemove
+        public void preRemove() {
+                if (climaList != null && !climaList.isEmpty()) {
+                        throw new RuntimeException("E-SI00100-7");
+                }
+
+                if (localizacionList != null && !localizacionList.isEmpty()) {
+                        throw new RuntimeException("E-SI00100-7");
+                }
+        }
 }

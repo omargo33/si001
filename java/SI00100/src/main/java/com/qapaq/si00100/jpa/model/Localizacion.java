@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -76,4 +77,14 @@ public class Localizacion implements Serializable {
     @OneToMany(targetEntity = Monitor.class)
     @JoinColumn(name = "id_localizacion", referencedColumnName = "id_localizacion")
     private List<Localizacion> localizacionList;
+
+    /**
+     * No se puede eliminar la localizacion si tiene un monitor asociado
+     */
+    @PreRemove
+    public void preRemove() {
+        if (localizacionList != null && !localizacionList.isEmpty()) {
+            throw new IllegalStateException("E-SI00100-7");
+        }
+    }
 }
