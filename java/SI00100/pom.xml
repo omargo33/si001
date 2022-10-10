@@ -59,7 +59,7 @@
 			<groupId>com.qapaq</groupId>
 			<artifactId>tools</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+		</dependency>		
 	</dependencies>
 	<build>
 		<plugins>

@@ -96,7 +96,7 @@ public class CiudadControlador extends ComonControlador{
       */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
     public @ResponseBody Ciudad updateCiudad(@Valid @RequestBody Ciudad ciudad) {
-        return ciudadServicio.saveCiudad(ciudad, "cambiar", appName+ " " + appVersion);
+        return ciudadServicio.saveCiudad(ciudad, "cambiar", appName+ " " + appVersion);        
     }
 
     /**

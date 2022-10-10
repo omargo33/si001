@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
+
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,7 +44,6 @@ import lombok.ToString;
  * @date 2022-10-02
  * 
  */
-
 @Entity
 @Table(name = "ciudad", schema = "SI_001_00")
 @Getter
@@ -66,12 +69,12 @@ public class Ciudad implements Serializable {
 
 	@NotNull(message = "E-SI00100-2")
 	
-	@Pattern(regexp = Constantes.LATITUDE_PATTERN, message = "E-SI00100-9")
+	@Pattern(regexp = Constantes.LATITUD_PATTERN, message = "E-SI00100-9")
 	@Column(name = "latitud", length = 64)
 	private String latitud;
 
 	@NotNull(message = "E-SI00100-2")	
-	@Pattern(regexp = Constantes.LONGITUDE_PATTERN, message = "E-SI00100-10")
+	@Pattern(regexp = Constantes.LONGITUD_PATTERN, message = "E-SI00100-10")
 	@Column(name = "longitud", length = 64)
 	private String longitud;
 
@@ -88,15 +91,18 @@ public class Ciudad implements Serializable {
 	/**
 	 * Relacion con Ciudad-Clima
 	 */
-	@OneToMany(targetEntity = Clima.class)
-	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
+	@OneToMany(targetEntity = Clima.class, fetch = FetchType.LAZY)	
+	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad" )
+	@OrderBy("usuarioFecha Asc")
 	private List<Clima> climaList;
+
 
 	/**
 	 * Relacion con Ciudad-Localizacion
 	 */
-	@OneToMany(targetEntity = Localizacion.class)
-	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")
+	@OneToMany(targetEntity = Localizacion.class, fetch = FetchType.LAZY)	
+	@JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad")	
+	@OrderBy("usuarioFecha Asc")	
 	private List<Localizacion> localizacionList;
 
 	/**
