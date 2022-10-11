@@ -5,6 +5,7 @@ import com.qapaq.si00100.jpa.model.Cliente;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -55,8 +56,9 @@ public interface ClienteRepositorio extends PagingAndSortingRepository<Cliente, 
     /**
      * Metodo para borrado logico de un cliente, se pasa a estado = 'X'.
      */
-    @Query("UPDATE Cliente c SET c.estado = 'X' WHERE c.id = ?1")
-    void deleteById(Long id);
+    @Modifying
+    @Query("UPDATE Cliente c SET c.estado = 'X' WHERE c.idCliente = ?1")
+    void deleteByIdCliente(Long idCliente);
 
     /**
      * Metodo para validar si existe un cliente con el correo.

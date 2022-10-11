@@ -26,6 +26,11 @@ public class ClienteServicio {
 
     private final ClienteRepositorio clienteRepositorio;
 
+    /**
+     * Constructor de la clase.
+     * 
+     * @param clienteRepositorio
+     */
     public ClienteServicio(ClienteRepositorio clienteRepositorio) {
         this.clienteRepositorio = clienteRepositorio;
     }
@@ -64,7 +69,7 @@ public class ClienteServicio {
     }
 
     public void deleteCliente(Long id) {
-        clienteRepositorio.deleteById(id);
+        clienteRepositorio.deleteByIdCliente(id);
     }    
 
     public boolean existsClienteByEmail(String email) {

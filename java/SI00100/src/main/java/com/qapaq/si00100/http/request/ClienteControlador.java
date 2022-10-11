@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
+import com.qapaq.si00100.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Cliente;
 import com.qapaq.si00100.servicio.ClienteServicio;
 
@@ -124,9 +125,9 @@ public class ClienteControlador extends ComonControlador {
      * 
      * @param idCliente
      */
-    @DeleteMapping(value = "/{idCliente}", consumes = "application/json", produces = "application/json")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteCliente(@PathVariable Long idCliente) {
-        clienteServicio.deleteCliente(idCliente);
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCliente(@PathVariable Long id) throws ForeignKeyException{
+        clienteServicio.deleteCliente(id);
     }
 }

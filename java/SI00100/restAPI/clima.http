@@ -1,0 +1,30 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas CLIMA
+@servicio=127.0.0.1:8080/si_001_00/climas
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### por id_ciudad
+get http://{{servicio}}/idCiudad=2
+Authorization: bearer {{token}}
+
+### por id_ciudad ultimo registor
+get http://{{servicio}}/idCiudad=2?page=0&size=1&sort=usuarioFecha,desc
+Authorization: bearer {{token}}
+
+
+### buscar por indice
+get http://{{servicio}}/6
+Authorization: bearer {{token}}
+
+### eliminar por indice
+delete http://{{servicio}}/6
+Authorization: bearer {{token}}

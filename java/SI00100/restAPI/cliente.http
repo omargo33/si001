@@ -1,0 +1,56 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas CLIENTES
+@servicio=127.0.0.1:8080/si_001_00/clientes
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por razonSocial
+get http://{{servicio}}/?page=0&size=2&sort=razonSocial,asc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/razonSocial=a
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/razonSocial=a?page=0&size=2&sort=razonSocial,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{     
+  "razonSocial": "Omar Velez",
+  "identificacion": "0102581709001",
+  "correo": "omargo33@hotmail.com"  
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+   "idCliente": 2,
+  "razonSocial": "Omar Velez Datun",
+  "identificacion": "0102581709001",
+  "correo": "omargo33@hotmail.com"
+}
+
+### eliminar por indice
+delete http://{{servicio}}/2
+Authorization: bearer {{token}}

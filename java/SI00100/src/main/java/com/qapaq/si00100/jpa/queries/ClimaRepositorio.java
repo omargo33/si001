@@ -12,8 +12,9 @@ import com.qapaq.si00100.jpa.model.Clima;
 /**
  * Interfaces para busqueda de Clima.
  * 
- * @author o.velez
+ * @author o.velez@qapaq.io
  * @date 2020-10-05
+ * 
  */
 @Repository
 public interface ClimaRepositorio extends PagingAndSortingRepository<Clima, Long> {

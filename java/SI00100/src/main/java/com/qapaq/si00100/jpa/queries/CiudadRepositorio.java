@@ -45,12 +45,5 @@ public interface CiudadRepositorio extends PagingAndSortingRepository<Ciudad, Lo
      * Metodo para validar si existe una ciudad con la mismo nombre y diferente idCiudad y devuelve un valor booleano.
      */
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Ciudad c WHERE c.nombre = ?1 AND c.idCiudad <> ?2")    
-    boolean existsByNombreAndIdCiudad(String nombre, Long idCiudad);
-
-    /**
-     * Metodo para borrado por id_ciudad.
-     */
-    @Query("DELETE FROM Ciudad c WHERE c.idCiudad = ?1")
-    void deleteByIdCiudad(Long idCiudad);
-    
+    boolean existsByNombreAndIdCiudad(String nombre, Long idCiudad);  
 }

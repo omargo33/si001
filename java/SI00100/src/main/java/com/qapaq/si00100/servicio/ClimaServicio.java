@@ -23,6 +23,11 @@ public class ClimaServicio {
 
     private final ClimaRepositorio climaRepositorio;
 
+    /**
+     * Constructor de la clase.
+     * 
+     * @param climaRepositorio
+     */
     public ClimaServicio(ClimaRepositorio climaRepositorio) {
         this.climaRepositorio = climaRepositorio;
     }
@@ -41,15 +46,6 @@ public class ClimaServicio {
     }
 
     /**
-     * Metodo para borrar la ciudad por id_ciudad.
-     * 
-     * @return
-     */
-    public void deleteClimaById(Long id) {        
-        climaRepositorio.deleteById(id);
-    }
-
-    /**
      * Metodo listar todos los climas de manera paginada
      */
     public List<Clima> findAllClimas(Pageable pageable) {
@@ -64,10 +60,16 @@ public class ClimaServicio {
     }
 
     /**
-     * Metodo para listar climas por nombre, y paginado.
+     * Metodo para borrar una entrada por id_clima.
      */
-    public List<Clima> findClimaByNombre(String nombre, Pageable pageable) {
-        return climaRepositorio.findByNombre(nombre, pageable);
+    public void deleteClimaByIdClima(Long id) {
+        climaRepositorio.deleteById(id);
     }
 
+    /**
+     * Metodo para buscar por la id_ciudad.
+     */
+    public List<Clima> findClimaByIdCiudad(Long id, Pageable pageable) {
+        return climaRepositorio.findByIdCiudad(id, pageable);
+    }
 }
