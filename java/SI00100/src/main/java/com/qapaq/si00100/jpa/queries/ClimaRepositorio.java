@@ -34,5 +34,5 @@ public interface ClimaRepositorio extends PagingAndSortingRepository<Clima, Long
      * Busqueda de clima por id_clima.
      */
     @Query("SELECT c FROM Clima c WHERE c.idClima = ?1")
-    Clima findByIdClima(Long id);
+    Clima findByIdClima(Long id);    
 }

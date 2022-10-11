@@ -46,7 +46,7 @@ public class ClienteServicio {
         cliente.setUsuarioPrograma(usuarioPrograma);
         return clienteRepositorio.save(cliente);
     }
-
+    
     public List<Cliente> findAllCliente(Pageable pageable) {        
         return clienteRepositorio.findAllPage(pageable);
     }
