@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.qapaq.si00100.validadores.InformacionNombre;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +33,7 @@ import lombok.ToString;
 @Table(name = "informacion", schema = "SI_001_00")
 @Getter
 @Setter
+@InformacionNombre(titulo = "Informacion", message = "E-SI00100-11")
 @ToString
 @JsonIgnoreProperties({ "usuario_programa" })
 public class Informacion implements Serializable {
@@ -41,12 +44,15 @@ public class Informacion implements Serializable {
     @Column(name = "id_informacion")
     private Long idInformacion;
 
+    @NotBlank(message = "E-SI00100-2")
     @Column(name = "nombre", length = 128)
     private String nombre;
 
+    @NotBlank(message = "E-SI00100-2")
     @Column(name = "valor_01", length = 256)
     private String valor01;
 
+    @NotBlank(message = "E-SI00100-2")
     @Column(name = "valor_02", length = 256)
     private String valor02;
 

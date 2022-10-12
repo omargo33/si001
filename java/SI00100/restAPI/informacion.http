@@ -1,0 +1,56 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas CLIENTES
+@servicio=127.0.0.1:8080/si_001_00/informaciones
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=2&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "-"
+get http://{{servicio}}/nombre=-
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "0", paginada y ordenada
+get http://{{servicio}}/nombre=0?page=0&size=2&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/14
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "nombre": "api nuevo",
+  "valor01": "https://www.youtube.com/watch?v=XsuE5Hky6xc",
+  "valor02": null 
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "idInformacion": 12,
+   "nombre": "api nuevo45",
+  "valor01": "https://www.youtube.com/watch?v=XsuE5Hky6xc",
+  "valor02": "no vacio"
+}
+
+### eliminar por indice
+delete http://{{servicio}}/13
+Authorization: bearer {{token}}

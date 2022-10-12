@@ -11,7 +11,7 @@ import com.qapaq.si00100.jpa.model.Clima;
 import com.qapaq.si00100.jpa.queries.ClimaRepositorio;
 
 /**
- * Clase de servicio para Informacion.
+ * Clase de servicio para Clima.
  * 
  * @author o.velez@qapaq.io
  * @date 2020-10-09

@@ -55,6 +55,7 @@ public interface InformacionRepositorio extends PagingAndSortingRepository<Infor
     @Query("SELECT CASE WHEN COUNT(i) > 0 THEN true ELSE false END FROM Informacion i WHERE i.nombre = ?1 AND i.idInformacion <> ?2")
     boolean existsByNombreAndIdInformacion(String nombre, Long idInformacion);
 
+
     /**
      * Metodo para borrado por id_informacion.
      * 
