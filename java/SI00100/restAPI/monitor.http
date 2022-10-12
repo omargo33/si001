@@ -1,0 +1,85 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas LOCALIZACIONES
+@servicio=127.0.0.1:8080/si_001_00/monitores
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=4&sort=nombre,desc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/nombre=a
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/nombre=w?page=0&size=3&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{   
+    "idLocalizacion": 2,
+    "nombre": "samsun123454",
+    "clave": "12341234",
+    "serie": "456454545AV 01- 45",
+    "descripcion": "samsun qjdkl ",
+    "tipoSistemaOperativo": "tizen",
+    "version": "6.5",
+    "tipoOrientacion": "h",
+    "network": "00:00:12:12:12:12",
+    "wifi": "00:00:12:12:12:12",
+    "ip": "192.168.1.3",
+    "puerto": "24789",
+    "relacion": "16:9",
+    "definicion": "1920",
+    "clima": "S",
+    "hora": "S",
+    "debug": "N",
+    "estado": "A"    
+    }
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+    "idMonitor": 1,
+  "idLocalizacion": 2,
+  "nombre": "samsun456",
+  "clave": "12341234",
+  "serie": "456454545AV - 45",
+  "descripcion": "samsun qjdkl ",
+  "tipoSistemaOperativo": "tizen",
+  "version": "6.5",
+  "tipoOrientacion": "h",
+  "network": null,
+  "wifi": "AB:00:12:12:12:1A",
+  "ip": "192.168.1.3",
+  "puerto": "24789",
+  "relacion": "16:9",
+  "definicion": "1920",
+  "clima": "S",
+  "hora": "S",
+  "debug": "N",
+  "estado": "A"
+}
+### eliminar por indice
+delete http://{{servicio}}/2
+Authorization: bearer {{token}}
