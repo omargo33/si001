@@ -71,6 +71,4 @@ public interface MonitorRepositorio extends PagingAndSortingRepository<Monitor, 
         */
         @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END FROM Monitor m WHERE m.serie = ?1 AND m.idMonitor <> ?2")        
         boolean existsBySerieAndIdMonitor(String serie, Long idMonitor);
-        
-        
 }

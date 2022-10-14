@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,12 +43,15 @@ public class MonitorAlerta implements Serializable{
     @Column(name = "id_monitor_alerta")
     private Long idMonitorAlerta;
 
+    @NotNull(message = "E-SI00100-2")
     @Column(name = "id_monitor")
     private Long idMonitor;
 
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "nombre", length = 128)
     private String nombre;
 
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "descripcion", length = 2048)
     private String descripcion;
 

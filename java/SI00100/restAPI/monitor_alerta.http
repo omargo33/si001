@@ -1,0 +1,62 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas LOCALIZACIONES
+@servicio=127.0.0.1:8080/si_001_00/monitores_alertas
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=4&sort=nombre,desc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/nombre=a
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/nombre=ale?page=0&size=1&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+ {   
+    "idMonitor": 1,
+    "nombre": "alerta enviada super nueva agenda",
+    "descripcion": "sadfasdsa",
+    "usuario": "manul",
+    "usuarioFecha": "2022-10-14T04:09:23.000+00:00",
+    "usuarioPrograma": "sadfs"
+  }
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+ {   
+    "idMonitorAlerta": 1,
+    "idMonitor": 1,
+    "nombre": "alerta enviada cambiada a uno",
+    "descripcion": "sadfasdsa",
+    "usuario": "manul",
+    "usuarioFecha": "2022-10-14T04:09:23.000+00:00",
+    "usuarioPrograma": "sadfs"
+  }
+
+### eliminar por indice
+delete http://{{servicio}}/2
+Authorization: bearer {{token}}

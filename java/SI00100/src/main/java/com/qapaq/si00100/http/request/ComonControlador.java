@@ -93,7 +93,6 @@ public class ComonControlador {
 
     /**
      * Metodo para informar errores de no hay resultados al SQL.
-     * 
      */
     private Map<String, String> emptyResultDataAccessException() {        
         Map<String, String> errors = new HashMap<>();        

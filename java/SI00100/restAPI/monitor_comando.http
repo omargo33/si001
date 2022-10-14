@@ -1,0 +1,59 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas LOCALIZACIONES
+@servicio=127.0.0.1:8080/si_001_00/monitores_comandos
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=4&sort=elemento,desc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/elemento=a
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/elemento=8?page=0&size=1&sort=elemento,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: bearer {{token}}
+  
+  {    
+    "idMonitor": 1,
+    "elemento": "12345678",
+    "respuesta": "--",
+    "descripcion": "kjlkj"
+  }    
+
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+ {   
+    "idMonitorComando": 2,
+    "idMonitor": 1,
+    "elemento": "8888",
+    "respuesta": "--",
+    "descripcion": "kjlkj"
+  }
+
+### eliminar por indice
+delete http://{{servicio}}/1
+Authorization: bearer {{token}}
