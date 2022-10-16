@@ -11,12 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -38,6 +39,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties ({ "estado", "usuario_programa" })
+
 public class Proyecto implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -46,16 +48,20 @@ public class Proyecto implements Serializable {
     @Column(name = "id_proyecto")
     private Long idProyecto;
 
+    @NotNull(message = "E-SI00100-2")
     @Column(name = "id_cliente")
     private Long idCliente;
 
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "nombre", length = 128)
     private String nombre;
 
+    @NotNull(message = "E-SI00100-2")    
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
 
+    @NotNull(message = "E-SI00100-2")    
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;

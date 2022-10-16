@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.si00100.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Monitor;
 import com.qapaq.si00100.servicio.MonitorServicio;
 
@@ -103,7 +104,7 @@ public class MonitorControlador extends ComonControlador {
         * @param id
         */
         @DeleteMapping(value = "/{id}")
-        public void deleteMonitor(@PathVariable Long id) {
+        public void deleteMonitorComando(@PathVariable Long id) throws ForeignKeyException {        
             monitorServicio.deleteMonitorById(id);
         }    
     }

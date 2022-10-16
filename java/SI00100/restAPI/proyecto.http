@@ -1,0 +1,58 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas LOCALIZACIONES
+@servicio=127.0.0.1:8080/si_001_00/proyectos
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=4&sort=nombre,desc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/nombre=p
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/nombre=d?page=0&size=3&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{       
+    "idCliente": 2,
+    "nombre": "proyecto demo 001",
+    "fechaInicio": "2022-12-12T06:06:00",
+    "fechaFin": "2022-12-12T05:05:10"
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+    "idProyecto": 1,
+    "idCliente": 2,
+    "nombre": "proyecto demopara uno",
+    "fechaInicio": "2022-12-12T06:06:00",
+    "fechaFin": "2022-12-12"
+}
+
+### eliminar por indice
+delete http://{{servicio}}/2
+Authorization: bearer {{token}}

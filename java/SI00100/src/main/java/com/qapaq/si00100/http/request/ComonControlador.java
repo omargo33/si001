@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,7 +35,11 @@ public class ComonControlador {
      * @return
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler( value ={MethodArgumentNotValidException.class, ForeignKeyException.class, EmptyResultDataAccessException.class}) 
+    @ExceptionHandler( value ={
+        MethodArgumentNotValidException.class, 
+        ForeignKeyException.class, 
+        EmptyResultDataAccessException.class, 
+        HttpMessageNotReadableException.class})
     public Map<String, String> handleExceptions(Object ex) {
         Map<String, String> errors = new HashMap<>();
         if (ex instanceof MethodArgumentNotValidException){
@@ -48,6 +53,10 @@ public class ComonControlador {
 
         if(ex instanceof EmptyResultDataAccessException){
             return emptyResultDataAccessException();
+        }
+
+        if(ex instanceof HttpMessageNotReadableException){
+            return httpMessageNotReadableException((HttpMessageNotReadableException)ex);
         }
         
         return errors;
@@ -107,5 +116,15 @@ public class ComonControlador {
         String controllerMapping = this.getClass().getAnnotation(RequestMapping.class).value()[0];
         controllerMapping = controllerMapping.replace("/", "");
         return controllerMapping;
+    }
+
+    private Map<String, String> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        Map<String, String> errors = new HashMap<>();
+        if(ex.toString().lastIndexOf("java.util.Date") > 1){
+            errors.put(getControllerMapping(), "E-SI00100-18");
+        }else {
+            throw new IllegalStateException(ex.toString());
+        }
+        return errors;
     }
 }
