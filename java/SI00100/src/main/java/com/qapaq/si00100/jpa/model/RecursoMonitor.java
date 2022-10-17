@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,15 +45,14 @@ public class RecursoMonitor implements Serializable{
     @Column(name = "id_recurso_monitor")
     private Long idRecursoMonitor;
 
-    @NotBlank(message = "E-SI00100-12")
+    @NotNull(message = "E-SI00100-2")
     @Column(name = "id_recurso")
     private Long idRecurso;
 
-    @NotBlank(message = "E-SI00100-12")
+    @NotNull(message = "E-SI00100-2")
     @Column(name = "id_monitor")
     private Long idMonitor;
 
-    @NotBlank(message = "E-SI00100-12")
     @Column(name = "estado", length = 8)
     private String estado;
 

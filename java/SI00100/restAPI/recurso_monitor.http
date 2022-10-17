@@ -1,0 +1,46 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas LOCALIZACIONES
+@servicio=127.0.0.1:8080/si_001_00/recursos_monitores
+@token=45454
+
+### buscar por indice
+get http://{{servicio}}/1
+Authorization: bearer {{token}}
+
+### por idRecurso
+get http://{{servicio}}/idRecurso=1?page=0&size=3&sort=usuarioFecha,asc
+Authorization: bearer {{token}}
+
+### por idMonitor
+get http://{{servicio}}/idMonitor=1?page=0&size=3&sort=usuarioFecha,asc
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{   
+    "idRecurso": 1,
+    "idMonitor": 1
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "idRecursoMonitor": 2,
+  "idRecurso": 1,
+  "idMonitor": 1
+}
+
+### eliminar por indice
+delete http://{{servicio}}/2
+Authorization: bearer {{token}}

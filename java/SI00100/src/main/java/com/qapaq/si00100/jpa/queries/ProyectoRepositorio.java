@@ -17,7 +17,7 @@ import com.qapaq.si00100.jpa.model.Proyecto;
  * @date 2020-10-14
  */
 @Repository
-public interface ProyectoRepositorio  extends PagingAndSortingRepository<Proyecto, Long> {
+public interface ProyectoRepositorio extends PagingAndSortingRepository<Proyecto, Long> {
     
     /**
      * Listar proyectos de forma paginada.
