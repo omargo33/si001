@@ -8,4 +8,8 @@ tizen/usb/images/info001.jpg
 tizen/usb/images/info002.jpg
 java/SI00100/target
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/RecursoMonitor.class
-
+java/SI00100/target/classes/com/qapaq/si00100/SI00100Application.class
+java/SI00100/target/classes/com/qapaq/si00100/http/request/ComonControlador.class
+java/SI00100/target/classes/com/qapaq/si00100/SI00100Application.class
+java/SI00100/target/classes/com/qapaq/si00100/http/request/ClienteControlador.class
+java/SI00100/target/classes/com/qapaq/si00100/http/request/ComonControlador.class
