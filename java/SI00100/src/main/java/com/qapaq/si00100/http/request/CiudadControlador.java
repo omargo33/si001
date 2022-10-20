@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +85,8 @@ public class CiudadControlador extends ComonControlador{
      * @return
      */
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
-    public @ResponseBody Ciudad createCiudad(@Valid @RequestBody Ciudad ciudad) {
-        return ciudadServicio.saveCiudad(ciudad, "cambiar", appName+ " " + appVersion);
+    public @ResponseBody Ciudad createCiudad(@Valid @RequestBody Ciudad ciudad, HttpServletRequest request) {
+        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName+ " " + appVersion);
     }
 
     /**
@@ -95,8 +96,8 @@ public class CiudadControlador extends ComonControlador{
       * @return
       */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
-    public @ResponseBody Ciudad updateCiudad(@Valid @RequestBody Ciudad ciudad) {
-        return ciudadServicio.saveCiudad(ciudad, "cambiar", appName+ " " + appVersion);        
+    public @ResponseBody Ciudad updateCiudad(@Valid @RequestBody Ciudad ciudad, HttpServletRequest request) {
+        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName+ " " + appVersion);        
     }
 
     /**

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,18 +23,22 @@ import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
 public class MonitorServicio {
 
     private final MonitorRepositorio monitorRepositorio;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructor de la clase.
      * 
      * @param monitorRepositorio
      */
-    public MonitorServicio(MonitorRepositorio monitorRepositorio) {
+    public MonitorServicio(MonitorRepositorio monitorRepositorio, PasswordEncoder passwordEncoder) {
         this.monitorRepositorio = monitorRepositorio;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
      * Metodo guardar monitor.
+     * 
+     * y encriptar la clave.
      * 
      * @param monitor
      * @return
@@ -43,6 +48,7 @@ public class MonitorServicio {
         monitor.setUsuario(usuario);
         monitor.setUsuarioFecha(new Date());
         monitor.setUsuarioPrograma(usuarioPrograma);
+        monitor.setClave(passwordEncoder.encode(monitor.getClave()));
         return monitorRepositorio.save(monitor);
     }
 
@@ -54,14 +60,18 @@ public class MonitorServicio {
     }
 
     /**
-     * Metodo para buscar un clima por id_clima.
+     * Metodo para buscar un monitor por id_monitor.
      */
     public Monitor findMonitorById(Long id) {
         return monitorRepositorio.findByIdMonitor(id);
     }
 
     /**
-     * Metodo para buscar un clima por nombre.
+     * Metodo para buscar un monitor por nombre.
+     */
+
+    /**
+     * Metodo para buscar un monitor por nombre.
      */
     public List<Monitor> findAllMonitorByNombre(String nombre, Pageable pageable) {
         return monitorRepositorio.findAllByNombre(nombre, pageable);

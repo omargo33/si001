@@ -20,4 +20,10 @@ public class Constantes {
     public static final String IP_ADDRESS="^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."+"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
     
     public static final String DATE_FORMAT="";
+
+    public static final String TOKEN_SECRET="qapaq.io";
+    public static final String ACCESS_TOKEN="access-token";
+    public static final String REFRESH_TOKEN="refresh-token";
+    public static final String TOKEN_PREFIX="Bearer ";
+    public static final String HEADER_STRING="Authorization";    
 }

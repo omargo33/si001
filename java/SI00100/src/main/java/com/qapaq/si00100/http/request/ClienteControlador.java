@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -103,10 +104,9 @@ public class ClienteControlador extends ComonControlador {
      * @param cliente
      * 
      */
-    @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public Cliente createCliente(@Valid @RequestBody Cliente cliente) {
-        return clienteServicio.saveCliente(cliente, "cambiar()", appName + " " + appVersion);
+    @PostMapping(value = "/", consumes = "application/json", produces = "application/json")    
+    public Cliente createCliente(@Valid @RequestBody Cliente cliente,  HttpServletRequest request) {
+        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
@@ -114,10 +114,9 @@ public class ClienteControlador extends ComonControlador {
      * 
      * @param cliente
      */
-    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public Cliente actualizarCliente(@Valid @RequestBody Cliente cliente) {
-        return clienteServicio.saveCliente(cliente, "cambiar()", appName + " " + appVersion);
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
+    public Cliente actualizarCliente(@Valid @RequestBody Cliente cliente,  HttpServletRequest request) {
+        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**

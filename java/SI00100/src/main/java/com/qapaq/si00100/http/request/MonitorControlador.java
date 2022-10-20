@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,8 @@ public class MonitorControlador extends ComonControlador {
         * @return
         */
         @PostMapping(value = "/")
-        public Monitor createMonitor(@Valid @RequestBody Monitor monitor) {
-            return monitorServicio.saveMonitor(monitor, "usuario()", appName+" "+appVersion);
+        public Monitor createMonitor(@Valid @RequestBody Monitor monitor, HttpServletRequest request) {
+            return monitorServicio.saveMonitor(monitor, evaluarUsuario(request), appName+" "+appVersion);
         }
     
         /**
@@ -94,8 +95,8 @@ public class MonitorControlador extends ComonControlador {
         * @return
         */
         @PutMapping(value = "/")
-        public Monitor updateMonitor(@Valid @RequestBody Monitor monitor) {
-            return monitorServicio.saveMonitor(monitor,"usuario()", appName+" "+appVersion);
+        public Monitor updateMonitor(@Valid @RequestBody Monitor monitor, HttpServletRequest request) {
+            return monitorServicio.saveMonitor(monitor,evaluarUsuario(request), appName+" "+appVersion);
         }
     
         /**

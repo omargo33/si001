@@ -6,21 +6,36 @@
 ## 
 ## Consultas LOCALIZACIONES
 @servicio=127.0.0.1:8080/si_001_00/recursos_monitores_calendarios
-@token=45454
+@username=AB:00:12:12:12:1A
+@password=12341234
+
+###
+# @name rdpAuth
+
+post http://127.0.0.1:8080/si_001_00/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+get http://127.0.0.1:8080/si_001_00/login/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh_token}}
+
+  
 
 ### buscar por indice
 get http://{{servicio}}/1
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### por idRecursoMonitor
 get http://{{servicio}}/idRecursoMonitor=1?page=0&size=3&sort=usuarioFecha,asc
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 
 ### crear
 post http://{{servicio}}/ 
 Content-Type: application/json
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 {   
     "idRecursoMonitor": 1,
@@ -30,7 +45,7 @@ Authorization: bearer {{token}}
 ### actualizar
 put http://{{servicio}}/
 Content-Type: application/json
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 {
   "idRecursoMonitorCalendario": 3,
@@ -40,4 +55,4 @@ Authorization: bearer {{token}}
 
 ### eliminar por indice
 delete http://{{servicio}}/2
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}

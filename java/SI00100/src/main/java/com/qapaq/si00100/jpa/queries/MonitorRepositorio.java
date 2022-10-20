@@ -39,6 +39,16 @@ public interface MonitorRepositorio extends PagingAndSortingRepository<Monitor, 
         */
         @Query("SELECT m FROM Monitor m WHERE m.nombre LIKE %?1%")
         List<Monitor> findAllByNombre(String nombre, Pageable pageable);
+
+        /**
+         * Metodo para buscar monitor por mac address en la wifi o en la network.
+         * 
+         * @param wifi
+         * @param network
+         * @return
+         */
+        @Query("SELECT m FROM Monitor m WHERE m.wifi = ?1 OR m.network = ?2")
+        Monitor findByMacAddress(String wifi, String network);
     
         /**
         * Metodo para validar si existe una informacion con el nombre y devuelve un valor

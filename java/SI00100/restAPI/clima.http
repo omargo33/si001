@@ -6,25 +6,39 @@
 ## 
 ## Consultas CLIMA
 @servicio=127.0.0.1:8080/si_001_00/climas
-@token=45454
+@username=AB:00:12:12:12:1A
+@password=12341234
+
+###
+# @name rdpAuth
+
+post http://127.0.0.1:8080/si_001_00/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+get http://127.0.0.1:8080/si_001_00/login/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh_token}}
+
 
 ### listar todos
 get http://{{servicio}}/
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### por id_ciudad
 get http://{{servicio}}/idCiudad=2
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### por id_ciudad ultimo registor
 get http://{{servicio}}/idCiudad=2?page=0&size=1&sort=usuarioFecha,desc
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 
 ### buscar por indice
 get http://{{servicio}}/6
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### eliminar por indice
 delete http://{{servicio}}/6
-Authorization: bearer {{token}}
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
