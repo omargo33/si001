@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,8 @@ public class MonitorAlertaControlador extends ComonControlador {
      * @return
      */
     @PostMapping(value = "/")
-    public MonitorAlerta saveMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta) {
-        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, " getUsuario()", appName + " " + appVersion);
+    public MonitorAlerta saveMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta, HttpServletRequest request) {
+        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
@@ -96,8 +97,8 @@ public class MonitorAlertaControlador extends ComonControlador {
      * @return
      */
     @PutMapping(value = "/")
-    public MonitorAlerta updateMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta) {
-        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, " getUsuario()", appName + " " + appVersion);
+    public MonitorAlerta updateMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta, HttpServletRequest request) {
+        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**

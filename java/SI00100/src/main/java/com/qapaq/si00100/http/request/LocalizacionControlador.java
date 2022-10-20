@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +87,8 @@ public class LocalizacionControlador extends ComonControlador {
      */
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public Localizacion createLocalizacion(@Valid @RequestBody Localizacion localizacion) {
-        return localizacionServicio.saveLocalizacion(localizacion, "cambiar()", appName + " " + appVersion);
+    public Localizacion createLocalizacion(@Valid @RequestBody Localizacion localizacion, HttpServletRequest request) {
+        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
@@ -98,8 +99,8 @@ public class LocalizacionControlador extends ComonControlador {
      */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ResponseBody  
-    public Localizacion updateLocalizacion(@Valid @RequestBody Localizacion localizacion) {
-        return localizacionServicio.saveLocalizacion(localizacion, "cambiar()", appName + " " + appVersion);
+    public Localizacion updateLocalizacion(@Valid @RequestBody Localizacion localizacion, HttpServletRequest request) {
+        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**

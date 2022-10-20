@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +83,8 @@ public class ProyectoControlador extends ComonControlador{
         * @return
         */
         @PostMapping("/")
-        public Proyecto saveProyecto(@Valid @RequestBody Proyecto proyecto) {
-            return proyectoServicio.saveProyecto(proyecto, "getUsuario()", appName+" "+ appVersion);
+        public Proyecto saveProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
+            return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName+" "+ appVersion);
         }
         
         /**
@@ -93,8 +94,8 @@ public class ProyectoControlador extends ComonControlador{
         * @return
         */
         @PutMapping("/")
-        public Proyecto updateProyecto(@Valid @RequestBody Proyecto proyecto) {
-            return proyectoServicio.saveProyecto(proyecto, "getUsuario()", appName+" "+ appVersion);
+        public Proyecto updateProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
+            return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName+" "+ appVersion);
         }
         
         /**

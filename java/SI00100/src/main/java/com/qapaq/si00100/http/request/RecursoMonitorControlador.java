@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,16 +72,16 @@ public class RecursoMonitorControlador  extends ComonControlador {
      * Metodo crear un recursoMonitor.
      */
     @PostMapping("/")
-    public RecursoMonitor createRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor) {
-        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,"getUSuario()", appName+" "+appVersion);
+    public RecursoMonitor createRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor, HttpServletRequest request) {
+        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName+" "+appVersion);
     }
 
     /**
      * Metodo para actualizar un recursoMonitor.
      */
     @PutMapping("/")
-    public RecursoMonitor updateRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor) {
-        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,"getUSuario()", appName+" "+appVersion);
+    public RecursoMonitor updateRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor, HttpServletRequest request) {
+        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName+" "+appVersion);
     }
 
     /**

@@ -115,7 +115,7 @@ public class ClienteControlador extends ComonControlador {
      * @param cliente
      */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
-    public Cliente actualizarCliente(@Valid @RequestBody Cliente cliente,  HttpServletRequest request) {
+    public Cliente actualizarCliente(@Valid @RequestBody Cliente cliente, HttpServletRequest request) {
         return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName + " " + appVersion);
     }
 

@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,16 +77,16 @@ public class RecursoControlador extends ComonControlador {
      * @return
      */
     @PostMapping("/")
-    public Recurso createRecurso(@Valid @RequestBody Recurso recurso) {
-        return recursoServicio.saveRecurso(recurso, "GetUsuario()", appName + " " + appVersion);
+    public Recurso createRecurso(@Valid @RequestBody Recurso recurso, HttpServletRequest request) {
+        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
      * Metodo para actualizar un recurso.
      */
     @PutMapping("/")
-    public Recurso updateRecurso(@Valid @RequestBody Recurso recurso) {
-        return recursoServicio.saveRecurso(recurso, "GetUsuario()", appName + " " + appVersion);
+    public Recurso updateRecurso(@Valid @RequestBody Recurso recurso, HttpServletRequest request) {
+        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     @DeleteMapping("/{id}")

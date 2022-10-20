@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,16 +65,16 @@ public class RecursoMonitorCalendarioControlador extends ComonControlador {
      * Metodo para crear un recursoMonitorCalendario
      */
     @PutMapping("/")
-    public RecursoMonitorCalendario createRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario) {
-        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario, "cambiar()", appName+" "+appVersion);
+    public RecursoMonitorCalendario createRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario, HttpServletRequest request) {
+        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario,evaluarUsuario(request), appName+" "+appVersion);
     } 
 
     /**
      * Metodo para actualizar un recursoMonitorCalendario
      */
     @PostMapping("/")
-    public RecursoMonitorCalendario updateRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario) {
-        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario, "cambiar()", appName+" "+appVersion);
+    public RecursoMonitorCalendario updateRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario, HttpServletRequest request) {
+        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario, evaluarUsuario(request), appName+" "+appVersion);
     }
 
     /**

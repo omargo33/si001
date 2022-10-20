@@ -2,6 +2,7 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,8 @@ public class InformacionControlador extends ComonControlador {
      * @return
      */
     @PostMapping(value = "/")
-    public @ResponseBody Informacion saveInformacion(@Valid @RequestBody Informacion informacion) {
-        return informacionServicio.saveInformacion(informacion, "cambiar()", appName + " " + appVersion);
+    public @ResponseBody Informacion saveInformacion(@Valid @RequestBody Informacion informacion, HttpServletRequest request) {
+        return informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
@@ -96,8 +97,8 @@ public class InformacionControlador extends ComonControlador {
      * @return
      */
     @PutMapping(value = "/")
-    public void updateInformacion(@Valid @RequestBody Informacion informacion) {
-        informacionServicio.saveInformacion(informacion, "cambiar()", appName + " " + appVersion);
+    public void updateInformacion(@Valid @RequestBody Informacion informacion, HttpServletRequest request) {
+        informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName + " " + appVersion);
     }
 
     /**
