@@ -19,7 +19,7 @@ username={{username}}&password={{password}}
 
 ### solicitar token refresh
 get http://127.0.0.1:8080/si_001_00/login/refresh
-Authorization: Bearer {{rdpAuth.response.headers.refresh_token}}
+Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
 
 
 
