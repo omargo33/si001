@@ -1,0 +1,30 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas CIUDADES
+@servicio=127.0.0.1:8080/si_001_00/v_recursos_monitores
+@username=AB:00:12:12:12:1A
+@password=12341234
+
+###
+# @name rdpAuth
+
+post http://127.0.0.1:8080/si_001_00/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+get http://127.0.0.1:8080/si_001_00/login/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
+
+### listar por network address
+get http://{{servicio}}/network=00:00:12:12:12:12
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### listar por wifi address
+get http://{{servicio}}/wifi=AB:00:12:12:12:1A
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}

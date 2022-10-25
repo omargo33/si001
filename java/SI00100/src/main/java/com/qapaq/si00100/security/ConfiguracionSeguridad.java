@@ -1,6 +1,5 @@
 package com.qapaq.si00100.security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.qapaq.si00100.filter.AuthenticationFilter;
 import com.qapaq.si00100.filter.AuthorizationFilter;
-
 import lombok.RequiredArgsConstructor;
-
 
 /**
  * Clase para configurar la seguridad de la aplicación.
