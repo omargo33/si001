@@ -1,6 +1,5 @@
 package com.qapaq.si00100.servicio;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -32,18 +31,7 @@ public class ClimaServicio {
         this.climaRepositorio = climaRepositorio;
     }
 
-    /**
-     * Metodo guardar informacion.
-     * 
-     * @param ciudad
-     * @return
-     */
-    public void saveClima(Clima clima, String usuario, String usuarioPrograma) {        
-        clima.setUsuario(usuario);
-        clima.setUsuarioFecha(new Date());
-        clima.setUsuarioPrograma(usuarioPrograma);
-        climaRepositorio.save(clima);
-    }
+   
 
     /**
      * Metodo listar todos los climas de manera paginada

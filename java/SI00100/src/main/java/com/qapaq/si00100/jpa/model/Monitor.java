@@ -129,5 +129,6 @@ public class Monitor implements Serializable{
         @OneToMany(targetEntity = MonitorComando.class)
         @JoinColumn(name = "id_monitor", referencedColumnName = "id_monitor")
         private List<MonitorComando> monitorComandoList;
-    
+
+         
 }

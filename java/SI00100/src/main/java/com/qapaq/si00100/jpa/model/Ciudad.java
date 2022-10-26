@@ -67,8 +67,7 @@ public class Ciudad implements Serializable {
 	@Column(name = "nombre", length = 128)
 	private String nombre;
 
-	@NotNull(message = "E-SI00100-2")
-	
+	@NotNull(message = "E-SI00100-2")	
 	@Pattern(regexp = Constantes.LATITUD_PATTERN, message = "E-SI00100-9")
 	@Column(name = "latitud", length = 64)
 	private String latitud;

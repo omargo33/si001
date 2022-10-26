@@ -48,7 +48,7 @@ public class Clima implements Serializable {
     @Column(name = "id_ciudad")
     private Long idCiudad;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "json", length = 1536)
     private String json;
 

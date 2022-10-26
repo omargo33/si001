@@ -1,0 +1,57 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas CIUDADES
+@servicio=127.0.0.1:8080/si_001_00/localizaciones
+@token=45454
+
+### listar todos
+get http://{{servicio}}/
+Authorization: bearer {{token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=4&sort=nombre,desc
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i"
+get http://{{servicio}}/nombre=i
+Authorization: bearer {{token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/nombre=i?page=0&size=3&sort=nombre,asc
+Authorization: bearer {{token}}
+
+### buscar por indice
+get http://{{servicio}}/2
+Authorization: bearer {{token}}
+
+### crear
+post http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{   
+    "idCiudad": 2,
+    "nombre": "Mall del rio 052",
+    "latitud": "-2.860402",
+    "longitud": "-79.041305" 
+  }
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+    "idLocalizacion": 7,
+    "idCiudad": 2,
+    "nombre": "miraflores",
+    "latitud": "-2.860402",
+    "longitud": "-79.0413050"   
+}
+### eliminar por indice
+delete http://{{servicio}}/110
+Authorization: bearer {{token}}

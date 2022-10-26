@@ -15,9 +15,12 @@ import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.qapaq.si00100.Constantes;
+import com.qapaq.si00100.validadores.LocalizacionNombre;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +42,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@LocalizacionNombre(message = "E-SI00100-13")
 @JsonIgnoreProperties({ "usuario_programa" })
 public class Localizacion implements Serializable {
 
@@ -52,12 +56,17 @@ public class Localizacion implements Serializable {
     @Column(name = "id_ciudad")
     private Long idCiudad;
 
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "nombre", length = 128)
     private String nombre;
 
+    @NotBlank(message = "E-SI00100-12")
+    @Pattern(regexp = Constantes.LATITUD_PATTERN, message = "E-SI00100-9")
     @Column(name = "latitud", length = 64)
     private String latitud;
 
+    @NotBlank(message = "E-SI00100-12")
+    @Pattern(regexp = Constantes.LONGITUD_PATTERN, message = "E-SI00100-10")
     @Column(name = "longitud", length = 64)
     private String longitud;
 

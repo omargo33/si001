@@ -44,15 +44,15 @@ public class Informacion implements Serializable {
     @Column(name = "id_informacion")
     private Long idInformacion;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "nombre", length = 128)
     private String nombre;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "valor_01", length = 256)
     private String valor01;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "valor_02", length = 256)
     private String valor02;
 

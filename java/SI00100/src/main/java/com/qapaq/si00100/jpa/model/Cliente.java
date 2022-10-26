@@ -55,11 +55,11 @@ public class Cliente implements Serializable {
     @Column(name = "id_cliente")
     private Long idCliente;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Column(name = "razon_social", length = 256)
     private String razonSocial;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @ClienteEcIdentificacion(message = "E-SI00100-5")
     @Column(name = "identificacion", length = 16)
     private String identificacion;
@@ -67,7 +67,7 @@ public class Cliente implements Serializable {
     @Column(name = "estado", length = 8)
     private String estado;
 
-    @NotBlank(message = "E-SI00100-2")
+    @NotBlank(message = "E-SI00100-12")
     @Email(message = "E-SI00100-1")    
     @Column(name = "correo", length = 256)    
     private String correo;

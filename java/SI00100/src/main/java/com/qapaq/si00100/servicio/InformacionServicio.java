@@ -42,8 +42,7 @@ public class InformacionServicio {
         informacion.setUsuario(usuario);
         informacion.setUsuarioFecha(new Date());
         informacion.setUsuarioPrograma(usuarioPrograma);
-        informacionRepositorio.save(informacion);
-        return informacion;
+        return informacionRepositorio.save(informacion);        
     }
 
     /**
