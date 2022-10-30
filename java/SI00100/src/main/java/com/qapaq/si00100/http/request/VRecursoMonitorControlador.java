@@ -2,12 +2,14 @@ package com.qapaq.si00100.http.request;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.VRecursoMonitor;
 import com.qapaq.si00100.servicio.VRecursoMonitorServicio;
 
@@ -35,22 +37,12 @@ public class VRecursoMonitorControlador extends ComonControlador {
     }
 
     /**
-     * Metodo para obtener todos los recursos monitores buscando por network.
+     * Metodo para obtener todos los recursos monitores buscando por nombre desde el token.
      * 
      * @return
      */
-    @GetMapping("/network={network}")
-    public List<VRecursoMonitor> getAllVRecursoMonitorByNetwork(@PathVariable String network) {
-        return vRecursoMonitorServicio.findAllByNetworkOrWifi(network, null);
+    @GetMapping("/")
+    public List<VRecursoMonitor> getAllVRecursoMonitorByNetwork(HttpServletRequest request) {
+        return vRecursoMonitorServicio.findAllByNombre(evaluarUsuario(request));
     }    
-
-    /**
-     * Metodo para obtener todos los recursos monitores buscando por wifi.
-     * 
-     * @return
-     */
-    @GetMapping("/wifi={wifi}")
-    public List<VRecursoMonitor> getAllVRecursoMonitorByWifi(@PathVariable String wifi) {
-        return vRecursoMonitorServicio.findAllByNetworkOrWifi(null, wifi);
-    }
 }

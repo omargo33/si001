@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qapaq.si00100.jpa.exception.ForeignKeyException;
+import com.qapaq.http.request.ComonControlador;
+import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.RecursoMonitor;
 import com.qapaq.si00100.servicio.RecursoMonitorServicio;
 
@@ -30,7 +31,7 @@ import com.qapaq.si00100.servicio.RecursoMonitorServicio;
  */
 @RestController
 @RequestMapping(value = "/recursos_monitores")
-public class RecursoMonitorControlador  extends ComonControlador {
+public class RecursoMonitorControlador extends ComonControlador {
     private RecursoMonitorServicio recursoMonitorServicio;
 
     @Value("${app.name}")

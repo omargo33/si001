@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
-import com.qapaq.si00100.jpa.exception.ForeignKeyException;
+import com.qapaq.http.request.ComonControlador;
+import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Cliente;
 import com.qapaq.si00100.servicio.ClienteServicio;
 

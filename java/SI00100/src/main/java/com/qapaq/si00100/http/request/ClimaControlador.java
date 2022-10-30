@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qapaq.si00100.jpa.exception.ForeignKeyException;
+import com.qapaq.http.request.ComonControlador;
+import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Clima;
 import com.qapaq.si00100.servicio.ClimaServicio;
 

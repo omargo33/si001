@@ -21,6 +21,6 @@ public interface VRecursoMonitorRepositorio extends JpaRepository<VRecursoMonito
     /**
      * Buscar todos los v_recursos_monitores por network o wifi.
      */
-    @Query("SELECT r FROM VRecursoMonitor r WHERE r.network = ?1 OR r.wifi = ?2")
-    List<VRecursoMonitor> findAllByNetworkOrWifi(String network, String wifi);
+    @Query("SELECT r FROM VRecursoMonitor r WHERE r.nombre = ?1")
+    List<VRecursoMonitor> findAllByNombre(String nombre);
 }

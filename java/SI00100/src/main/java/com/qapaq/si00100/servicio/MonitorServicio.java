@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.apache.commons.lang3.StringUtils;
 import com.qapaq.si00100.jpa.model.Monitor;
 import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
 
@@ -44,10 +44,10 @@ public class MonitorServicio {
      * @return
      */
     public Monitor saveMonitor(Monitor monitor, String usuario, String usuarioPrograma) {
-        monitor.setEstado("A");
-        monitor.setUsuario(usuario);
+        monitor.setEstado(StringUtils.truncate("A",8));
+        monitor.setUsuario(StringUtils.truncate(usuario,128));
         monitor.setUsuarioFecha(new Date());
-        monitor.setUsuarioPrograma(usuarioPrograma);
+        monitor.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma,256));
         monitor.setClave(passwordEncoder.encode(monitor.getClave()));
         return monitorRepositorio.save(monitor);
     }

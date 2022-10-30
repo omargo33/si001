@@ -22,7 +22,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.si00100.Constantes;
+import com.qapaq.SeguridadesConstantes;
 
 /**
  * Clase para personalizar el filtro de autorización.
@@ -31,6 +31,7 @@ import com.qapaq.si00100.Constantes;
  * @date 2020-10-23
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
+ * @see security
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
 
@@ -50,11 +51,11 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             request.getServletPath().equals("/login/refresh")){                
             filterChain.doFilter(request, response);    
         }else{
-            String authorizationHeader = request.getHeader(Constantes.HEADER_STRING);
-            if (authorizationHeader != null && authorizationHeader.startsWith(Constantes.TOKEN_PREFIX)){
+            String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
+            if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)){
                 try {
-                    String token = authorizationHeader.substring(Constantes.TOKEN_PREFIX.length());
-                    Algorithm algorithm = Algorithm.HMAC256(Constantes.TOKEN_SECRET.getBytes());
+                    String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
+                    Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();

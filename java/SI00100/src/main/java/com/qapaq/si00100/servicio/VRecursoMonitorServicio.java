@@ -29,12 +29,12 @@ public class VRecursoMonitorServicio {
     }
     
     /**
-     * Metodo para buscar todos los v_recursos_monitores por network o wifi.
+     * Metodo para buscar todos los v_recursos_monitores por nombre.
      * 
-     * @param networkOrWifi
+     * @param nombre
      * @return
      */
-    public List<VRecursoMonitor> findAllByNetworkOrWifi(String network, String wifi) {
-        return vRecursoMonitorRepositorio.findAllByNetworkOrWifi(network, wifi);
+    public List<VRecursoMonitor> findAllByNombre(String nombre) {
+        return vRecursoMonitorRepositorio.findAllByNombre(nombre);
     }    
 }

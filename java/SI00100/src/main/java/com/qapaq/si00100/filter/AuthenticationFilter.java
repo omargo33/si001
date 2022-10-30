@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.qapaq.si00100.Constantes;
+import com.qapaq.SeguridadesConstantes;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +30,7 @@ import org.springframework.security.core.userdetails.User;
  * @date 2020-10-18
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
+ * @see security
  */
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -76,7 +77,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
 
         User user = (User) authResult.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256(Constantes.TOKEN_SECRET.getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
 
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
@@ -92,7 +93,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        response.setHeader(Constantes.ACCESS_TOKEN, accessToken);
-        response.setHeader(Constantes.REFRESH_TOKEN, refreshToken);
+        response.setHeader(SeguridadesConstantes.ACCESS_TOKEN, accessToken);
+        response.setHeader(SeguridadesConstantes.REFRESH_TOKEN, refreshToken);
     }
 }

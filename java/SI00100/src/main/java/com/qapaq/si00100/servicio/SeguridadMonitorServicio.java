@@ -2,9 +2,7 @@ package com.qapaq.si00100.servicio;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -23,6 +21,8 @@ import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
  * @date 2020-10-09
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
+ * @see security 
+ * 
  */
 @Service
 @Transactional
@@ -51,7 +51,7 @@ public class SeguridadMonitorServicio implements UserDetailsService{
         Monitor monitor = this.monitorRepositorio.findByMacAddress(monitorMacAddres,monitorMacAddres);
 
         if (monitor == null) {   
-            throw new UsernameNotFoundException("Monitor no encontrado");
+            throw new UsernameNotFoundException("E-SI00100-22");
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();        

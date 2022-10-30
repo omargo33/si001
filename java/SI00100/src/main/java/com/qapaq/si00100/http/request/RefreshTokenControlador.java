@@ -22,8 +22,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.si00100.Constantes;
-import com.qapaq.si00100.jpa.exception.SeguridadException;
+import com.qapaq.SeguridadesConstantes;
+import com.qapaq.jpa.exception.SeguridadException;
 import com.qapaq.si00100.servicio.MonitorServicio;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2020-10-04
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
+ * @see security
+ * 
  */
 @Slf4j
 @RestController
@@ -61,11 +63,11 @@ public class RefreshTokenControlador {
      */        
     @GetMapping(value = "/refresh")
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        String authorizationHeader = request.getHeader(Constantes.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(Constantes.TOKEN_PREFIX)) {
+        String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
+        if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)) {
             try {
-                String token = authorizationHeader.substring(Constantes.TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(Constantes.TOKEN_SECRET.getBytes());
+                String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
+                Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(token);
                 String nombre = decodedJWT.getSubject();
@@ -89,8 +91,8 @@ public class RefreshTokenControlador {
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put(Constantes.ACCESS_TOKEN, accessToken);
-                tokens.put(Constantes.REFRESH_TOKEN, refreshToken);
+                tokens.put(SeguridadesConstantes.ACCESS_TOKEN, accessToken);
+                tokens.put(SeguridadesConstantes.REFRESH_TOKEN, refreshToken);
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.Localizacion;
 import com.qapaq.si00100.servicio.LocalizacionServicio;
 

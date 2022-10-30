@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.RecursoMonitorPresentacion;
 import com.qapaq.si00100.servicio.RecursoMonitorPresentacionServicio;
 

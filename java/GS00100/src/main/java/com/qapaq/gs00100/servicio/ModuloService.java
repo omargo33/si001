@@ -1,18 +1,16 @@
 package com.qapaq.gs00100.servicio;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qapaq.gs00100.jpa.model.Modulo;
 import com.qapaq.gs00100.jpa.queries.ModuloRepositorio;
-import com.qapaq.gs00100.seguridad.AESUtil;
-
-import lombok.extern.slf4j.Slf4j;
-
 
 /**
  * Objeto para dar soporte a servicio REST de modulo
@@ -23,22 +21,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Transactional
-@Slf4j
 public class ModuloService {
 
     private final ModuloRepositorio moduloRepositorio;
-    
-    @Value("${app.name}")
-    String appName;
-
-    @Value("${app.version}")
-    String appVersion;    
-
     /**
      * Metodo para crear los repositorios.
      * @param moduloRepositorio
      *
      */
+    @Autowired
     public ModuloService(ModuloRepositorio moduloRepositorio) {
         this.moduloRepositorio = moduloRepositorio;
     }
@@ -46,8 +37,8 @@ public class ModuloService {
     /**
      * Metodo para mostrar todos los modulos.
      */
-    public List<Modulo> findAllModulos() {
-        return moduloRepositorio.findAll();
+    public List<Modulo> findAllModulos(Pageable pageable) {
+        return moduloRepositorio.findAllByEstadoNot(pageable);
     }
 
     /**
@@ -55,29 +46,83 @@ public class ModuloService {
      * 
      * @param id
      */
-    public Modulo findByIdModulo(String id) {        
-        long indice = 0;
-        try{
-            indice = Long.valueOf(AESUtil.desencriptar(id));
-        }catch(Exception e){
-            indice = 0;
-            log.warn(e.toString());
-        }
-        return moduloRepositorio.findByIdModulo(indice);
+    public Modulo findByIdModulo(Long id) {               
+        return moduloRepositorio.findByIdModulo(id);
+    }
+
+    /**
+     * Metodo para buscar lista de modulos por indice.
+     * 
+     * @param indice
+     * @param pageable
+     * @return
+     */
+    public List<Modulo> findByIndiceModulo(String indice, Pageable pageable){
+        return moduloRepositorio.findByIndiceAndEstadoNot(indice, pageable);
+    }
+
+    /**
+     * Metodo para buscar lista de modulos por nombre.
+     * 
+     */
+    public List<Modulo> findByNombreModulo(String nombre, Pageable pageable){
+        return moduloRepositorio.findByNombreLike( nombre , pageable);
     }
 
     /**
      * Metodo para crear un modulo.
-     *  
+     * 
+     * @param modulo
+     * @param usuario
+     * @param usuarioPrograma
+     * @return
      */
-    public Modulo createModulo(String usuario, Modulo modulo) {
-        modulo.setEstado(StringUtils.truncate("A", 8));        
+    public Modulo guardarModulo(Modulo modulo, String usuario, String usuarioPrograma) {
+        modulo.setEstado("A");        
         modulo.setUsuario(StringUtils.truncate(usuario, 128));        
-        modulo.setUsuarioPrograma(StringUtils.truncate(String.format("%s %s", appName, appVersion), 256));
+        modulo.setUsuarioFecha(new Date());
+        modulo.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
         return moduloRepositorio.save(modulo);
-    }    
+    } 
 
     /**
+     * Metodo para borrar un modulo.
+     * 
+     * @param id
+     */
+    public void borrarModulo(Long id) {
+        moduloRepositorio.deleteByIdModulo(id);
+    }
+
+    /**
+     * Metodo para validar indice.
      * 
      */
+    public boolean isIndiceUnico(String indice) {
+        return moduloRepositorio.existsByIndice(indice);
+    }
+
+    /**
+     * Metodo para validar indice diferente idModulo.
+     * 
+     */
+    public boolean isIndiceUnico(String indice, Long idModulo) {
+        return moduloRepositorio.existsByIndiceAndIdModulo(indice, idModulo);
+    }
+
+    /**
+     * Metodo para validar nombre.
+     * 
+     */
+    public boolean isNombreUnico(String nombre) {
+        return moduloRepositorio.existsByNombre(nombre);
+    }
+
+    /**
+     * Metodo para validar nombre diferente idModulo.
+     * 
+     */
+    public boolean isNombreUnico(String nombre, Long idModulo) {
+        return moduloRepositorio.existsByNombreAndIdModulo(nombre, idModulo);
+    }
 }

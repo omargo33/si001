@@ -26,7 +26,7 @@ import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.qapaq.si00100.Constantes;
-import com.qapaq.si00100.jpa.exception.ForeignKeyException;
+import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.validadores.CiudadNombre;
 
 import lombok.Getter;

@@ -15,10 +15,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qapaq.gs00100.seguridad.AESUtil;
+import com.qapaq.gs00100.validadores.ModuloIndice;
+import com.qapaq.gs00100.validadores.ModuloNombre;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,28 +35,39 @@ import lombok.Setter;
  * 
  */
 @Entity
+@Table(name = "modulo", schema = "GS_001_00")
 @Getter
 @Setter
-@Table(name = "modulo", schema = "GS_001_00")
-@JsonIgnoreProperties({ "idModulo", "estado", "usuario", "usuarioFecha" })
+@ModuloIndice(titulo = "indice", message = "E-GS00100-4")
+@ModuloNombre(titulo = "nombre", message = "E-GS00100-4")
+@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha" })
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_modulo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_modulo")    
     private Long idModulo;
     
     @Transient
     @JsonProperty("idxModulo")
     private String idxModulo;
 
+    @NotNull(message = "E-GS00100-2")
+    @NotEmpty(message = "E-GS00100-3")
     @Column(name = "indice", length = 32)
     private String indice;
+    
+    @NotNull(message = "E-GS00100-2")
+    @NotEmpty(message = "E-GS00100-3")
     @Column(name = "nombre", length = 128)
     private String nombre;
+    
+    @NotNull(message = "E-GS00100-2")
+    @NotEmpty(message = "E-GS00100-3")
     @Column(name = "contexto", length = 128)
     private String contexto;
+    
     @Column(name = "usuario", length = 128)
     private String usuario;
     @Column(name = "usuario_fecha", columnDefinition = "DATETIME")
@@ -79,22 +93,4 @@ public class Modulo implements Serializable {
     @OneToMany(targetEntity = Rol.class)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
     private List<Rol> rolList;
-
-    /**
-     * Metodo para obtener el valor de la propiedad idModuloCustom
-     * 
-     * @return
-     */
-    public String getIdxModulo() {
-        return AESUtil.encriptar(String.valueOf(idxModulo));
-    }
-
-    /**
-     * Metodo para asignar el valor de la propiedad idModuloCustom
-     * 
-     * @param idxModuloCustom
-     */
-    public void setIdxModulo(String idxModulo) {
-        this.idxModulo = idxModulo;
-    }
 }
