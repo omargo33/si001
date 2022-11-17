@@ -1,0 +1,18 @@
+{
+    "@@locale": "template",
+    "helloWorld": "Hello World!",    
+
+    "app": "SI00100",
+    "description": "SI00100 - Information Sistem Version 1.0",
+
+    "login_title": "Sistema de /nInformación",
+    "login_subtitle": "Administración de Proyectos",
+    "login_username": "Usuario",
+    "login_password": "Contraseña",
+    "login_event_ingresar": "Ingresar",
+    "login_event_recuperar": "¿Olvido su Contraseña?",    
+    
+    "images_svg_login": "assets/images/undraw_secure_login_pdn4.svg",    
+    "images_svg_mail": "assets/images/1814108_email_envenlope_letter_mail_icon.svg",
+    "images_svg_burbuja": "assets/images/1814099_chat_cloud_speech_talk_text_icon.svg"
+}

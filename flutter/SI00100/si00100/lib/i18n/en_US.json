@@ -1,0 +1,40 @@
+{
+    "@@locale": "en_US",       
+    "helloWorld": "Hello World!",    
+
+    "app": "SI00100",
+    "description": "SI00100 - Information Sistem Version 1.0",
+
+    "login_title": "Sistema de \nInformación",
+    "login_subtitle": "Administración de Proyectos",
+    "login_username": "Usuario",
+    "login_username_label": "your_email@domain.com",
+    "login_password": "Contraseña",
+    "login_password_label": "******",
+    "login_acceso": "Acceder",
+    "login_recuperar_clave": "Recuperar Clave",
+    "login_event_ingresar": "Ingresar",
+    "login_event_recuperar": "¿Olvido su Contraseña?",    
+    "login_msg_recuperar_0": "Usuario encontrado",
+    "login_msg_recuperar_1": "Se ha enviado un correo a su cuenta de correo electrónico con las instrucciones para recuperar su contraseña.",
+    
+    "images_svg_login": "assets/images/undraw_secure_login_pdn4.svg",    
+    "images_svg_mail": "assets/images/1814108_email_envenlope_letter_mail_icon.svg",
+    "images_svg_error": "assets/images/1814078_close_no_reject_icon.svg",
+    "images_svg_burbuja": "assets/images/1814099_chat_cloud_speech_talk_text_icon.svg",
+
+    "event_cancel": "Cancelar",
+    "event_save": "Guardar",
+    "event_edit": "Editar",
+    "event_delete": "Eliminar",
+    "event_new": "Nuevo",
+    "event_search": "Buscar",
+    "event_close": "Cerrar",
+    "event_back": "Atras",
+    "event_next": "Siguiente",
+    "event_finish": "Finalizar",
+    "event_ok": "Aceptar",
+    "event_yes": "Si",
+    "event_no": "No",
+    "event_confirm": "Confirmar"
+}
