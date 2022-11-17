@@ -1,0 +1,10 @@
+##
+## Localizacion o internacionalizacion de datos.
+##
+https://pub.dev/packages/localization
+
+##
+## Mensajes de informacion 
+## SVG picture
+##
+https://www.youtube.com/watch?v=UWXC0DHIIfQ
