@@ -11,8 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.qapaq.si00100.filter.AuthenticationFilter;
-import com.qapaq.si00100.filter.AuthorizationFilter;
+import com.qapaq.filter.AuthenticationFilter;
+import com.qapaq.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -28,8 +28,8 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter{
-    
+public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
+
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -51,16 +51,16 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter{
      * @throws Exception
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {        
+    protected void configure(HttpSecurity http) throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
-        //TODO: para poder cambiar los datos del monitor se debe permitir el acceso a todos
-        //http.authorizeRequests().antMatchers("/monitores/**").permitAll();
-        //http.authorizeRequests().antMatchers("/monitores/**").hasAuthority("ROLE_MONITOR");        
+        // TODO: para poder cambiar los datos del monitor se debe permitir el acceso a todos
+        // TODO: http.authorizeRequests().antMatchers("/monitores/**").permitAll();
+        // TODO: http.authorizeRequests().antMatchers("/monitores/**").hasAuthority("ROLE_MONITOR");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

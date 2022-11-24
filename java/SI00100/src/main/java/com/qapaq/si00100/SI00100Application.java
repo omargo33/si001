@@ -9,12 +9,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 /**
  * Objeto de llamado principal del sistema.
  * 
  * @author o.velez@qapaq.io
  * @date 2020-10-02
+ * 
+ * @see seguridad
  */
 @ComponentScan(
         {

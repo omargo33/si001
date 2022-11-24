@@ -2,31 +2,19 @@ package com.qapaq.si00100.http.request;
 
 import java.util.ArrayList;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.SeguridadesConstantes;
-import com.qapaq.jpa.exception.SeguridadException;
+import com.qapaq.http.request.ComonRefreshTokenControlador;
+import com.qapaq.http.request.TokenRefreshControlador;
 import com.qapaq.si00100.servicio.MonitorServicio;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para controlar las peticiones de las ciudades.
@@ -38,10 +26,9 @@ import lombok.extern.slf4j.Slf4j;
  * @see security
  * 
  */
-@Slf4j
 @RestController
 @RequestMapping(value = "/login")
-public class RefreshTokenControlador {
+public class RefreshTokenControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
 
     private MonitorServicio monitorServicio;
 
@@ -53,7 +40,19 @@ public class RefreshTokenControlador {
     @Autowired
     public RefreshTokenControlador(MonitorServicio monitorServicio) {
         this.monitorServicio = monitorServicio;
-    }    
+    }       
+    
+    @Override
+    public boolean isActiveUser(String username) {        
+        return monitorServicio.existsMonitorByNombre(username);
+    }
+
+    @Override
+    public List<String> getRoles(String username) {
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_MONITOR");
+        return roles;
+    }
 
     /**
      * Método para refrescar el token.
@@ -62,53 +61,8 @@ public class RefreshTokenControlador {
      * @param response
      */        
     @GetMapping(value = "/refresh")
+    @Override
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)) {
-            try {
-                String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
-                JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(token);
-                String nombre = decodedJWT.getSubject();
-                if(!monitorServicio.existsMonitorByNombre(nombre)){
-                    throw new SeguridadException("E-SI00100-19");
-                }
-
-                List<String> authorities = new ArrayList<>();
-                authorities.add("ROLE_MONITOR");
-                String accessToken = JWT.create()
-                        .withSubject(nombre)
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", authorities)
-                        .sign(algorithm);
-
-                String refreshToken = JWT.create()
-                        .withSubject(nombre)
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .sign(algorithm);
-
-                Map<String, String> tokens = new HashMap<>();
-                tokens.put(SeguridadesConstantes.ACCESS_TOKEN, accessToken);
-                tokens.put(SeguridadesConstantes.REFRESH_TOKEN, refreshToken);
-                response.setContentType("application/json");
-                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            } catch (Exception e) {
-                response.setHeader("error", e.getMessage());
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                Map<String, String> error = new HashMap<>();
-                error.put("error_message", e.getMessage());
-                response.setContentType("application/json");
-                try{
-                    new ObjectMapper().writeValue(response.getOutputStream(), error);
-                }catch(Exception ex){
-                    log.error("E-SI00100-20 {}", ex.getMessage());
-                }
-            }
-        } else {
-            throw new SeguridadException("E-SI00100-21");
-        }
+        super.refresh(request, response);
     }
 }

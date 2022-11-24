@@ -26,7 +26,7 @@ import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
  */
 @Service
 @Transactional
-public class SeguridadMonitorServicio implements UserDetailsService{
+public class SeguridadServicio implements UserDetailsService{
     private MonitorRepositorio monitorRepositorio;
 
     /**
@@ -35,7 +35,7 @@ public class SeguridadMonitorServicio implements UserDetailsService{
      * @param monitorRepositorio
      */
     @Autowired
-    public SeguridadMonitorServicio(MonitorRepositorio monitorRepositorio) {
+    public SeguridadServicio(MonitorRepositorio monitorRepositorio) {
         this.monitorRepositorio = monitorRepositorio;
     }
 

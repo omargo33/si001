@@ -5,20 +5,20 @@
 ## 
 ## 
 ## Consultas LOCALIZACIONES
-@servicio=127.0.0.1:8080/si_001_00/proyectos
+@servicio=127.0.0.1:8081/si_001_00/proyectos
 @username=AB:00:12:12:12:1A
 @password=12341234
 
 ###
 # @name rdpAuth
 
-post http://127.0.0.1:8080/si_001_00/login
+post http://127.0.0.1:8081/si_001_00/login
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}
 
 ### solicitar token refresh
-get http://127.0.0.1:8080/si_001_00/login/refresh
+get http://127.0.0.1:8081/si_001_00/login/refresh
 Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
 
   
