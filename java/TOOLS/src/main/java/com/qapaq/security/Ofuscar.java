@@ -1,4 +1,4 @@
-package com.qapaq.gs00100.seguridad;
+package com.qapaq.security;
 
 /**
  * Clase para ofuscar cadenas de texto.

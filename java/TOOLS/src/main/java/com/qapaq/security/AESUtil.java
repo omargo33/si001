@@ -1,4 +1,4 @@
-package com.qapaq.gs00100.seguridad;
+package com.qapaq.security;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -57,8 +57,7 @@ public class AESUtil {
     public static String encriptar(String item) {
         try {
             return encrypt(item);
-        } catch (Exception e) {
-            //TODO: bundle para mensaje
+        } catch (Exception e) {            
             log.warn(e.toString());
             return "";
         }

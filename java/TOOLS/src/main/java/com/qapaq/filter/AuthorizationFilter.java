@@ -1,4 +1,4 @@
-package com.qapaq.si00100.filter;
+package com.qapaq.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +36,9 @@ import com.qapaq.SeguridadesConstantes;
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
 
+    @Value("${server.servlet.context-path}")
+    private String contexto;
+
     /**
      * Método para autorizar al usuario.
      * 
@@ -47,7 +51,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if (request.getServletPath().equals("/si_001_00/login") || 
+        if (request.getServletPath().equals(contexto + "/login") || 
             request.getServletPath().equals("/login/refresh")){                
             filterChain.doFilter(request, response);    
         }else{

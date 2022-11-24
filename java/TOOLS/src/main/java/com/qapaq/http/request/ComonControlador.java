@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -21,6 +22,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.qapaq.SeguridadesConstantes;
 import com.qapaq.jpa.exception.ForeignKeyException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +38,12 @@ public class ComonControlador {
 
     private Object[] arguments;
 
+    @Value("${app.name}")
+    private String appName;
+
+    @Value("${app.version}")
+    private String appVersion;
+
     /**
      * Metodo para informar errores de validacion.
      * 
@@ -50,7 +58,8 @@ public class ComonControlador {
             MethodArgumentNotValidException.class,
             ForeignKeyException.class,
             EmptyResultDataAccessException.class,
-            HttpMessageNotReadableException.class })
+            HttpMessageNotReadableException.class,
+            DataIntegrityViolationException.class })
     public Map<String, String> handleExceptions(Object ex) {
         Map<String, String> errors = new HashMap<>();
         if (ex instanceof MethodArgumentNotValidException) {
@@ -68,6 +77,12 @@ public class ComonControlador {
         if (ex instanceof HttpMessageNotReadableException) {
             return httpMessageNotReadableException((HttpMessageNotReadableException) ex);
         }
+        
+        if (ex instanceof DataIntegrityViolationException) {
+            return sqlIntegrityConstraintViolationException((DataIntegrityViolationException) ex);
+        }
+
+        log.error("W-GS00100-2 {}", ex.getClass().getName());
 
         return errors;
     }
@@ -169,5 +184,42 @@ public class ComonControlador {
             throw new IllegalStateException(ex.toString());
         }
         return errors;
+    }
+
+    /**
+     * Metodo para informar errores de validacion personalizada de Constrain de foreign de tabla de SQL.
+     * 
+     * @param ex
+     * @return
+     */
+    private Map<String, String> sqlIntegrityConstraintViolationException(DataIntegrityViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        log.info("data 01 "+ex);
+        log.info("data 02 "+ex.toString());
+        errors.put(getControllerMapping(), "E-GS00100-19");
+        return errors;
+    }
+
+    /**
+     * Metodo para crear el nombre de aplicacion con path correcto.
+     * 
+     * @param usuarioPrograma
+     * @return
+     * 
+     */
+    public String getUsuarioPrograma(String usuarioPrograma) {
+        if (usuarioPrograma == null || usuarioPrograma.isEmpty()) {
+            usuarioPrograma = "noCliente@" + appName + "-" + appVersion;
+            return usuarioPrograma;
+        }
+
+        int separador = usuarioPrograma.indexOf("@");
+        if (separador > 0) {
+            usuarioPrograma = usuarioPrograma.substring(0, separador) + "@" + appName + "-" + appVersion;
+        } else {
+            usuarioPrograma = usuarioPrograma + "@" + appName + "-"  + appVersion;
+        }
+
+        return usuarioPrograma;
     }
 }

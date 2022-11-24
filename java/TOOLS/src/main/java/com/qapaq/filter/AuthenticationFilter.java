@@ -1,4 +1,4 @@
-package com.qapaq.si00100.filter;
+package com.qapaq.filter;
 
 import java.io.IOException;
 import java.util.Date;
