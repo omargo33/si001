@@ -9,5 +9,4 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(GS00100Application.class);
 	}
-
 }

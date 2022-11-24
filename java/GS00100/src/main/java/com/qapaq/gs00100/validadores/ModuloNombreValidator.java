@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qapaq.gs00100.jpa.model.Modulo;
-import com.qapaq.gs00100.servicio.ModuloService;
+import com.qapaq.gs00100.servicio.ModuloServicio;
 
 /**
  * Clase Validador para nombre de modulo.
@@ -17,7 +17,7 @@ import com.qapaq.gs00100.servicio.ModuloService;
 @Component
 public class ModuloNombreValidator implements ConstraintValidator<ModuloNombre, Modulo> {
     @Autowired
-    private ModuloService moduloService;
+    private ModuloServicio moduloService;
 
     @Override
     public void initialize(ModuloNombre constraintAnnotation) {

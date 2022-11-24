@@ -21,7 +21,7 @@ import com.qapaq.gs00100.jpa.queries.ModuloRepositorio;
  */
 @Service
 @Transactional
-public class ModuloService {
+public class ModuloServicio {
 
     private final ModuloRepositorio moduloRepositorio;
     /**
@@ -30,7 +30,7 @@ public class ModuloService {
      *
      */
     @Autowired
-    public ModuloService(ModuloRepositorio moduloRepositorio) {
+    public ModuloServicio(ModuloRepositorio moduloRepositorio) {
         this.moduloRepositorio = moduloRepositorio;
     }
 

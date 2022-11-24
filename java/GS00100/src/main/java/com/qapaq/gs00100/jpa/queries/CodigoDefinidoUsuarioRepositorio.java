@@ -17,9 +17,6 @@ import com.qapaq.gs00100.jpa.model.CodigoDefinidoUsuario;
  */
 @Repository
 public interface CodigoDefinidoUsuarioRepositorio extends JpaRepository <CodigoDefinidoUsuario, Long>{
-        
-        //TODO metodos para encabezados de codigos definidos por usuario.
-
 
         /**
         * Metodo para buscar un objeto por id y con estado distinto a eliminado (X)

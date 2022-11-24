@@ -70,11 +70,16 @@ public class Modulo implements Serializable {
     
     @Column(name = "usuario", length = 128)
     private String usuario;
+    
     @Column(name = "usuario_fecha", columnDefinition = "DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date usuarioFecha;
+
+    @NotNull(message = "E-GS00100-2")
+    @NotEmpty(message = "E-GS00100-3")
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;
+    
     @Column(name = "estado", length = 8)
     private String estado;
 

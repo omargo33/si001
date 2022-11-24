@@ -5,14 +5,14 @@
 ## 
 ## 
 ## Consultas modulos
-@servicio=127.0.0.1:8080/gs_001_00/modulos
+@servicio=127.0.0.1:8080/gs_001_00/usuarios
 @username=admin
 @password=admin
 
 ###
 # @name rdpAuth
 
-post http://127.0.0.1:8080/gs_001_00/login/
+post http://127.0.0.1:8080/gs_001_00/login
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}
@@ -29,32 +29,32 @@ Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 get http://{{servicio}}/?page=0&size=2&sort=nombre,desc
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
-### por indice que contenga la letra "i"
-get http://{{servicio}}/indice=0
+### id usuario
+get http://{{servicio}}/15
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### id usuario
+get http://{{servicio}}/nick=u089
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### por indice que contenga la letra "i", paginada y ordenada
-get http://{{servicio}}/indice=0?page=0&size=3&sort=nombre,desc
+get http://{{servicio}}/nombres=velez?page=0&size=3&sort=nombre,desc
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
-### por nombre que contenga la letra "i", paginada y ordenada
-get http://{{servicio}}/nombre=0?page=0&size=3&sort=nombre,desc
-Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
-### buscar por indice unico
-get http://{{servicio}}/1
-Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
 
 ### crear un nuevo modulo
 POST http://{{servicio}}/ 
 Content-Type: application/json
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
-{   
-  "indice": "test123",
-  "nombre": "test123",
-  "contexto": "http://test",
-  "usuarioPrograma": "manual"
+{ 
+    "idArchivo": null,
+    "nick": "omar45-001",
+    "nombre": "jk45-001",
+    "apellido": "kljlkj",
+    "usuarioPrograma": "rest-client"
 }
 
 ### actualizar
@@ -63,13 +63,14 @@ Content-Type: application/json
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 {
-  "idModulo": 9,
-  "indice": "test123",
-  "nombre": "123",
-  "contexto": "http://test",  
-  "usuarioPrograma": "manual"
+  "idUsuario": 45,
+  "idArchivo": null,
+    "nick": "u016",
+    "nombre": "jk45-001",
+    "apellido": "kljlkj",
+    "usuarioPrograma": "rest-client"
 }
 
 ### eliminar por indice
-delete http://{{servicio}}/1
+delete http://{{servicio}}/45
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}

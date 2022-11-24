@@ -1,0 +1,66 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## 
+## Consultas tokens
+@servicio=127.0.0.1:8080/gs_001_00/tokens
+@username=root  
+@password=12341234
+
+###
+# @name rdpAuth
+
+post http://127.0.0.1:8080/gs_001_00/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+get http://127.0.0.1:8080/gs_001_00/login/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
+
+
+### por idToken
+get http://{{servicio}}/20
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### por idUsuario
+get http://{{servicio}}/idUsuario=20?page=0&size=3&sort=usuarioFecha,desc
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### crear un nuevo tokens
+POST http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+{   
+  "idUsuario": 2000,
+  "tipo": "C",
+  "socialNick": "truiz",
+  "correo": "tania.ruiz@sicsas.com",
+  "token": "8DF79DEB606C9A5955D4D7FBD93037C29F736659B06AEF73A377626DCD404B41",
+  "usuarioFecha": "2022-03-11T14:48:03.000+00:00",
+  "usuarioPrograma": "/Administrativo-001"
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+{
+   "idToken": 9,
+  "idUsuario": 20,
+  "tipo": "C",
+  "socialNick": "truiz",
+  "correo": "tania.ruiz@sicsas.com",
+  "token": "8DF79DEB606C9A5955D4D7FBD93037C29F736659B06AEF73A377626DCD404B41",
+  "usuarioFecha": "2022-03-11T14:48:03.000+00:00",
+  "usuarioPrograma": "/Administrativo-001"
+}
+
+### eliminar por indice
+delete http://{{servicio}}/1
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}

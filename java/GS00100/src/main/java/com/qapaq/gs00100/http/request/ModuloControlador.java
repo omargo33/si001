@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qapaq.gs00100.jpa.model.Modulo;
-import com.qapaq.gs00100.servicio.ModuloService;
+import com.qapaq.gs00100.servicio.ModuloServicio;
 import com.qapaq.http.request.ComonControlador;
 
 /**
@@ -34,13 +33,7 @@ import com.qapaq.http.request.ComonControlador;
 @RequestMapping(value = "/modulos")
 public class ModuloControlador extends ComonControlador {
 
-   @Value("${app.name}")
-   private String appName;
-
-   @Value("${app.version}")
-   private String appVersion;
-
-   ModuloService moduloService;
+   ModuloServicio moduloService;
 
    /**
     * Metodo para crear la clase.
@@ -48,7 +41,7 @@ public class ModuloControlador extends ComonControlador {
     * @param moduloService
     */
    @Autowired
-   public ModuloControlador(ModuloService moduloService) {
+   public ModuloControlador(ModuloServicio moduloService) {
       this.moduloService = moduloService;
    }
 
@@ -100,7 +93,7 @@ public class ModuloControlador extends ComonControlador {
     */
    @PostMapping(value = "/")
    public Modulo createMonitor(@Valid @RequestBody Modulo modulo, HttpServletRequest request) {
-      return moduloService.guardarModulo(modulo, evaluarUsuario(request), appName + " " + appVersion);
+      return moduloService.guardarModulo(modulo, evaluarUsuario(request), getUsuarioPrograma(modulo.getUsuarioPrograma()));
    }
 
    /**
@@ -111,7 +104,7 @@ public class ModuloControlador extends ComonControlador {
     */
    @PutMapping(value = "/")   
    public Modulo updateMonitor(@Valid @RequestBody Modulo modulo, HttpServletRequest request) {
-      return moduloService.guardarModulo(modulo, evaluarUsuario(request), appName + " " + appVersion);
+      return moduloService.guardarModulo(modulo, evaluarUsuario(request), getUsuarioPrograma(modulo.getUsuarioPrograma()));
    }
 
    /**
