@@ -25,6 +25,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qapaq.SeguridadesConstantes;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Clase para personalizar el filtro de autorización.
  * 
@@ -34,10 +36,20 @@ import com.qapaq.SeguridadesConstantes;
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security
  */
+@Slf4j
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    @Value("${server.servlet.context-path}")
+
     private String contexto;
+
+    /**
+     * Constructor de la clase.
+     * 
+     * @param contexto
+     */
+    public AuthorizationFilter(String contexto) {
+        this.contexto = contexto;
+    }
 
     /**
      * Método para autorizar al usuario.
@@ -51,6 +63,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        log.info("Autorizando al usuario {} {}", contexto, "/login");
+
         if (request.getServletPath().equals(contexto + "/login") || 
             request.getServletPath().equals("/login/refresh")){                
             filterChain.doFilter(request, response);    

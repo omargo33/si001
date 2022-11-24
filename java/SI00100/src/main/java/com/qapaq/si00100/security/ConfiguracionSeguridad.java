@@ -1,5 +1,6 @@
 package com.qapaq.si00100.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +34,10 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Value("${server.servlet.context-path}")
+    private String contexto;
+
+
     /**
      * Método para configurar la autenticación.
      * 
@@ -63,7 +68,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
         // TODO: http.authorizeRequests().antMatchers("/monitores/**").hasAuthority("ROLE_MONITOR");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
-        http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationFilter(contexto), UsernamePasswordAuthenticationFilter.class);
     }
 
     /**

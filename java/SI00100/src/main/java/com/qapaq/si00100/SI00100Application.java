@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 
  * @see seguridad
  */
-@ComponentScan(
+@ComponentScan(basePackages = 
         {
             "com.qapaq.si00100.http.request",
             "com.qapaq.si00100.servicio",

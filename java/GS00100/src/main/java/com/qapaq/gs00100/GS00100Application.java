@@ -17,25 +17,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 
  * @see seguridad
  */
-@ComponentScan(
-        {
-            "com.qapaq.gs00100.security",
-            "com.qapaq.gs00100.http.request",
-            "com.qapaq.gs00100.servicio",            
-            //"com.qapaq.gs00100.validadores",
-        }
-)
+
+@ComponentScan(basePackages = {
+        "com.qapaq.gs00100.http.request",
+        "com.qapaq.gs00100.servicio",
+        "com.qapaq.gs00100.validadores",
+        "com.qapaq.gs00100.security",
+})
 @EnableJpaRepositories("com.qapaq.gs00100.jpa.queries")
 @EntityScan("com.qapaq.gs00100.jpa.model")
 @SpringBootApplication
 public class GS00100Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GS00100Application.class, args);
-	}
-        
+    public static void main(String[] args) {
+        SpringApplication.run(GS00100Application.class, args);
+    }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }        
+    }
+
+    @Bean
+	BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
