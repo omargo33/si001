@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:si00100/widget/boton_widget.dart';
 import 'package:localization/localization.dart';
 
 /// Clase para el cajas de dialogo personalizadas
@@ -56,11 +55,13 @@ class DialogWidget {
                 ],
               )),
           actions: [
-            BotonWidget(
-                texto: "event_cancel".i18n(),
-                onClick: () {
-                  Navigator.of(context).pop();
-                }),
+            OutlinedButton(
+                onPressed: () => {
+                      Navigator.of(context).pop(),
+                    },
+                child: Text(
+                  "event_cancel".i18n(),
+                ))
           ],
         );
       },

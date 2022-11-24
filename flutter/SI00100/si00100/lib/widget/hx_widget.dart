@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:si00100/common/app_colors.dart';
 
 /// Clase h1 h2 h3 widget
+/// ademas se hace cambio de color por nivel
+///
 class HxWidget extends StatelessWidget {
   final int indice;
   final String texto;
