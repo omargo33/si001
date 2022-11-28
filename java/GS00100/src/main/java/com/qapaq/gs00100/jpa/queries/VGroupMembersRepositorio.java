@@ -14,7 +14,6 @@ import com.qapaq.gs00100.jpa.model.VGroupMembers;
  * 
  */
 public interface VGroupMembersRepositorio extends JpaRepository <VGroupMembers, Long>{
-
         
         /**
          * Metodo para buscar todos los objetos.
@@ -35,5 +34,5 @@ public interface VGroupMembersRepositorio extends JpaRepository <VGroupMembers, 
          * Metodo para buscar un objetos por MEMBER.
          * 
          */
-        public List<VGroupMembers> findByMember(String member);         
+        public List<VGroupMembers> findByMember(String member);
 }

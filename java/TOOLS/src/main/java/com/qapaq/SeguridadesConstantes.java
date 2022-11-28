@@ -13,6 +13,7 @@ public class SeguridadesConstantes {
     public static final String REFRESH_TOKEN="refresh-token";
     public static final String TOKEN_PREFIX="Bearer ";
     public static final String HEADER_STRING="Authorization";  
+    public static final String ROLES_STRING="roles";
     
     /**
      * Constructor de la clase.

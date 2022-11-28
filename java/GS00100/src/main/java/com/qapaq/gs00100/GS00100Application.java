@@ -21,11 +21,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ComponentScan(basePackages = {
         "com.qapaq.gs00100.http.request",
         "com.qapaq.gs00100.servicio",
+        "com.qapaq.ar00100.servicio",
         "com.qapaq.gs00100.validadores",
-        "com.qapaq.gs00100.security",
+        "com.qapaq.gs00100.configuracion",
 })
-@EnableJpaRepositories("com.qapaq.gs00100.jpa.queries")
-@EntityScan("com.qapaq.gs00100.jpa.model")
+/*
+@EnableJpaRepositories(basePackages = {
+        "com.qapaq.gs00100.jpa.queries",
+        "com.qapaq.ar00100.jpa.queries",
+})*/
+@EntityScan(basePackages = {
+        "com.qapaq.gs00100.jpa.model",
+        "com.qapaq.ar00100.jpa.model",
+})
 @SpringBootApplication
 public class GS00100Application {
 
@@ -39,7 +47,7 @@ public class GS00100Application {
     }
 
     @Bean
-	BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

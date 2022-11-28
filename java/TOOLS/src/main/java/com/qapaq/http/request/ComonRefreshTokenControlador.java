@@ -42,7 +42,7 @@ public class ComonRefreshTokenControlador {
       * @return
       */
     public boolean isActiveUser(String username) {
-        log.warn(username, username);
+        log.warn(username);
         return true;
     }
 
@@ -54,7 +54,7 @@ public class ComonRefreshTokenControlador {
      */
     public List<String> getRoles(String username) {
         List<String> roles = new ArrayList<>();
-        log.warn(username, username);
+        log.warn(username);
         return roles;
     }
 
@@ -85,7 +85,7 @@ public class ComonRefreshTokenControlador {
                         .withSubject(nombre)
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", authorities)
+                        .withClaim(SeguridadesConstantes.ROLES_STRING, authorities)
                         .sign(algorithm);
 
                 String refreshToken = JWT.create()
@@ -115,5 +115,4 @@ public class ComonRefreshTokenControlador {
             throw new SeguridadException("E-SI00100-21");
         }
     }
-
 }

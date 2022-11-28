@@ -19,6 +19,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.qapaq.SeguridadesConstantes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -32,6 +34,7 @@ import org.springframework.security.core.userdetails.User;
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security
  */
+@Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -58,8 +61,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String userName = request.getParameter("username");
         String password = request.getParameter("password");        
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,password);
-        return authenticationManager.authenticate(authenticationToken);
+        Authentication aunt = authenticationManager.authenticate(authenticationToken);
+
+        log.warn("Usuario autenticado: " + aunt.getPrincipal());        
+
+        return aunt;
     }
+
 
     /**
      * Método para generar el token de autenticación.
@@ -83,7 +91,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim("roles",
+                .withClaim(SeguridadesConstantes.ROLES_STRING,
                         user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 

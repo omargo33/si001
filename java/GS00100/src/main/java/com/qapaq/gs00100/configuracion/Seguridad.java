@@ -1,4 +1,4 @@
-package com.qapaq.gs00100.security;
+package com.qapaq.gs00100.configuracion;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter{
+public class Seguridad extends WebSecurityConfigurerAdapter{
     
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qapaq.gs00100.Constantes;
+import com.qapaq.gs00100.jpa.model.VGroupMembers;
 import com.qapaq.gs00100.servicio.TokenServicio;
+import com.qapaq.gs00100.servicio.VGroupMembersServicio;
 import com.qapaq.http.request.ComonRefreshTokenControlador;
 import com.qapaq.http.request.TokenRefreshControlador;
-
 
 /**
  * Clase para controlar las peticiones de las ciudades.
@@ -27,12 +29,12 @@ import com.qapaq.http.request.TokenRefreshControlador;
  * @see security
  * 
  */
-
 @RestController
 @RequestMapping(value = "/login")
 public class RefreshTokenControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
 
     private TokenServicio tokenServicio;
+    private VGroupMembersServicio vGroupMembersServicio;
 
     /**
      * Constructor de la clase.
@@ -40,19 +42,39 @@ public class RefreshTokenControlador extends ComonRefreshTokenControlador implem
      * @param monitorServicio
      */
     @Autowired
-    public RefreshTokenControlador(TokenServicio tokenServicio) {
+    public RefreshTokenControlador(TokenServicio tokenServicio, VGroupMembersServicio vGroupMembersServicio) {
         this.tokenServicio = tokenServicio;
+        this.vGroupMembersServicio = vGroupMembersServicio;
     }
 
+    /**
+     * Método para validar el usuario.
+     * 
+     * @param username
+     * @return
+     * 
+     */
     @Override
     public boolean isActiveUser(String username) {        
-        return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username, "C");
+        return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username, Constantes.TIPO_USER_NAME);
     }
 
+    /**
+     * Método para consultar los roles.
+     * 
+     * @param username
+     * @return
+     * 
+     */
     @Override
     public List<String> getRoles(String username) {
         List<String> roles = new ArrayList<>();
-        roles.add("Pendinte");
+        List<VGroupMembers> listvGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(username);
+        
+        for (VGroupMembers a : listvGroupMembers){
+            roles.add(a.getName());
+        }
+        
         return roles;
     }
 

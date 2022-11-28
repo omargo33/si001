@@ -21,7 +21,7 @@ import com.qapaq.gs00100.jpa.queries.UsuarioRepositorio;
  * 
  */
 @Service
-@Transactional
+@Transactional("gs001001TransactionManager")
 public class UsuarioServicio {
 
     private final UsuarioRepositorio usuarioRepositorio;

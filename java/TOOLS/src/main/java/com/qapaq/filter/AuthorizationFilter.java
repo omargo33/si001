@@ -64,7 +64,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        log.info("Autorizando al usuario {} {}", contexto, "/login");
+        log.info("Autorizando al usuario {}{}", contexto, "/login");
 
         if (request.getServletPath().equals(contexto + "/login") || 
             request.getServletPath().equals("/login/refresh")){                
@@ -78,7 +78,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(SeguridadesConstantes.ROLES_STRING).asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     for (String role : roles) {
                         authorities.add(new SimpleGrantedAuthority(role));

@@ -21,7 +21,7 @@ import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
  * 
  */
 @Service
-@Transactional
+@Transactional("gs001001TransactionManager")
 public class TokenServicio {
 
     private final TokenRepositorio tokenRepositorio;
