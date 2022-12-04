@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Objeto de llamado principal del sistema.
@@ -35,6 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         "com.qapaq.ar00100.jpa.model",
 })
 @SpringBootApplication
+@Slf4j
 public class GS00100Application {
 
     public static void main(String[] args) {

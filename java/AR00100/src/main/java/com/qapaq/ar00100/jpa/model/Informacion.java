@@ -14,38 +14,41 @@ import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import lombok.ToString;
 
 /**
- * Entidad JPA creada desde la consulta: "SELECT id_direccion, elemento, direccion, navegador_dispositivo, usuario, usuario_fecha, usuario_programa FROM AR_001_00.direccion;"
+ * Entidad JPA creada desde la consulta: "SELECT id_informacion, nombre,
+ * valor_01, valor_02, usuario, usuario_fecha, usuario_programa FROM
+ * AR_001_00.informacion;"
  * 
- * Con codigo autonumerico en la columna id_direccion.
+ * Con codigo autonumerico en la columna id_informacion.
  * 
  * @author o.velez@qapaq.io
  * @date 2022-11-25
  * 
  */
 @Entity
-@Table(name = "direccion",  schema = "AR_001_00")
+@Table(name = "informacion", schema = "AR_001_00")
 @Getter
 @Setter
-public class Direccion  implements Serializable {
+@ToString
+public class Informacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_direccion")
-    private Long idDireccion;
+    @Column(name = "id_informacion")
+    private Long idInformacion;
 
-    @Column(name = "elemento", length = 64)
-    private String elemento;
+    @Column(name = "nombre", length = 128)
+    private String nombre;
 
-    @Column(name = "direccion", length = 128)
-    private String direccion;
+    @Column(name = "valor_01", length = 256)
+    private String valor01;
 
-    @Column(name = "navegador_dispositivo", length = 1024)
-    private String navegadorDispositivo;
+    @Column(name = "valor_02", length = 256)
+    private String valor02;
 
     @Column(name = "usuario", length = 128)
     private String usuario;
@@ -56,4 +59,5 @@ public class Direccion  implements Serializable {
 
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;
+
 }
