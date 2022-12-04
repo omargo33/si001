@@ -42,7 +42,7 @@ public class Direccion  implements Serializable {
     private String elemento;
 
     @Column(name = "direccion", length = 128)
-    private String direccion;
+    private String direccionDispositivo;
 
     @Column(name = "navegador_dispositivo", length = 1024)
     private String navegadorDispositivo;
