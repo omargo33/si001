@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +22,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.SeguridadesConstantes;
+import com.qapaq.ConstantesSeguridades;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,15 +69,15 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             request.getServletPath().equals("/login/refresh")){                
             filterChain.doFilter(request, response);    
         }else{
-            String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
-            if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)){
+            String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
+            if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)){
                 try {
-                    String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
-                    Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
+                    String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
+                    Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim(SeguridadesConstantes.ROLES_STRING).asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(ConstantesSeguridades.ROLES_STRING).asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     for (String role : roles) {
                         authorities.add(new SimpleGrantedAuthority(role));

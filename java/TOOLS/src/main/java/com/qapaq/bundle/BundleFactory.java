@@ -7,6 +7,13 @@ package com.qapaq.bundle;
  * @created 2022-07-05
  */
 public class BundleFactory{
+
+    /**
+     * Constructor de la clase.
+     */
+    private BundleFactory() {
+        super();
+    }
     
     /**
      * Crea el bundle para instancias.

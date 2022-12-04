@@ -17,7 +17,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.SeguridadesConstantes;
+import com.qapaq.ConstantesSeguridades;
 import com.qapaq.jpa.exception.SeguridadException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,11 +66,11 @@ public class ComonRefreshTokenControlador {
      * @param response
      */
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)) {
+        String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
+        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)) {
             try {
-                String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
+                String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
+                Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(token);
                 String nombre = decodedJWT.getSubject();
@@ -85,7 +85,7 @@ public class ComonRefreshTokenControlador {
                         .withSubject(nombre)
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim(SeguridadesConstantes.ROLES_STRING, authorities)
+                        .withClaim(ConstantesSeguridades.ROLES_STRING, authorities)
                         .sign(algorithm);
 
                 String refreshToken = JWT.create()
@@ -95,8 +95,8 @@ public class ComonRefreshTokenControlador {
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put(SeguridadesConstantes.ACCESS_TOKEN, accessToken);
-                tokens.put(SeguridadesConstantes.REFRESH_TOKEN, refreshToken);
+                tokens.put(ConstantesSeguridades.ACCESS_TOKEN, accessToken);
+                tokens.put(ConstantesSeguridades.REFRESH_TOKEN, refreshToken);
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {

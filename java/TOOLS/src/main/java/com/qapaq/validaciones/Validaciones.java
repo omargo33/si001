@@ -23,10 +23,10 @@ public class Validaciones {
      * @return
      */
     public static boolean validarRuc(String ruc) {
-        boolean resultado = false;
+        boolean resultadoRuc = false;
         if (ruc.length() == 13) {
             int total = 0;
-            int digito = Integer.parseInt(ruc.substring(9, 10));
+            int digitoRuc = Integer.parseInt(ruc.substring(9, 10));
             int[] coeficientes = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
             int n = coeficientes.length;
             int aux = 0;
@@ -34,17 +34,17 @@ public class Validaciones {
                 aux = Integer.parseInt(ruc.substring(i, i + 1)) * coeficientes[i];
                 total = total + ((aux / 10) + (aux % 10));
             }
-            int decena = total / 10;
-            decena = (decena + 1) * 10;
-            if ((decena - total) == digito) {
-                resultado = true;
-            } else if ((total % 10 == 0) && (digito == 0)) {
-                resultado = true;
+            int decenaRuc = total / 10;
+            decenaRuc = (decenaRuc + 1) * 10;
+            if ((decenaRuc - total) == digitoRuc) {
+                resultadoRuc = true;
+            } else if ((total % 10 == 0) && (digitoRuc == 0)) {
+                resultadoRuc = true;
             } else {
-                resultado = false;
+                resultadoRuc = false;
             }
         }
-        return resultado;
+        return resultadoRuc;
     }
 
     /**

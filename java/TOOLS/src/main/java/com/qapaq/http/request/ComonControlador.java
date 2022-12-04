@@ -20,7 +20,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qapaq.SeguridadesConstantes;
+import com.qapaq.ConstantesSeguridades;
 import com.qapaq.jpa.exception.ForeignKeyException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -151,10 +151,10 @@ public class ComonControlador {
      */
     public String evaluarUsuario(HttpServletRequest request) {
         String nombre = "none";
-        String authorizationHeader = request.getHeader(SeguridadesConstantes.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(SeguridadesConstantes.TOKEN_PREFIX)) {
-            String token = authorizationHeader.substring(SeguridadesConstantes.TOKEN_PREFIX.length());
-            Algorithm algorithm = Algorithm.HMAC256(SeguridadesConstantes.getTokenSecret());
+        String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
+        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)) {
+            String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
+            Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
             JWTVerifier verifier = JWT.require(algorithm).build();
             try {
                 DecodedJWT decodedJWT = verifier.verify(token);

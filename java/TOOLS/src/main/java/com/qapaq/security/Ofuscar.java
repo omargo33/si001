@@ -60,12 +60,12 @@ public class Ofuscar {
         if (partes.length != 2) {
             return item;
         }
-        String parte1 = partes[0];
-        String parte2 = partes[1];
-        if (parte1.length() < 3) {
+        String parteNombre = partes[0];
+        String parteDominio = partes[1];
+        if (parteNombre.length() < 3) {
             return item;
         }
-        return parte1.substring(0, 3) + OFUSCADO + parte2;
+        return parteNombre.substring(0, 3) + OFUSCADO + parteDominio;
     }
 
     /**

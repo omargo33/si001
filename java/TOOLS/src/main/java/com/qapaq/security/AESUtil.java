@@ -22,6 +22,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import com.qapaq.ConstantesSeguridades;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,13 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class AESUtil {    
-    private static final char[] PASSWORD = "qapaq".toCharArray();
-    private static final String ALGORITMO_KEY = "PBKDF2WithHmacSHA1";
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private static final String SPEC = "AES";
-    private static final int ITERACIONES = 65556;
-    private static final int KEY_LENGTH = 256;
-
+    
     /**
      * Constructor de la clase.
      */
@@ -86,11 +82,11 @@ public class AESUtil {
         random.nextBytes(bytes);
         byte[] saltBytes = bytes;
 
-        SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITMO_KEY);
-        PBEKeySpec spec = new PBEKeySpec(PASSWORD, saltBytes, ITERACIONES, KEY_LENGTH);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance(ConstantesSeguridades.ALGORITMO_KEY);
+        PBEKeySpec spec = new PBEKeySpec(ConstantesSeguridades.getPasswordChar(), saltBytes, ConstantesSeguridades.ITERACIONES, ConstantesSeguridades.KEY_LENGTH);
         SecretKey secretKey = factory.generateSecret(spec);
-        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), SPEC);
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), ConstantesSeguridades.SPEC);
+        Cipher cipher = Cipher.getInstance(ConstantesSeguridades.TRANSFORMATION);
         cipher.init(Cipher.ENCRYPT_MODE, secret);
 
         AlgorithmParameters params = cipher.getParameters();
@@ -113,8 +109,7 @@ public class AESUtil {
     public static String desencriptar(String item) {
         try {
             return decrypt(item);
-        } catch (Exception e) {
-            //TODO: bundle para mensaje
+        } catch (Exception e) {            
             log.warn(e.toString());
             return "";
         }
@@ -138,7 +133,7 @@ public class AESUtil {
     private static String decrypt(String encryptedText)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, InvalidKeyException,
             InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+        Cipher cipher = Cipher.getInstance(ConstantesSeguridades.TRANSFORMATION);
         ByteBuffer buffer = ByteBuffer.wrap(new Base64().decode(encryptedText));
         byte[] saltBytes = new byte[20];
         buffer.get(saltBytes, 0, saltBytes.length);
@@ -147,10 +142,10 @@ public class AESUtil {
         byte[] encryptedTextBytes = new byte[buffer.capacity() - saltBytes.length - ivBytes1.length];
         buffer.get(encryptedTextBytes);
 
-        SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITMO_KEY);
-        PBEKeySpec spec = new PBEKeySpec(PASSWORD, saltBytes, ITERACIONES, KEY_LENGTH);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance(ConstantesSeguridades.ALGORITMO_KEY);
+        PBEKeySpec spec = new PBEKeySpec(ConstantesSeguridades.getPasswordChar(), saltBytes, ConstantesSeguridades.ITERACIONES, ConstantesSeguridades.KEY_LENGTH);
         SecretKey secretKey = factory.generateSecret(spec);
-        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), SPEC);
+        SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), ConstantesSeguridades.SPEC);
         cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes1));
         byte[] decryptedTextBytes = null;
         decryptedTextBytes = cipher.doFinal(encryptedTextBytes);
