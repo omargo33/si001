@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qapaq.gs00100.Constantes;
+import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.VGroupMembers;
 import com.qapaq.gs00100.servicio.TokenServicio;
 import com.qapaq.gs00100.servicio.VGroupMembersServicio;
@@ -56,7 +56,7 @@ public class RefreshTokenControlador extends ComonRefreshTokenControlador implem
      */
     @Override
     public boolean isActiveUser(String username) {        
-        return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username, Constantes.TIPO_USER_NAME);
+        return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username, ConstantesGS00100.TIPO_USER_NAME);
     }
 
     /**

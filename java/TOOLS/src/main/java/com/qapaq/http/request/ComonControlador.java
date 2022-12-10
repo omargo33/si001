@@ -20,7 +20,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qapaq.ConstantesSeguridades;
+import com.qapaq.ConstantesTools;
 import com.qapaq.jpa.exception.ForeignKeyException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -151,10 +151,10 @@ public class ComonControlador {
      */
     public String evaluarUsuario(HttpServletRequest request) {
         String nombre = "none";
-        String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)) {
-            String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
-            Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
+        String authorizationHeader = request.getHeader(ConstantesTools.HEADER_STRING);
+        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesTools.TOKEN_PREFIX)) {
+            String token = authorizationHeader.substring(ConstantesTools.TOKEN_PREFIX.length());
+            Algorithm algorithm = Algorithm.HMAC256(ConstantesTools.getPassword());
             JWTVerifier verifier = JWT.require(algorithm).build();
             try {
                 DecodedJWT decodedJWT = verifier.verify(token);
@@ -193,9 +193,7 @@ public class ComonControlador {
      * @return
      */
     private Map<String, String> sqlIntegrityConstraintViolationException(DataIntegrityViolationException ex) {
-        Map<String, String> errors = new HashMap<>();
-        log.info("data 01 "+ex);
-        log.info("data 02 "+ex.toString());
+        Map<String, String> errors = new HashMap<>();        
         errors.put(getControllerMapping(), "E-GS00100-19");
         return errors;
     }

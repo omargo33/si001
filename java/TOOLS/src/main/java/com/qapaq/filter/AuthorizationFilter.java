@@ -22,9 +22,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.ConstantesSeguridades;
-
-import lombok.extern.slf4j.Slf4j;
+import com.qapaq.ConstantesTools;
 
 /**
  * Clase para personalizar el filtro de autorización.
@@ -35,9 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security
  */
-@Slf4j
 public class AuthorizationFilter extends OncePerRequestFilter {
-
 
     private String contexto;
 
@@ -62,22 +58,20 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-        log.info("Autorizando al usuario {}{}", contexto, "/login");
-
+                
         if (request.getServletPath().equals(contexto + "/login") || 
             request.getServletPath().equals("/login/refresh")){                
             filterChain.doFilter(request, response);    
         }else{
-            String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
-            if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)){
+            String authorizationHeader = request.getHeader(ConstantesTools.HEADER_STRING);
+            if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesTools.TOKEN_PREFIX)){
                 try {
-                    String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
-                    Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
+                    String token = authorizationHeader.substring(ConstantesTools.TOKEN_PREFIX.length());
+                    Algorithm algorithm = Algorithm.HMAC256(ConstantesTools.getPassword());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim(ConstantesSeguridades.ROLES_STRING).asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(ConstantesTools.ROLES_STRING).asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     for (String role : roles) {
                         authorities.add(new SimpleGrantedAuthority(role));

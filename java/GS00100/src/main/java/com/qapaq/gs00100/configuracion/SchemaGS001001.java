@@ -30,7 +30,11 @@ public class SchemaGS001001 {
     @Bean(name="gs001001DataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("GS_001_00.datasource.driver-class-name"));
+        String className = env.getProperty("GS_001_00.datasource.driver-class-name");
+        
+        if (className != null) {
+            dataSource.setDriverClassName(className);    
+        }        
         dataSource.setUrl(env.getProperty("GS_001_00.datasource.url"));
         dataSource.setUsername(env.getProperty("GS_001_00.datasource.username"));
         dataSource.setPassword(env.getProperty("GS_001_00.datasource.password"));

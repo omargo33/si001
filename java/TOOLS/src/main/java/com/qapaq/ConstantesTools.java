@@ -7,7 +7,7 @@ package com.qapaq;
  * @date 2020-10-28
  * 
  */
-public class ConstantesSeguridades {
+public class ConstantesTools {
     public static final String TOKEN_SECRET="qapaq.io";
     public static final String ACCESS_TOKEN="access-token";
     public static final String REFRESH_TOKEN="refresh-token";
@@ -17,14 +17,15 @@ public class ConstantesSeguridades {
     public static final String ALGORITMO_KEY = "PBKDF2WithHmacSHA1";
     public static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
     public static final String SPEC = "AES";
+    public static final String USER_NAME = "username";
+	public static final String PASSWORD = "password";
     public static final int ITERACIONES = 65556;
     public static final int KEY_LENGTH = 256;
-
     
     /**
      * Constructor de la clase.
      */
-    protected ConstantesSeguridades() { 
+    protected ConstantesTools() { 
     }    
 
     /**

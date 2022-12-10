@@ -3,6 +3,8 @@ package com.qapaq.filter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
@@ -18,7 +20,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.qapaq.ConstantesSeguridades;
+import com.qapaq.ConstantesTools;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,18 +38,42 @@ import org.springframework.security.core.userdetails.User;
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security
  */
+@Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
 
 	/**
-	 * Metodo para procedar a la salida de un error en la autenticación.
+	 * Metodo para procedar a la salida de un error en la autenticación, debe ser
+	 * Override.
 	 * 
 	 * @param userName
 	 * @return
 	 */
-	public String generarMensaje(String userName) {
-		return "{error: 'E1222145'" + userName + "}";
+	public String generarMensajeError(HttpServletRequest request) {
+		String userName = request.getParameter(ConstantesTools.USER_NAME);
+		String json = "";
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("error", "E-GS00100-9");
+		map.put("user", userName);
+		try {
+			json = new ObjectMapper().writeValueAsString(map);
+		} catch (Exception e) {
+			log.error("E-GS00100-9 {}", e.getMessage());
+		}
+		return json;
+	}
+
+	/**
+	 * Metodo para proceder a la salida de ejecucion correcta de la autenticación,
+	 * debe ser Override.
+	 * 
+	 * @param userName
+	 */
+	public void ejecutaPostIngreso(HttpServletRequest request) {
+		String userName = request.getParameter(ConstantesTools.USER_NAME);
+		log.warn("W-GS00100-3 {}", userName);
 	}
 
 	/**
@@ -66,8 +95,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		String userName = request.getParameter("username");
-		String password = request.getParameter("password");
+		String userName = request.getParameter(ConstantesTools.USER_NAME);
+		String password = request.getParameter(ConstantesTools.PASSWORD);
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				userName,
 				password);
@@ -89,15 +118,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			FilterChain chain, Authentication authResult)
 			throws IOException, ServletException {
+		ejecutaPostIngreso(request);
 
 		User user = (User) authResult.getPrincipal();
-		Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
+		Algorithm algorithm = Algorithm.HMAC256(ConstantesTools.getPassword());
 
 		String accessToken = JWT.create()
 				.withSubject(user.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())
-				.withClaim(ConstantesSeguridades.ROLES_STRING,
+				.withClaim(ConstantesTools.ROLES_STRING,
 						user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.sign(algorithm);
@@ -108,8 +138,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 				.withIssuer(request.getRequestURL().toString())
 				.sign(algorithm);
 
-		response.setHeader(ConstantesSeguridades.ACCESS_TOKEN, accessToken);
-		response.setHeader(ConstantesSeguridades.REFRESH_TOKEN, refreshToken);
+		response.setHeader(ConstantesTools.ACCESS_TOKEN, accessToken);
+		response.setHeader(ConstantesTools.REFRESH_TOKEN, refreshToken);
 	}
 
 	/**
@@ -124,10 +154,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		String userName = request.getParameter("username");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-		response.getWriter().write(generarMensaje(userName));
+		response.getWriter().write(generarMensajeError(request));
 	}
 }

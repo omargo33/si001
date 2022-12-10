@@ -1,5 +1,7 @@
 package com.qapaq.gs00100.configuracion;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,12 +16,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.qapaq.ConstantesTools;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
-import com.qapaq.gs00100.jpa.model.Usuario;
 import com.qapaq.gs00100.servicio.UsuarioServicio;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para configurar la seguridad de la aplicación.
@@ -31,6 +34,7 @@ import lombok.RequiredArgsConstructor;
  * @see security
  * 
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -39,11 +43,17 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+    @Value("${app.name}")
+    private String appName;
+
+    @Value("${app.version}")
+    private String appVersion;
 
     @Value("${server.servlet.context-path}")
     private String contexto;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     /**
      * Método para configurar la autenticación.
@@ -65,25 +75,51 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean()) {
+
             @Override
-            public String generarMensaje(String userName) {
+            public String generarMensajeError(HttpServletRequest request) {
+                String mensajeError = "W-GS00100-6";
+                String userName = request.getParameter(ConstantesTools.USER_NAME);
+                String ip = request.getRemoteAddr() + request.getRemoteHost() + ":" + request.getRemotePort();
+                String userAgent = request.getHeader("User-Agent");
+                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
 
-                Usuario usuario= usuarioServicio.findByNick(userName);
+                int estado = usuarioServicio.validarUsuarioLogin(userName);
 
+                switch (estado) {
+                    case UsuarioServicio.USUARIO_NO_EXISTE:
+                        mensajeError="W-GS00100-6";
+                        break;
+                    case UsuarioServicio.USUARIO_EXCEDE_NUMERO_INTENTOS:
+                        mensajeError="W-GS00100-7";
+                        break;
+                    case UsuarioServicio.USUARIO_NO_ACTIVO:
+                        mensajeError="W-GS00100-8";
+                        break;
+                    default:
+                        log.warn("W-GS00100-1 user={} estado={}", userName, estado);
+                        break;
+                }
+                return "{error: '"+mensajeError+"'}";
+            }
 
-                return "{error: 'E1222145 holaaaa!!! '" + usuario.getIdUsuario() + "}";
+            @Override
+            public void ejecutaPostIngreso(HttpServletRequest request) {
+                String userName = request.getParameter(ConstantesTools.USER_NAME);
+                usuarioServicio.inicialiarContadoresIngreso(userName);                
             }
         };
+
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
-        // TODO: para poder cambiar los datos del monitor se debe permitir el acceso a
-        // todos
-        // TODO: http.authorizeRequests().antMatchers("/monitores/**").permitAll();
-        // TODO:
-        // http.authorizeRequests().antMatchers("/monitores/**").hasAuthority("ROLE_MONITOR");
+        
+        http.authorizeRequests().antMatchers("/modulos/**").hasAuthority("ADM");
+        http.authorizeRequests().antMatchers("/tokens/**").hasAuthority("ADM");
+        http.authorizeRequests().antMatchers("/usuarios/**").hasAuthority("ADM");
+                
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(contexto), UsernamePasswordAuthenticationFilter.class);
@@ -98,5 +134,5 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }   
+    }
 }

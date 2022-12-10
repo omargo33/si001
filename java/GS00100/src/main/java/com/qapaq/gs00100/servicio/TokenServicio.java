@@ -9,9 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
-
+import com.qapaq.security.Hash;
 
 /**
  * Objeto para dar soporte a servicio REST de token.
@@ -60,8 +61,8 @@ public class TokenServicio {
      * @return
      */
     public Token guardarToken(Token token, String usuario, String usuarioPrograma) {        
-        token.setEstado(StringUtils.truncate("A", 8));
-        token.setValidador(StringUtils.truncate("001", 512));
+        token.setEstado(ConstantesGS00100.TOKEN_ESTADO_ACTIVO);
+        token.setValidador(Hash.crearHash(String.valueOf(token.getIdUsuario()), token.getTipo(), token.getSocialNick()));
         token.setUsuario(StringUtils.truncate(usuario, 128));
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));        

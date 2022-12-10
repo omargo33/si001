@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Objeto de llamado principal del sistema.
@@ -15,9 +15,12 @@ import lombok.extern.slf4j.Slf4j;
  * @author o.velez@qapaq.io
  * @date 2020-08-02
  * 
+ * Datos de configuracion de la aplicacion que son agregadas por las seguridades por API.
+ * 
+ * @EnableJpaRepositories(basePackages = {"com.qapaq.gs00100.jpa.queries", "com.qapaq.ar00100.jpa.queries",})
+ * 
  * @see seguridad
  */
-
 @ComponentScan(basePackages = {
         "com.qapaq.gs00100.http.request",
         "com.qapaq.gs00100.servicio",
@@ -25,17 +28,11 @@ import lombok.extern.slf4j.Slf4j;
         "com.qapaq.gs00100.validadores",
         "com.qapaq.gs00100.configuracion",
 })
-/*
-@EnableJpaRepositories(basePackages = {
-        "com.qapaq.gs00100.jpa.queries",
-        "com.qapaq.ar00100.jpa.queries",
-})*/
 @EntityScan(basePackages = {
         "com.qapaq.gs00100.jpa.model",
         "com.qapaq.ar00100.jpa.model",
 })
 @SpringBootApplication
-@Slf4j
 public class GS00100Application {
 
     public static void main(String[] args) {

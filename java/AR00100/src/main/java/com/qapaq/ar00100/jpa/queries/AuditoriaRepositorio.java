@@ -33,12 +33,4 @@ public interface AuditoriaRepositorio extends JpaRepository<Auditoria, Long > {
      */
     @Query("SELECT a FROM Auditoria a WHERE a.usuarioFecha BETWEEN ?1 AND ?2")
     List<Auditoria> findByUsuarioFechaBetween(Date fechaInicio, Date fechaFin, Pageable pageable);    
-
-    /**
-     * Conocer largo de la tabla para paginación.
-     * 
-     */
-    @Query("SELECT COUNT(a) FROM Auditoria a")
-    Long countAll();
-    
 }

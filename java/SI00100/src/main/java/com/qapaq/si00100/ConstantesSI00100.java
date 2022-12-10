@@ -6,12 +6,12 @@ package com.qapaq.si00100;
  * @author o.velez@qapaq.io
  * @date 2020-10-09
  */
-public class Constantes {
+public class ConstantesSI00100 {
 
     /**
      * Constructor de la clase.
      */
-    private Constantes() {             
+    private ConstantesSI00100() {             
     }
 
     public static final String LATITUD_PATTERN="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$";

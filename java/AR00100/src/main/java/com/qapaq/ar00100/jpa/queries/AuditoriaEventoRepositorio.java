@@ -17,11 +17,5 @@ public interface AuditoriaEventoRepositorio extends JpaRepository<AuditoriaEvent
      * Buscar auditoria evento por id de auditoria.
      */
     @Query("SELECT a FROM AuditoriaEvento a WHERE a.idAuditoria = ?1")
-    AuditoriaEvento findByIdAuditoria(Long idAuditoria);
-
-    /**
-     * Conocer largo de la tabla para paginación.
-     */
-    @Query("SELECT COUNT(a) FROM AuditoriaEvento a")
-    Long countAll();    
+    AuditoriaEvento findByIdAuditoria(Long idAuditoria);    
 }

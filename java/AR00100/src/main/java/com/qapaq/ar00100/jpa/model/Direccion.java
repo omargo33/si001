@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 /**
@@ -29,6 +30,7 @@ import lombok.Setter;
 @Table(name = "direccion",  schema = "AR_001_00")
 @Getter
 @Setter
+@ToString
 public class Direccion  implements Serializable {
 
     private static final long serialVersionUID = 1L;

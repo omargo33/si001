@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Modulo;
 import com.qapaq.gs00100.jpa.queries.ModuloRepositorio;
 
@@ -62,6 +63,16 @@ public class ModuloServicio {
     }
 
     /**
+     * Metodo para buscar un modulo por indice.
+     * 
+     * @param indice
+     * 
+     */
+    public Modulo findByIndice(String indice) {
+        return moduloRepositorio.findByIndice(indice);
+    }
+
+    /**
      * Metodo para buscar lista de modulos por nombre.
      * 
      */
@@ -78,7 +89,7 @@ public class ModuloServicio {
      * @return
      */
     public Modulo guardarModulo(Modulo modulo, String usuario, String usuarioPrograma) {
-        modulo.setEstado("A");        
+        modulo.setEstado(ConstantesGS00100.MODULO_ESTADO_ACTIVO);        
         modulo.setUsuario(StringUtils.truncate(usuario, 128));        
         modulo.setUsuarioFecha(new Date());
         modulo.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));

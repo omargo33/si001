@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.qapaq.si00100.Constantes;
+import com.qapaq.si00100.ConstantesSI00100;
 import com.qapaq.si00100.validadores.LocalizacionNombre;
 
 import lombok.Getter;
@@ -61,12 +61,12 @@ public class Localizacion implements Serializable {
     private String nombre;
 
     @NotBlank(message = "E-SI00100-12")
-    @Pattern(regexp = Constantes.LATITUD_PATTERN, message = "E-SI00100-9")
+    @Pattern(regexp = ConstantesSI00100.LATITUD_PATTERN, message = "E-SI00100-9")
     @Column(name = "latitud", length = 64)
     private String latitud;
 
     @NotBlank(message = "E-SI00100-12")
-    @Pattern(regexp = Constantes.LONGITUD_PATTERN, message = "E-SI00100-10")
+    @Pattern(regexp = ConstantesSI00100.LONGITUD_PATTERN, message = "E-SI00100-10")
     @Column(name = "longitud", length = 64)
     private String longitud;
 

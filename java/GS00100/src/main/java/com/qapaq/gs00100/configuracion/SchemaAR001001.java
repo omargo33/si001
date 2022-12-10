@@ -30,7 +30,11 @@ public class SchemaAR001001 {
     @Bean(name="ar001001DataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("AR_001_00.datasource.driver-class-name"));
+        String className = env.getProperty("AR_001_00.datasource.driver-class-name");
+        
+        if (className != null) {
+            dataSource.setDriverClassName(className);    
+        }
         dataSource.setUrl(env.getProperty("AR_001_00.datasource.url"));
         dataSource.setUsername(env.getProperty("AR_001_00.datasource.username"));
         dataSource.setPassword(env.getProperty("AR_001_00.datasource.password"));

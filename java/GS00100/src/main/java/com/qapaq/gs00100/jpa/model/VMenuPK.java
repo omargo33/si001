@@ -55,9 +55,6 @@ public class VMenuPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         //Comparacion de referencias.
-        if (this == object) {
-            return true;
-        }
-        return false;
+        return (this == object);
     }
 }

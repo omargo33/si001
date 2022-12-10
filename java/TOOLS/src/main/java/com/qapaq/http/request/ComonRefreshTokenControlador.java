@@ -17,7 +17,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.ConstantesSeguridades;
+import com.qapaq.ConstantesTools;
 import com.qapaq.jpa.exception.SeguridadException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,8 +41,7 @@ public class ComonRefreshTokenControlador {
       * @param username
       * @return
       */
-    public boolean isActiveUser(String username) {
-        log.warn(username);
+    public boolean isActiveUser(String username) {        
         return true;
     }
 
@@ -53,8 +52,7 @@ public class ComonRefreshTokenControlador {
      * @return
      */
     public List<String> getRoles(String username) {
-        List<String> roles = new ArrayList<>();
-        log.warn(username);
+        List<String> roles = new ArrayList<>();        
         return roles;
     }
 
@@ -66,11 +64,11 @@ public class ComonRefreshTokenControlador {
      * @param response
      */
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        String authorizationHeader = request.getHeader(ConstantesSeguridades.HEADER_STRING);
-        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesSeguridades.TOKEN_PREFIX)) {
+        String authorizationHeader = request.getHeader(ConstantesTools.HEADER_STRING);
+        if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesTools.TOKEN_PREFIX)) {
             try {
-                String token = authorizationHeader.substring(ConstantesSeguridades.TOKEN_PREFIX.length());
-                Algorithm algorithm = Algorithm.HMAC256(ConstantesSeguridades.getPassword());
+                String token = authorizationHeader.substring(ConstantesTools.TOKEN_PREFIX.length());
+                Algorithm algorithm = Algorithm.HMAC256(ConstantesTools.getPassword());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(token);
                 String nombre = decodedJWT.getSubject();
@@ -85,7 +83,7 @@ public class ComonRefreshTokenControlador {
                         .withSubject(nombre)
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim(ConstantesSeguridades.ROLES_STRING, authorities)
+                        .withClaim(ConstantesTools.ROLES_STRING, authorities)
                         .sign(algorithm);
 
                 String refreshToken = JWT.create()
@@ -95,8 +93,8 @@ public class ComonRefreshTokenControlador {
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put(ConstantesSeguridades.ACCESS_TOKEN, accessToken);
-                tokens.put(ConstantesSeguridades.REFRESH_TOKEN, refreshToken);
+                tokens.put(ConstantesTools.ACCESS_TOKEN, accessToken);
+                tokens.put(ConstantesTools.REFRESH_TOKEN, refreshToken);
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,11 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.qapaq.ar00100.jpa.model.Direccion;
-import com.qapaq.ar00100.servicio.DireccionServicio;
-import com.qapaq.gs00100.Constantes;
-import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.model.VGroupMembers;
 
 /**
@@ -39,23 +32,16 @@ import com.qapaq.gs00100.jpa.model.VGroupMembers;
 public class SeguridadServicio implements UserDetailsService {
     
     @Autowired
-    private TokenServicio tokenServicio;
+    private UsuarioServicio usuarioServicio;
     
     @Autowired
-    private VGroupMembersServicio vGroupMembersServicio;
+    private VGroupMembersServicio vGroupMembersServicio;    
     
-    @Autowired
-    private DireccionServicio direccionServicio;
-
-    @Autowired
-    private HttpServletRequest request;
-
     @Value("${app.name}")
     private String appName;
 
     @Value("${app.version}")
     private String appVersion;
-
     
     /**
      * Método para validar el usuario y roles.
@@ -65,24 +51,18 @@ public class SeguridadServicio implements UserDetailsService {
      * 
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Token token = tokenServicio.findBySocialNickAndTipo(username, Constantes.TIPO_USER_NAME);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        int estado = usuarioServicio.validarUsuarioLogin(userName);
+        if (estado < 0) {            
+            throw new UsernameNotFoundException("W-GS00100-5");
+        }       
 
-        if (token == null) {
-            Direccion direccion = new Direccion();            
-            direccion.setElemento(this.getClass().getName());
-            direccion.setDireccion(request.getRemoteAddr());
-            direccion.setNavegadorDispositivo(request.getHeader("User-Agent"));
-            direccionServicio.saveDireccion(direccion, username, appName+" "+appVersion);
-            throw new UsernameNotFoundException("E-SI00100-22");
-        }
-
-        List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(username);
+        List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(userName);
         final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();               
         for (VGroupMembers vGroupMembers : listaVGroupMembers) {
             authorities.add(new SimpleGrantedAuthority(vGroupMembers.getName()));
         }
                 
-        return new User(username, token.getToken(), authorities);        
+        return new User(userName, usuarioServicio.getTokenUsuario().getTokenPassword(), authorities);        
     }
 }

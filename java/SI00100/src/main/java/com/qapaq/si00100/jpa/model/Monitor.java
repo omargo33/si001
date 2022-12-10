@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.qapaq.si00100.Constantes;
+import com.qapaq.si00100.ConstantesSI00100;
 import com.qapaq.si00100.validadores.MonitorNombre;
 import com.qapaq.si00100.validadores.MonitorSerie;
 
@@ -83,16 +83,16 @@ public class Monitor implements Serializable{
         @Column (name = "tipo_orientacion", length = 8)
         private String tipoOrientacion;
         
-        @Pattern(regexp = Constantes.MAC_ADDRES, message = "E-SI00100-14")
+        @Pattern(regexp = ConstantesSI00100.MAC_ADDRES, message = "E-SI00100-14")
         @Column (name = "network", length = 128)
         private String network;
 
-        @Pattern(regexp = Constantes.MAC_ADDRES, message = "E-SI00100-14")
+        @Pattern(regexp = ConstantesSI00100.MAC_ADDRES, message = "E-SI00100-14")
         @Column (name = "wifi", length = 128)
         private String wifi;
 
         @NotNull(message = "E-SI00100-2")
-        @Pattern(regexp = Constantes.IP_ADDRESS, message = "E-SI00100-15")
+        @Pattern(regexp = ConstantesSI00100.IP_ADDRESS, message = "E-SI00100-15")
         @Column (name = "ip", length = 64)
         private String ip;
 

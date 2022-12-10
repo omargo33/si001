@@ -59,7 +59,7 @@ public class Token implements Serializable {
     private String correo;
     
     @Column(name = "token", length = 512)
-    private String token;
+    private String tokenPassword;
     
     @Column(name = "validador", length = 512)
     private String validador;

@@ -60,6 +60,16 @@ public interface ModuloRepositorio extends PagingAndSortingRepository<Modulo, Lo
     public List<Modulo> findByNombreLike(String nombre, Pageable pageable);
 
     /**
+     * Metodo para buscar un objeto por like nombre exacto.
+     * 
+     * @param indice
+     * @param pageable
+     * @return
+     */
+    @Query("SELECT m FROM Modulo m WHERE m.indice = ?1 AND m.estado <> 'X'")
+    public Modulo findByIndice(String indice);
+
+    /**
      * Metodo para borrar el objeto por id en forma logica (cambio de estado a X).
      * 
      * @param id

@@ -39,11 +39,4 @@ public interface AccesoRepositorio extends JpaRepository<Acceso, Long > {
      */
     @Query(value = "INSERT INTO AR_001_00.acceso (nombre, token, token_api, usuario_fecha, usuario_programa) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     Acceso insertAcceso(String nombre, String token, String tokenApi, Date usuarioFecha, String usuarioPrograma);
-
-     /**
-     * Conocer largo de la tabla para paginación.
-     * 
-     */
-    @Query("SELECT COUNT(a) FROM Acceso a")    
-    Long countAll();
 }

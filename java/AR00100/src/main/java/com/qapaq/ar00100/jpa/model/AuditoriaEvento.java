@@ -52,8 +52,8 @@ public class AuditoriaEvento  implements Serializable {
     @Column(name = "orden")
     private Integer orden;
 
-    @Column(name = "parte", length = 32)
-    private String parte;
+    @Column(name = "parte")
+    private Integer parte;
 
     @Column(name = "usuario_fecha")
     @Temporal(TemporalType.TIMESTAMP)

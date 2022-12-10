@@ -26,12 +26,6 @@ public interface DireccionRepositorio extends JpaRepository<Direccion, Long> {
     Direccion findByIdDireccion(Long idDireccion);
 
     /**
-     * Busca un registro por su direccion y paginado
-     */
-    @Query("SELECT d FROM Direccion d WHERE d.direccion = ?1")
-    List<Direccion> findByDireccion(String direccion, Pageable pageable);
-
-    /**
      * Busca un registro en rango de fechas y paginado
      * 
      */
@@ -43,12 +37,5 @@ public interface DireccionRepositorio extends JpaRepository<Direccion, Long> {
      * 
      */
     @Query(value = "INSERT INTO AR_001_00.direccion (elemento, direccion, navegador_dispositivo, usuario, usuario_fecha, usuario_programa) VALUES (?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
-    Direccion insertDireccion(String elemento, String direccion, String navegadorDispositivo, String usuario, Date usuarioFecha, String usuarioPrograma);
-
-     /**
-     * Conocer largo de la tabla para paginación.
-     * 
-     */
-    @Query("SELECT COUNT(d) FROM Direccion d")
-    Long countAll();
+    Direccion insertDireccion(String elemento, String direccion, String navegadorDispositivo, String usuario, Date usuarioFecha, String usuarioPrograma);     
 }

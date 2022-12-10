@@ -1,0 +1,22 @@
+##
+## Configuracion del producto e informacion de como se genero el producto.
+##
+## @author: o.velez@qapaq.io
+##
+
+##
+## Configuracion Maven
+##
+## com.qapaq.tools
+## 
+https://medium.com/knoldus/how-to-integrate-your-maven-project-with-sonarqube-79f7368f8c7a
+
+##
+## Ejecutar Sonar
+mvn sonar:sonar
+mvn clean compile install sonar:sonar
+
+##
+## Ejecutar mvn
+mvn clean compile
+mvn clean compile install 

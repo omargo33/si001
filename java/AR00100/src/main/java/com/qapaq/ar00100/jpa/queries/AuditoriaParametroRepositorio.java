@@ -26,11 +26,5 @@ public interface AuditoriaParametroRepositorio extends JpaRepository<AuditoriaPa
      * Buscar registros por idAuditoria.
      */
     @Query("SELECT a FROM AuditoriaParametro a WHERE a.idAuditoria = ?1")
-    AuditoriaParametro findByIdAuditoria(Long idAuditoria);
-
-    /**
-     * Conocer largo de la tabla para paginación.
-     */
-    @Query("SELECT COUNT(a) FROM AuditoriaParametro a")
-    Long countAll();
+    AuditoriaParametro findByIdAuditoria(Long idAuditoria);    
 }
