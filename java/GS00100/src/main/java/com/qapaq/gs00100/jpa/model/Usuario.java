@@ -22,6 +22,7 @@ import com.qapaq.gs00100.validadores.UsuarioNick;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entidad JPA creada desde la consulta: "SELECT id_usuario, id_archivo, nick, nombre, apellido, usuario, validador, usuario_fecha, usuario_programa, estado, contador_ingreso, contador_fecha FROM GS_001_00.usuario;"
@@ -36,6 +37,7 @@ import lombok.Setter;
 @Table(name = "usuario", schema = "GS_001_00")
 @Getter
 @Setter
+@ToString
 @UsuarioNick(titulo = "nick", message = "E-GS00100-6")
 @JsonIgnoreProperties({"usuarioFecha", "estado", "contadorIngreso", "contadorFecha", "validador"})
 public class Usuario implements Serializable {

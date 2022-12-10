@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * Entidad JPA creada desde la consulta: "SELECT id_usuario, DESCRIPTION, NAME, PASSWORD FROM GS_001_00.v_users;"
  * 
@@ -20,6 +24,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "v_users", schema = "GS_001_00")
+@Getter
+@Setter
+@ToString
 public class VUsers implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -27,49 +34,13 @@ public class VUsers implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Long idUsuario;
+    
     @Column(name = "description", length = 256)
     private String description;
+    
     @Column(name = "name", length = 256)
     private String name;
+    
     @Column(name = "password", length = 256)
     private String password;
-
-    /**
-     * Constructor por defecto.
-     */
-    public VUsers() {
-        super();
-    }
-
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

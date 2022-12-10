@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * Clase JPA para la tabla modulo de la consulta "SELECT NAME, DESCRIPTION FROM GS_001_00.v_groups;"
  * 
@@ -20,41 +24,17 @@ import javax.persistence.Table;
 @Entity
 @IdClass(VGroupsPK.class)
 @Table(name = "v_groups", schema = "GS_001_00")
+@Getter
+@Setter
+@ToString
 public class VGroups implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "NAME")
     private String name;
+ 
     @Id
     @Column(name = "DESCRIPTION")
-    private String description;
-
-    /**
-     * Metodo para crear una instancia de la clase VGroups.
-     */
-    public VGroups() {
-        super();
-    }
-
-    public VGroups(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private String description;    
 }

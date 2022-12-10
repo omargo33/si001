@@ -12,7 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Entidad creada desde la consulta: SELECT id_rol, id_modulo, nombre, tipo, estado, usuario, usuario_fecha, usuario_programa FROM GS_001_00.rol
@@ -25,6 +27,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "rol", schema = "GS_001_00") 
+@Getter
+@Setter
+@ToString
 public class Rol implements Serializable{
     
     @Id
@@ -53,81 +58,4 @@ public class Rol implements Serializable{
 
     @Column (name = "usuario_programa", length = 256)
     private String usuarioPrograma;
-
-    /**
-     * Metodo para crear la clase Rol.
-     * 
-     */
-    public Rol() {
-        super();
-    }
-
-    public Long getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Long idRol) {
-        this.idRol = idRol;
-    }
-
-    public Long getIdModulo() {
-        return idModulo;
-    }
-
-    public void setIdModulo(Long idModulo) {
-        this.idModulo = idModulo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public Date getUsuarioFecha() {
-        return usuarioFecha;
-    }
-
-    public void setUsuarioFecha(Date usuarioFecha) {
-        this.usuarioFecha = usuarioFecha;
-    }
-
-    public String getUsuarioPrograma() {
-        return usuarioPrograma;
-    }
-
-    public void setUsuarioPrograma(String usuarioPrograma) {
-        this.usuarioPrograma = usuarioPrograma;
-    }
-
-    @Override
-    public String toString() {
-        return "Rol [idRol=" + idRol + ", idModulo=" + idModulo + ", nombre=" + nombre + ", tipo=" + tipo + ", estado=" + estado + ", usuario=" + usuario + ", usuarioFecha=" + usuarioFecha + ", usuarioPrograma=" + usuarioPrograma + "]";
-    }
 }
