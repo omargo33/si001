@@ -2,14 +2,19 @@ package com.qapaq.gs00100.jpa.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,6 +30,7 @@ import com.qapaq.gs00100.validadores.ModuloNombre;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Clase JPA para la tabla modulo de la consulta "SELECT id_modulo, indice,
@@ -38,9 +44,10 @@ import lombok.Setter;
 @Table(name = "modulo", schema = "GS_001_00")
 @Getter
 @Setter
+@ToString
 @ModuloIndice(titulo = "indice", message = "E-GS00100-4")
 @ModuloNombre(titulo = "nombre", message = "E-GS00100-4")
-@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha" })
+@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "codigoDefinidoUsuarioList", "menuList", "rolList" })
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -86,7 +93,7 @@ public class Modulo implements Serializable {
     @OneToMany(targetEntity = CodigoDefinidoUsuario.class)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
     private List<CodigoDefinidoUsuario> codigoDefinidoUsuarioList;
-
+    
     @OneToMany(targetEntity = Parametro.class)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
     private List<Parametro> parametroList;
@@ -96,6 +103,7 @@ public class Modulo implements Serializable {
     private List<Menu> menuList;
 
     @OneToMany(targetEntity = Rol.class)
-    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")    
     private List<Rol> rolList;
+    
 }

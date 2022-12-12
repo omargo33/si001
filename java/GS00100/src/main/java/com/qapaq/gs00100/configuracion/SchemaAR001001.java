@@ -2,6 +2,7 @@ package com.qapaq.gs00100.configuracion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -27,45 +28,61 @@ public class SchemaAR001001 {
     @Autowired
     private Environment env;
 
-    @Bean(name="ar001001DataSource")
+    @Bean(name = "ar001001DataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSourceAR = new DriverManagerDataSource();
         String className = env.getProperty("AR_001_00.datasource.driver-class-name");
-        
+
         if (className != null) {
-            dataSourceAR.setDriverClassName(className);    
+            dataSourceAR.setDriverClassName(className);
         }
         dataSourceAR.setUrl(env.getProperty("AR_001_00.datasource.url"));
         dataSourceAR.setUsername(env.getProperty("AR_001_00.datasource.username"));
         dataSourceAR.setPassword(env.getProperty("AR_001_00.datasource.password"));
-        
+
         return dataSourceAR;
     }
 
     @Bean(name="ar001001EntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        String showSQL = env.getProperty("AR_001_00.jpa.show-sql");
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean emAR = new LocalContainerEntityManagerFactoryBean();
         emAR.setDataSource(dataSource());
         emAR.setPackagesToScan("com.qapaq.ar00100.jpa.model");
 
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        emAR.setJpaVendorAdapter(vendorAdapter);
+        if (showSQL != null && !showSQL.isEmpty() && showSQL.equals("true")) {
+            jpaVendorAdapter.setShowSql(true);
+        }
 
-        Map<String, Object> propertiesAR = new  HashMap<>();
-        propertiesAR.put("spring.jpa.show-sql", env.getProperty("AR_001_00.jpa.show-sql"));
-        propertiesAR.put("spring.jpa.properties.hibernate.format_sql", env.getProperty("AR_001_00.jpa.properties.hibernate.format_sql"));
-        propertiesAR.put("spring.jpa.properties.hibernate.dialect", env.getProperty("AR_001_00.jpa.properties.hibernate.dialect"));
-
-        emAR.setJpaPropertyMap(propertiesAR);
-        
+        emAR.setJpaVendorAdapter(jpaVendorAdapter);     
+        emAR.setJpaPropertyMap(additionalMapProperties());   
         return emAR;
+    }    
+
+        /**
+     * Metodo para agreger propiedades adicionales a la configuracion de JPA
+     * 
+     * @return
+     */
+    private Map<String, Object> additionalMapProperties() {
+        Map<String, Object> map = new HashMap<>();        
+        
+        map.put("hibernate.dialect", 
+            env.getProperty("AR_001_00.jpa.properties.hibernate.dialect"));
+        map.put("hibernate.format_sql", 
+            env.getProperty("AR_001_00.jpa.properties.hibernate.format_sql"));
+        map.put("hibernate.enable_lazy_load_no_trans", 
+            env.getProperty("AR_001_00.jpa.properties.hibernate.enable_lazy_load_no_trans"));
+
+        return map;
     }
 
-    @Bean(name="ar001001TransactionManager")
+
+    @Bean(name = "ar001001TransactionManager")
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
         return transactionManager;
     }
 }

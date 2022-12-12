@@ -117,6 +117,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         
         http.authorizeRequests().antMatchers("/modulos/**").hasAuthority("ADM");
+        http.authorizeRequests().antMatchers("/rolList/**").hasAuthority("ADM");
         http.authorizeRequests().antMatchers("/tokens/**").hasAuthority("ADM");
         http.authorizeRequests().antMatchers("/usuarios/**").hasAuthority("ADM");
                 
