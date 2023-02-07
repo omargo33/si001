@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -68,4 +70,8 @@ public class Menu implements Serializable {
     
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;
+
+    @OneToMany(targetEntity = Permiso.class)
+    @JoinColumn(name = "id_menu", referencedColumnName = "id_menu")    
+    private List<Permiso> permisoList;    
 }

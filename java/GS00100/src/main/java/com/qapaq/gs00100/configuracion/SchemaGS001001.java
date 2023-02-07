@@ -2,7 +2,6 @@ package com.qapaq.gs00100.configuracion;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -18,10 +17,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import lombok.extern.slf4j.Slf4j;
-
-
-@Slf4j
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(    

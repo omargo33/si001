@@ -31,7 +31,7 @@ import com.qapaq.http.request.TokenRefreshControlador;
  */
 @RestController
 @RequestMapping(value = "/login")
-public class RefreshTokenControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
+public class LoginControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
 
     private TokenServicio tokenServicio;
     private VGroupMembersServicio vGroupMembersServicio;
@@ -42,7 +42,7 @@ public class RefreshTokenControlador extends ComonRefreshTokenControlador implem
      * @param monitorServicio
      */
     @Autowired
-    public RefreshTokenControlador(TokenServicio tokenServicio, VGroupMembersServicio vGroupMembersServicio) {
+    public LoginControlador(TokenServicio tokenServicio, VGroupMembersServicio vGroupMembersServicio) {
         this.tokenServicio = tokenServicio;
         this.vGroupMembersServicio = vGroupMembersServicio;
     }

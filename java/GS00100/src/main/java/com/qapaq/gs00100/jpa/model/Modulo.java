@@ -2,19 +2,14 @@ package com.qapaq.gs00100.jpa.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -47,7 +42,7 @@ import lombok.ToString;
 @ToString
 @ModuloIndice(titulo = "indice", message = "E-GS00100-4")
 @ModuloNombre(titulo = "nombre", message = "E-GS00100-4")
-@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "codigoDefinidoUsuarioList", "menuList", "rolList" })
+@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "parametroList", "menuList", "rolList" })
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -104,6 +99,5 @@ public class Modulo implements Serializable {
 
     @OneToMany(targetEntity = Rol.class)
     @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")    
-    private List<Rol> rolList;
-    
+    private List<Rol> rolList;    
 }

@@ -1,6 +1,7 @@
 package com.qapaq.gs00100.jpa.queries;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.Menu;
@@ -33,10 +34,13 @@ public interface MenuRepositorio extends JpaRepository<Menu, Long> {
     public List<Menu> findAll();
 
     /**
-     * Metodo para buscar por idModulo y ordenado por el campo orden.
+     * Metodo para buscar por id_modulo con estado sea diferente a 'X' y paginado.
      */
-    public List<Menu> findByIdModuloOrderByOrden(Long idModulo);
-
+    
+    
+    
+    
+    
     /**
      * Metodo para buscar un objeto por indice.
      * 

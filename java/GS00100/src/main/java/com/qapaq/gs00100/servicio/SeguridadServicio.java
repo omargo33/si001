@@ -37,12 +37,6 @@ public class SeguridadServicio implements UserDetailsService {
     @Autowired
     private VGroupMembersServicio vGroupMembersServicio;    
     
-    @Value("${app.name}")
-    private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-    
     /**
      * Método para validar el usuario y roles.
      * 

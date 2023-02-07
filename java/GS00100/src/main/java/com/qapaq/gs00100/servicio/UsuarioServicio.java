@@ -42,8 +42,8 @@ import com.qapaq.ar00100.jpa.model.Direccion;
 @Transactional("gs001001TransactionManager")
 public class UsuarioServicio {
 
-    @Value("${app.name.loging}")
-    private String appNameLogin;
+    @Value("${app.name}")
+    private String appName;
 
     public static final int USUARIO_NO_EXISTE = -1;
     public static final int USUARIO_EXCEDE_NUMERO_INTENTOS = -2;
@@ -82,7 +82,7 @@ public class UsuarioServicio {
 
     @PostConstruct
     public void init() {        
-        mapaParametros = parametroServicio.findByIndiceModulo(appNameLogin);
+        mapaParametros = parametroServicio.findByIndiceModulo(appName);
     }
 
     /**

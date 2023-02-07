@@ -1,11 +1,14 @@
 package com.qapaq.gs00100.configuracion;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.qapaq.ConstantesTools;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
+import com.qapaq.gs00100.jpa.model.VPermisoRol;
 import com.qapaq.gs00100.servicio.UsuarioServicio;
+import com.qapaq.gs00100.servicio.VPermisoRolServicio;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +60,9 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @Autowired
+    private VPermisoRolServicio vPermisoRolServicio;
+
     /**
      * Método para configurar la autenticación.
      * 
@@ -68,6 +76,11 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
 
     /**
      * Método para configurar la seguridad de la aplicación.
+     * 
+     * http.authorizeRequests().antMatchers(HttpMethod.GET, "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.PUT, "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.POST, "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/modulos/**").hasRole("ADM");       
      * 
      * @param http
      * @throws Exception
@@ -85,28 +98,27 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
                 usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
 
                 int estado = usuarioServicio.validarUsuarioLogin(userName);
-
                 switch (estado) {
                     case UsuarioServicio.USUARIO_NO_EXISTE:
-                        mensajeError="W-GS00100-6";
+                        mensajeError = "W-GS00100-6";
                         break;
                     case UsuarioServicio.USUARIO_EXCEDE_NUMERO_INTENTOS:
-                        mensajeError="W-GS00100-7";
+                        mensajeError = "W-GS00100-7";
                         break;
                     case UsuarioServicio.USUARIO_NO_ACTIVO:
-                        mensajeError="W-GS00100-8";
+                        mensajeError = "W-GS00100-8";
                         break;
                     default:
                         log.warn("W-GS00100-1 user={} estado={}", userName, estado);
                         break;
                 }
-                return "{error: '"+mensajeError+"'}";
+                return String.format("{error: '%s'}", mensajeError);
             }
 
             @Override
             public void ejecutaPostIngreso(HttpServletRequest request) {
                 String userName = request.getParameter(ConstantesTools.USER_NAME);
-                usuarioServicio.inicialiarContadoresIngreso(userName);                
+                usuarioServicio.inicialiarContadoresIngreso(userName);
             }
         };
 
@@ -115,12 +127,24 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
-        
-        http.authorizeRequests().antMatchers("/modulos/**").hasAuthority("ADM");
-        http.authorizeRequests().antMatchers("/rolList/**").hasAuthority("ADM");
-        http.authorizeRequests().antMatchers("/tokens/**").hasAuthority("ADM");
-        http.authorizeRequests().antMatchers("/usuarios/**").hasAuthority("ADM");
-                
+
+        List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
+        for (VPermisoRol vpr : listaVPermisoRol) {
+            log.warn(vpr.toString());
+            http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
+
+            if (vpr.getCrear() > 0) {
+                http.authorizeRequests().antMatchers(HttpMethod.POST, vpr.getUrl()).hasAuthority(vpr.getRol());
+            }
+            if (vpr.getActualizar() > 0) {
+                http.authorizeRequests().antMatchers(HttpMethod.PUT, vpr.getUrl()).hasAuthority(vpr.getRol());
+                http.authorizeRequests().antMatchers(HttpMethod.PATCH, vpr.getUrl()).hasAuthority(vpr.getRol());
+            }
+            if (vpr.getBorrar() > 0) {
+                http.authorizeRequests().antMatchers(HttpMethod.DELETE, vpr.getUrl()).hasAuthority(vpr.getRol());
+            }
+        }
+
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(contexto), UsernamePasswordAuthenticationFilter.class);
