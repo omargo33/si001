@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">Sistema Información 001</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app_abbreviation">SI00100</string>
+    <color name="primary">#3F51B5</color>
+    <color name="white">#FFFFFF</color>
+</resources>
