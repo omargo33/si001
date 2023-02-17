@@ -1,0 +1,16 @@
+##
+## Docker Compose file for the Apache Web Server
+## https://tecadmin.net/tutorial/docker/docker-compose-example/
+##
+
+version: '3'
+services:
+  web:
+    image: apache
+    build: ./webapp
+    container_name: apache_web
+    restart: always
+    volumes:
+      - ./webapp:/var/www/html
+    ports:
+      - "8080:80"
