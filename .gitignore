@@ -10,14 +10,9 @@ java/SI00100/target
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/RecursoMonitor.class
 java/SI00100/target/classes/com/qapaq/si00100/SI00100Application.class
 java/SI00100/target/classes/com/qapaq/si00100/http/request/ComonControlador.class
-java/SI00100/target/classes/com/qapaq/si00100/SI00100Application.class
 java/SI00100/target/classes/com/qapaq/si00100/http/request/ClienteControlador.class
-java/SI00100/target/classes/com/qapaq/si00100/http/request/ComonControlador.class
 java/SI00100/target/classes/application.properties
 java/SI00100/target/classes/com/qapaq/si00100/ServletInitializer.class
-java/SI00100/target/classes/com/qapaq/si00100/SI00100Application.class
-java/SI00100/target/classes/com/qapaq/si00100/http/request/ClienteControlador.class
-java/SI00100/target/classes/com/qapaq/si00100/http/request/ComonControlador.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/Ciudad.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/Cliente.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/Clima.class
@@ -28,7 +23,6 @@ java/SI00100/target/classes/com/qapaq/si00100/jpa/model/MonitorAlerta.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/MonitorComando.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/Proyecto.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/Recurso.class
-java/SI00100/target/classes/com/qapaq/si00100/jpa/model/RecursoMonitor.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/RecursoMonitorCalendario.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/model/RecursoMonitorPresentacion.class
 java/SI00100/target/classes/com/qapaq/si00100/jpa/queries/CiudadRepositorio.class
@@ -45,3 +39,4 @@ java/SI00100/target/classes/com/qapaq/si00100/validadores/ClienteEcIdentificacio
 java/SI00100/target/classes/com/qapaq/si00100/validadores/ClienteIdentificacion.class
 java/SI00100/target/classes/com/qapaq/si00100/validadores/ClienteIdentificacionValidator.class
 java/SI00100/target/test-classes/com/qapaq/si00100/Si00100ApplicationTests.class
+*.mp4

@@ -7,7 +7,7 @@
 ## Consultas modulos
 @servicio=127.0.0.1:8080/gs_001_10/modulos
 @username=admin
-@password=12341234
+@password=admin
 
 ###
 # @name rdpAuth

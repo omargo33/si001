@@ -4,17 +4,17 @@ import 'package:si00100/pages/login/widget/login_form.dart';
 import 'package:si00100/widget/hx_widget.dart';
 import 'package:localization/localization.dart';
 
-/// Clase para el login
-///
-///
-class LogingPage extends StatefulWidget {
-  const LogingPage({super.key});
+// Clase para el login
+class LoginPage extends StatefulWidget {
+  static const String routeName = 'login_page';
+
+  const LoginPage({super.key});
 
   @override
-  _LogingPageState createState() => _LogingPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LogingPageState extends State<LogingPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

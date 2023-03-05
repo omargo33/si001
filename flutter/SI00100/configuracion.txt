@@ -1,4 +1,12 @@
 ##
+## Error de configuracion:
+##
+## Unable to find bundled Java version. in Linux
+##
+##
+https://www.reddit.com/r/flutterhelp/comments/10f2g9l/unable_to_find_bundled_java_version_in_linux/
+
+##
 ## Localizacion o internacionalizacion de datos.
 ##
 https://pub.dev/packages/localization
@@ -19,4 +27,12 @@ https://www.youtube.com/watch?v=eGwq3_0K_Sg
 ##
 https://www.youtube.com/watch?v=04j8jTJ7j8Q
 
+##
+## Mejor practica de codigo
+##
+https://pub.dev/packages/dio
 
+##
+## Preferencias compartidas
+##
+https://pub.dev/packages/shared_preferences

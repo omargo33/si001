@@ -5,14 +5,14 @@
 ## 
 ## 
 ## Consultas modulos
-@servicio=127.0.0.1:8080/gs_001_00/usuarios
+@servicio=127.0.0.1:8080/gs_001_10/usuarios
 @username=admin
-@password=admin
+@password=12341234
 
 ###
 # @name rdpAuth
 
-post http://127.0.0.1:8080/gs_001_00/login
+post http://127.0.0.1:8080/gs_001_10/login
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}

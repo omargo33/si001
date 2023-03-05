@@ -4,8 +4,14 @@ import 'package:localization/localization.dart';
 import 'package:si00100/common/app_colors.dart';
 import 'package:si00100/pages/login/login_page.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:si00100/sharePreferences/preferences.dart';
 
-void main() {
+void main() async {
+  /// inicializar el paquete de preferencias
+  WidgetsFlutterBinding.ensureInitialized();
+  await Preferences.init();
+
+  /// inicializar el paquete de localizacion
   runApp(const MyApp());
 }
 
@@ -46,8 +52,6 @@ class MyApp extends StatelessWidget {
 
         /// para decorar los inputs de flutter_form_builder
         inputDecorationTheme: const InputDecorationTheme(
-          /*filled: true,
-          fillColor: AppColors.white,*/
           contentPadding: EdgeInsets.all(16),
           suffixIconColor: AppColors.mandarin,
           labelStyle: TextStyle(
@@ -91,8 +95,8 @@ class MyApp extends StatelessWidget {
 
       /// TODO validar si es necesario
       /// supportedLocales: FormBuilderLocalizations.delegate.supportedLocales,
-
-      home: const LogingPage(),
+      //initialRoute: LoginPage.routeName,
+      home: const LoginPage(),
     );
   }
 }

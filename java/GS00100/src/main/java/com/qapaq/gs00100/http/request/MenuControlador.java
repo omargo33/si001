@@ -33,24 +33,15 @@ import com.qapaq.http.request.ComonControlador;
 @RequestMapping(value = "/Menus")
 public class MenuControlador extends ComonControlador {
 
-   MenuServicio MenuService;
-
-   /**
-    * Metodo para crear la clase.
-    * 
-    * @param MenuService
-    */
    @Autowired
-   public MenuControlador(MenuServicio MenuService) {
-      this.MenuService = MenuService;
-   }
-
+   MenuServicio menuService;
+   
    /**
     * Metodo para mostrar todos los Menus.
     */
    @GetMapping("/")
    public List<Menu> getAllMenus(Pageable pageable) {
-      return MenuService.findAllMenus(pageable);
+      return menuService.findAllMenus(pageable);
    }
 
    /**
@@ -58,7 +49,7 @@ public class MenuControlador extends ComonControlador {
     */
    @GetMapping("/{id}")
    public Menu getMenuById(@PathVariable Long id) {
-      return MenuService.findByIdMenu(id);
+      return menuService.findMenuById(id);
    }
 
    /**
@@ -69,8 +60,8 @@ public class MenuControlador extends ComonControlador {
     * @return
     */
    @GetMapping("/indice={indice}")
-   public List<Menu> getMenuByIndice(@PathVariable String indice, Pageable pageable) {
-      return MenuService.findByIndiceMenu(indice, pageable);
+   public List<Menu> getMenuByIndice(@PathVariable String indice, Pageable pageable) {      
+      return menuService.findAllMenusByIndice(indice, pageable);
    }
 
    /**
@@ -82,7 +73,7 @@ public class MenuControlador extends ComonControlador {
     */
    @GetMapping("/nombre={nombre}")
    public List<Menu> getMenuByNombre(@PathVariable String nombre, Pageable pageable) {
-      return MenuService.findByNombreMenu(nombre, pageable);
+      return menuService.findAllMenusByNombre(nombre, pageable);
    }
 
    /**
@@ -92,8 +83,8 @@ public class MenuControlador extends ComonControlador {
     * @return
     */
    @PostMapping(value = "/")
-   public Menu createMonitor(@Valid @RequestBody Menu Menu, HttpServletRequest request) {
-      return MenuService.guardarMenu(Menu, evaluarUsuario(request), getUsuarioPrograma(Menu.getUsuarioPrograma()));
+   public Menu createMonitor(@Valid @RequestBody Menu menu, HttpServletRequest request) {
+      return menuService.guardarMenu(menu, evaluarUsuario(request), getUsuarioPrograma(menu.getUsuarioPrograma()));
    }
 
    /**
@@ -103,8 +94,8 @@ public class MenuControlador extends ComonControlador {
     * @return
     */
    @PutMapping(value = "/")   
-   public Menu updateMonitor(@Valid @RequestBody Menu Menu, HttpServletRequest request) {
-      return MenuService.guardarMenu(Menu, evaluarUsuario(request), getUsuarioPrograma(Menu.getUsuarioPrograma()));
+   public Menu updateMonitor(@Valid @RequestBody Menu menu, HttpServletRequest request) {
+      return menuService.guardarMenu(menu, evaluarUsuario(request), getUsuarioPrograma(menu.getUsuarioPrograma()));
    }
 
    /**
@@ -115,6 +106,6 @@ public class MenuControlador extends ComonControlador {
    @DeleteMapping("/{id}")
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public void deleteMenu(@PathVariable Long id) {
-      MenuService.borrarMenu(id);
+      menuService.borrarMenu(id);
    }
 }

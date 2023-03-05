@@ -99,7 +99,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		String password = request.getParameter(ConstantesTools.PASSWORD);
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				userName,
-				password);
+				password);				
 		this.setDetails(request, authenticationToken);
 		return authenticationManager.authenticate(authenticationToken);
 	}

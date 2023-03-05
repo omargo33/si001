@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:localization/localization.dart';
+import 'package:si00100/controller/login_controller.dart';
 import 'package:si00100/widget/dialog_widget.dart';
 import 'package:si00100/widget/snack_bar_widget.dart';
 import 'package:si00100/widget/hx_widget.dart';
-import 'package:si00100/widget/input_widget.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 /// Clase para el formulario de login
@@ -26,12 +26,20 @@ class _LoginForm extends State<LoginForm> {
   static const int _formKeyRecobrar = 2;
   static const int _formKeyCambiarClave = 1;
 
-  final _formBuilderKey = GlobalKey<FormBuilderState>();
+  /// Formulario de login
+  final _formLoginBuilderKey = GlobalKey<FormBuilderState>();
   final _userFieldKey = GlobalKey<FormBuilderFieldState>();
   final _passwordFieldKey = GlobalKey<FormBuilderFieldState>();
-  final _emailFieldKey = GlobalKey<FormBuilderFieldState>();
+
+  /// Formulario de cambio de clave
+  final _formChangePasswordBuilderKey = GlobalKey<FormBuilderState>();
+  final _passwordOldFieldKey = GlobalKey<FormBuilderFieldState>();
   final _passwordNewFieldKey = GlobalKey<FormBuilderFieldState>();
   final _passwordConfirmFieldKey = GlobalKey<FormBuilderFieldState>();
+
+  /// Formulario de recuperar clave
+  final _formRecoveryPassBuilderKey = GlobalKey<FormBuilderState>();
+  final _emailFieldKey = GlobalKey<FormBuilderFieldState>();
 
   late bool _passwordVisible;
 
@@ -80,9 +88,20 @@ class _LoginForm extends State<LoginForm> {
     });*/
   }
 
-  void _onPressedLogin() {
-    log(_userFieldKey.currentState!.value);
-    log(_passwordFieldKey.currentState!.value);
+  Future<void> _onPressedLogin() async {
+    debugPrint(_userFieldKey.currentState?.value);
+    debugPrint(_passwordFieldKey.currentState?.value);
+
+    /*_userFieldKey.currentState?.reset();
+    _userFieldKey.currentState?.setValue(null);
+
+    _passwordFieldKey.currentState?.reset();
+    _passwordFieldKey.currentState?.setValue(null);*/
+
+    LoginController l = new LoginController();
+
+    l.login(_userFieldKey.currentState?.value,
+        _passwordFieldKey.currentState?.value);
 
     // TODO: validar login con rest
     // Si es invalido
@@ -104,18 +123,81 @@ class _LoginForm extends State<LoginForm> {
       children: [
         HxWidget(indice: 4, texto: "login_recuperar_clave".i18n()),
         const SizedBox(height: 10),
-        InputWidget(
-            hintText: 'login_password_old'.i18n(),
-            tipo: InputWidget.tipoPasswordForm),
-        const SizedBox(height: 20),
-        InputWidget(
-            hintText: 'login_password_new'.i18n(),
-            tipo: InputWidget.tipoPasswordForm),
-        const SizedBox(height: 20),
-        InputWidget(
-            hintText: 'login_password_repeat'.i18n(),
-            tipo: InputWidget.tipoPasswordForm),
-        const SizedBox(height: 20),
+        FormBuilderTextField(
+          key: _passwordFieldKey,
+          name: 'password_old',
+          enabled: true,
+          obscureText: !_passwordVisible,
+          decoration: InputDecoration(
+            labelText: 'login_password_old_label'.i18n(),
+            hintText: 'login_password_old_hint'.i18n(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+                errorText: 'validation_required'.i18n()),
+          ]),
+        ),
+        const SizedBox(height: 10),
+        FormBuilderTextField(
+          key: _passwordNewFieldKey,
+          name: 'password_new_fiel',
+          enabled: true,
+          obscureText: !_passwordVisible,
+          decoration: InputDecoration(
+            labelText: 'login_password_new_label'.i18n(),
+            hintText: 'login_password_new_hint'.i18n(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+                errorText: 'validation_required'.i18n()),
+          ]),
+        ),
+        const SizedBox(height: 10),
+        FormBuilderTextField(
+          key: _passwordConfirmFieldKey,
+          name: 'password_repeat_fiel',
+          enabled: true,
+          obscureText: !_passwordVisible,
+          decoration: InputDecoration(
+            labelText: 'login_password_repeat_label'.i18n(),
+            hintText: 'login_password_repeat_hint'.i18n(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+                errorText: 'validation_required'.i18n()),
+          ]),
+        ),
+        const SizedBox(height: 10),
         ElevatedButton(
             onPressed: _onPressedCambiarClave,
             child: Text('login_event_cambiar_clave'.i18n())),
@@ -133,97 +215,124 @@ class _LoginForm extends State<LoginForm> {
   /// Formulario de recuperar clave
   ///
   _formRecuperar() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        HxWidget(indice: 4, texto: "login_recuperar_clave".i18n()),
-        const SizedBox(height: 10),
-        InputWidget(
-            hintText: 'login_username_label'.i18n(),
-            tipo: InputWidget.tipoInputForm),
-        const SizedBox(height: 20),
-        ElevatedButton(
-            onPressed: _onPressedRecuperarClave,
-            child: Text('login_event_recuperar_clave'.i18n())),
-        const SizedBox(height: 20),
-        TextButton(
-            onPressed: () => {
-                  setState(() {
-                    _formKey = _formKeyLogin;
-                  })
-                },
-            child: Text(
-              'event_cancel'.i18n(),
-            )),
-      ],
-    );
-  }
-
-  _formLogin() {
     return FormBuilder(
-      key: _formBuilderKey,
+      key: _formRecoveryPassBuilderKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       skipDisabled: false,
       child: Column(
         children: [
-          HxWidget(indice: 4, texto: "login_acceso".i18n()),
+          HxWidget(indice: 4, texto: "login_recuperar_clave".i18n()),
           const SizedBox(height: 10),
           FormBuilderTextField(
-            key: _userFieldKey,
-            name: 'username',
+            key: _emailFieldKey,
+            name: 'emal_field',
             enabled: true,
             decoration: InputDecoration(
-              labelText: 'login_username_label'.i18n(),
-              hintText: 'login_username_hint'.i18n(),
+              labelText: 'login_email_label'.i18n(),
+              hintText: 'login_email_hint'.i18n(),
             ),
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(
                   errorText: 'validation_required'.i18n()),
-            ]),
-          ),
-          const SizedBox(height: 10),
-          FormBuilderTextField(
-            key: _passwordFieldKey,
-            name: 'password',
-            enabled: true,
-            obscureText: !_passwordVisible,
-            decoration: InputDecoration(
-              labelText: 'login_password_label'.i18n(),
-              hintText: 'login_password_hint'.i18n(),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _passwordVisible = !_passwordVisible;
-                  });
-                },
-              ),
-            ),
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                  errorText: 'validation_required'.i18n()),
+              FormBuilderValidators.email(errorText: 'validation_email'.i18n()),
             ]),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-              onPressed: () => {
-                    _formBuilderKey.currentState?.validate() == true
-                        ? _onPressedLogin()
-                        : {}
-                  },
-              child: Text('login_event_ingresar'.i18n())),
+              onPressed: _onPressedRecuperarClave,
+              child: Text('login_event_recuperar_clave'.i18n())),
           const SizedBox(height: 20),
           TextButton(
               onPressed: () => {
                     setState(() {
-                      _formKey = _formKeyRecobrar;
+                      _formKey = _formKeyLogin;
                     })
                   },
-              child: Text('login_event_recuperar'.i18n())),
+              child: Text(
+                'event_cancel'.i18n(),
+              )),
         ],
       ),
+    );
+  }
+
+  /// Formulario de login
+  _formLogin() {
+    return Column(
+      children: [
+        HxWidget(indice: 4, texto: "login_acceso".i18n()),
+        // Formulario
+        FormBuilder(
+          key: _formLoginBuilderKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          skipDisabled: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // login_username
+              FormBuilderTextField(
+                key: _userFieldKey,
+                name: 'username',
+                enabled: true,
+                decoration: InputDecoration(
+                  labelText: 'login_username_label'.i18n(),
+                  hintText: 'login_username_hint'.i18n(),
+                ),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(
+                      errorText: 'validation_required'.i18n()),
+                ]),
+              ),
+              const SizedBox(height: 10),
+              FormBuilderTextField(
+                key: _passwordFieldKey,
+                name: 'password',
+                enabled: true,
+                obscureText: !_passwordVisible,
+                decoration: InputDecoration(
+                  labelText: 'login_password_label'.i18n(),
+                  hintText: 'login_password_hint'.i18n(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
+                ),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(
+                      errorText: 'validation_required'.i18n()),
+                ]),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                  onPressed: () => {
+                        _formLoginBuilderKey.currentState?.validate() == true
+                            ? _onPressedLogin()
+                            : {},
+                      },
+                  child: Text('login_event_ingresar'.i18n())),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextButton(
+          onPressed: () => {
+            setState(() {
+              _formKey = _formKeyRecobrar;
+            })
+          },
+          child: Text('login_event_recuperar'.i18n()),
+        ),
+      ],
     );
   }
 

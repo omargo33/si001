@@ -127,6 +127,9 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
+        http.authorizeRequests().antMatchers("/v3/**").permitAll();
+        //http.authorizeRequests().antMatchers("/swagger-ui").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
 
         List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
         for (VPermisoRol vpr : listaVPermisoRol) {
