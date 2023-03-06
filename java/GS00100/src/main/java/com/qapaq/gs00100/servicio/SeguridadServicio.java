@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.qapaq.gs00100.jpa.model.VGroupMembers;
 
+import com.qapaq.gs00100.ConstantesGS00100;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Clase de servicio Seguridad Monitor repositorio.
  * 
@@ -21,21 +25,23 @@ import com.qapaq.gs00100.jpa.model.VGroupMembers;
  * @date 2020-10-09
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
- * @see security 
+ * @see security
  * 
- * Esta seguridad se instancia por la configuracion del pom que busca el objeto con la implementacion de UserDetailsService
+ *      Esta seguridad se instancia por la configuracion del pom que busca el
+ *      objeto con la implementacion de UserDetailsService
  * 
  */
+@Slf4j
 @Service
 @Transactional("gs001001TransactionManager")
 public class SeguridadServicio implements UserDetailsService {
-    
+
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Autowired
-    private VGroupMembersServicio vGroupMembersServicio;    
-    
+    private VGroupMembersServicio vGroupMembersServicio;
+
     /**
      * Método para validar el usuario y roles.
      * 
@@ -45,17 +51,18 @@ public class SeguridadServicio implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        int estado = usuarioServicio.validarUsuarioLogin(userName);
-        if (estado < 0) {            
-            throw new UsernameNotFoundException("W-GS00100-5");
-        }       
+        String estado = usuarioServicio.validarUsuarioLogin(userName);
 
-        List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(userName);
-        final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();               
-        for (VGroupMembers vGroupMembers : listaVGroupMembers) {
-            authorities.add(new SimpleGrantedAuthority(vGroupMembers.getName()));
-        }
-                
-        return new User(userName, usuarioServicio.getTokenUsuario().getTokenPassword(), authorities);        
+        if (estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_ACTIVO) == 0 || estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_CREADO) == 0) {
+            List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(userName);
+            final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            for (VGroupMembers vGroupMembers : listaVGroupMembers) {
+                log.info("grupos", vGroupMembers.getName());
+                authorities.add(new SimpleGrantedAuthority(vGroupMembers.getName()));
+            }
+            return new User(userName, usuarioServicio.getTokenUsuario().getTokenPassword(), authorities);
+        } else {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }        
     }
 }

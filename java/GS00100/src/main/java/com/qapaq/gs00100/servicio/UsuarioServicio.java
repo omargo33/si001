@@ -1,7 +1,6 @@
 package com.qapaq.gs00100.servicio;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qapaq.ar00100.servicio.AuditoriaServicio;
 import com.qapaq.ar00100.servicio.DireccionServicio;
 import com.qapaq.gs00100.ConstantesGS00100;
@@ -45,11 +43,6 @@ public class UsuarioServicio {
     @Value("${app.name}")
     private String appName;
 
-    public static final int USUARIO_NO_EXISTE = -1;
-    public static final int USUARIO_EXCEDE_NUMERO_INTENTOS = -2;
-    public static final int USUARIO_NO_ACTIVO = -3;
-    public static final int USUARIO_OK = 0;
-
     private UsuarioRepositorio usuarioRepositorio;
 
     private final TokenServicio tokenServicio;
@@ -60,7 +53,6 @@ public class UsuarioServicio {
     @Getter
     private Token tokenUsuario;
     private Map<String, Parametro> mapaParametros;
-
 
     /**
      * Metodo para crear los repositorios.
@@ -77,11 +69,11 @@ public class UsuarioServicio {
         this.direccionServicio = direccionServicio;
         this.auditoriaServicio = auditoriaServicio;
         this.parametroServicio = parametroServicio;
-        
+
     }
 
     @PostConstruct
-    public void init() {        
+    public void init() {
         mapaParametros = parametroServicio.findByIndiceModulo(appName);
     }
 
@@ -144,56 +136,62 @@ public class UsuarioServicio {
      * @param userName
      * @param elemento
      */
-    public int validarUsuarioLogin(String userName) {
+    public String validarUsuarioLogin(String userName) {
         Usuario usuario = usuarioRepositorio.findByNick(userName);
-
-        if (usuario != null) {
-            long contadorIngreso = usuario.getContadorIngreso();
-            Date contadorFecha = usuario.getContadorFecha();
-            Date fechaActual = new Date();
-            long intentosMaximo = mapaParametros.get(ConstantesGS00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
-            long tiempoBloqueo = mapaParametros.get(ConstantesGS00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01() *
-                    (60 * 60 * 1000);
-
-            if (contadorIngreso >= intentosMaximo
-                    && (contadorFecha.getTime() + tiempoBloqueo) < fechaActual.getTime()) {
-                return USUARIO_EXCEDE_NUMERO_INTENTOS;
-            } else {
-                tokenUsuario = tokenServicio.findBySocialNickAndTipo(userName, ConstantesGS00100.TIPO_USER_NAME);
-                if (tokenUsuario.getEstado().compareTo(ConstantesGS00100.TOKEN_ESTADO_ACTIVO) != 0) {
-                    return USUARIO_NO_ACTIVO;
-                }
-                return USUARIO_OK;
-            }
+        
+        if (usuario == null) {
+            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
         }
-        return USUARIO_NO_EXISTE;
+
+        long contadorIngreso = usuario.getContadorIngreso();
+        Date contadorFecha = usuario.getContadorFecha();
+        Date fechaActual = new Date();
+        long intentosMaximo = mapaParametros.get(ConstantesGS00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
+        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesGS00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
+
+        if (contadorIngreso >= intentosMaximo
+                && fechaActual.getTime() < (contadorFecha.getTime() + tiempoBloqueo)) {
+            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS;
+        }
+        tokenUsuario = tokenServicio.findBySocialNickAndTipo(userName, ConstantesGS00100.TIPO_USER_NAME);
+
+        if(tokenUsuario==null){
+            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
+        }
+        
+        return tokenUsuario.getEstado();
     }
 
-    public String usuarioRechazado(String ip, String userAgent, String userName, String usuarioPrograma) {
-        String json = "";
-        Map<String, String> error = new HashMap<>();
-
-        auditarIngresosFallidos("login", "usuarioRechazado()", ip, userAgent, userName, usuarioPrograma);
-
-        Usuario usuario = findByNick(userName);
-        if (usuario != null) {       
-            usuario.setContadorIngreso(usuario.getContadorIngreso() + 1);
-            usuario.setContadorFecha(new Date());
-        }else{
-            Direccion direccion = new Direccion();
-            direccion.setElemento("usuarioRechazado()");
-            direccion.setDireccionDispositivo(ip);
-            direccion.setNavegadorDispositivo(userAgent);
-            direccionServicio.saveDireccion(direccion, userName, usuarioPrograma);
-        }
-
-        error.put("error", "E-GS00100-9");
+    /**
+     * Metodo para con procesos relativos a usuarios rechazados en la plataforma.
+     * 
+     * Audita ingresos fallidos
+     * Actualiza contador de ingresos fallidos
+     * De no existir el usuario, agrega un registro de direcciones de ingresos
+     * fallidos
+     * 
+     * @param ip
+     * @param userAgent
+     * @param userName
+     * @param usuarioPrograma
+     */
+    public void usuarioRechazado(String ip, String userAgent, String userName, String usuarioPrograma) {
         try {
-            new ObjectMapper().writeValueAsString(error);
+            auditarIngresosFallidos("login", "usuarioRechazado()", ip, userAgent, userName, usuarioPrograma);
+            Usuario usuario = findByNick(userName);
+            if (usuario != null) {
+                usuario.setContadorIngreso(usuario.getContadorIngreso() + 1);
+                usuario.setContadorFecha(new Date());
+            } else {
+                Direccion direccion = new Direccion();
+                direccion.setElemento("usuarioRechazado()");
+                direccion.setDireccionDispositivo(ip);
+                direccion.setNavegadorDispositivo(userAgent);
+                direccionServicio.saveDireccion(direccion, userName, usuarioPrograma);
+            }
         } catch (Exception e) {
             log.error("E-GS00100-9 {}", userName);
         }
-        return json;
     }
 
     /**
@@ -226,9 +224,9 @@ public class UsuarioServicio {
      * 
      * @param userName
      */
-    public void inicialiarContadoresIngreso(String userName){
+    public void inicialiarContadoresIngreso(String userName) {
         Usuario usuario = findByNick(userName);
-        if (usuario != null) {            
+        if (usuario != null) {
             usuario.setContadorIngreso(0);
             usuario.setContadorFecha(new Date());
         }

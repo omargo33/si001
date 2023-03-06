@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:si00100/pages/widget/alert_dialog.dart';
 import 'package:si00100/sharePreferences/preferences.dart';
 import 'package:si00100/static/static_url.dart';
 
@@ -21,12 +22,23 @@ class LoginController {
   }
 
   // method return integer
-  Future<int> login(String user, String password) async {
+  login(BuildContext context, String user, String password) async {
+    var alertDialog = new AlertDialog(
+        title: "Espere", description: "Espere por favor", type: "wait");
+
+    alertDialog.wait(context, "sdfadf", "content");
+    // wait for 5 seconds
+    await Future.delayed(Duration(seconds: 5));
+
     // TODO: implement encripcion
     // String basicAUTH = 'Basic ' + base64Encode(utf8.encode('$user:$password'));
+    Preferences.setUser = "";
+    Preferences.setToken = "";
+    Preferences.setIsLogin = true;
+    Preferences.setTokenRefresh = "";
 
-    Response response;
-    response = await _dio.post(
+    await _dio
+        .post(
       StaticUrl.urlAPILogin,
       data: {'username': user, 'password': password},
       options: Options(
@@ -34,15 +46,31 @@ class LoginController {
           Headers.contentTypeHeader: "application/x-www-form-urlencoded",
         },
       ),
-    );
-
-    if (response.statusCode == 200) {
+    )
+        .then((onResponse) async {
       Preferences.setUser = user;
-      Preferences.setToken = response.headers.value('access-token')!;
+      Preferences.setToken = onResponse.headers.value('access-token')!;
       Preferences.setIsLogin = true;
-      Preferences.setTokenRefresh = response.headers.value('refresh-token')!;
-      print('token ' + Preferences.token);
-    }
+      Preferences.setTokenRefresh = onResponse.headers.value('refresh-token')!;
+      print(onResponse.data);
+    }).catchError((e) {
+      try {
+        print(e);
+        print(e.toString());
+        DioError dioError = e as DioError;
+        print(dioError.error);
+        print(dioError.message);
+        print(dioError.requestOptions);
+        print(dioError.response!);
+        print(dioError.response!.statusCode);
+        print(dioError.stackTrace);
+        print(dioError.type);
+      } catch (e) {
+        print("nuevos datos de error: " + e.toString());
+      }
+    });
+
+    alertDialog.hideWait(context);
 
     return 0;
   }

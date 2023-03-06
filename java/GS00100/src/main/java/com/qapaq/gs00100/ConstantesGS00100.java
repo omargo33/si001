@@ -7,7 +7,7 @@ package com.qapaq.gs00100;
  * @date 2020-10-09
  */
 public class ConstantesGS00100 {
-
+    
     /**
      * Constructor de la clase.
      */
@@ -25,8 +25,11 @@ public class ConstantesGS00100 {
     public static final String PARAMETRO_CAMBIO_CLAVE="302";
 
     public static final String TOKEN_ESTADO_INACTIVO="I";
-    public static final String TOKEN_ESTADO_ACTIVO="A";
-
+    public static final String TOKEN_ESTADO_CREADO="C";
+    public static final String TOKEN_ESTADO_ACTIVO="A";    
+    public static final String TOKEN_ESTADO_USUARIO_NO_EXISTE = "<NO DATA>";
+    public static final String TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS = "<EXCEEDS NUMBER OF ATTEMPTS>";
+    
     public static final String MODULO_ESTADO_INACTIVO="I";
     public static final String MODULO_ESTADO_ACTIVO="A";
 

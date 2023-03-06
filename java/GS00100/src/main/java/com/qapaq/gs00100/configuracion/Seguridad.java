@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.qapaq.ConstantesTools;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
+import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.VPermisoRol;
 import com.qapaq.gs00100.servicio.UsuarioServicio;
 import com.qapaq.gs00100.servicio.VPermisoRolServicio;
@@ -77,10 +78,14 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     /**
      * Método para configurar la seguridad de la aplicación.
      * 
-     * http.authorizeRequests().antMatchers(HttpMethod.GET, "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.PUT, "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.POST, "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/modulos/**").hasRole("ADM");       
+     * http.authorizeRequests().antMatchers(HttpMethod.GET,
+     * "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.PUT,
+     * "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.POST,
+     * "/modulos/**").hasRole("ADM");
+     * http.authorizeRequests().antMatchers(HttpMethod.DELETE,
+     * "/modulos/**").hasRole("ADM");
      * 
      * @param http
      * @throws Exception
@@ -95,24 +100,31 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
                 String userName = request.getParameter(ConstantesTools.USER_NAME);
                 String ip = request.getRemoteAddr() + request.getRemoteHost() + ":" + request.getRemotePort();
                 String userAgent = request.getHeader("User-Agent");
-                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
 
-                int estado = usuarioServicio.validarUsuarioLogin(userName);
+                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
+                String estado = usuarioServicio.validarUsuarioLogin(userName);
                 switch (estado) {
-                    case UsuarioServicio.USUARIO_NO_EXISTE:
+                    case ConstantesGS00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
                         mensajeError = "W-GS00100-6";
                         break;
-                    case UsuarioServicio.USUARIO_EXCEDE_NUMERO_INTENTOS:
+                    case ConstantesGS00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
                         mensajeError = "W-GS00100-7";
                         break;
-                    case UsuarioServicio.USUARIO_NO_ACTIVO:
+                    case ConstantesGS00100.TOKEN_ESTADO_INACTIVO:
                         mensajeError = "W-GS00100-8";
                         break;
+                    case ConstantesGS00100.TOKEN_ESTADO_ACTIVO:
+                        mensajeError = "W-GS00100-6";
+                        break;
+                    case ConstantesGS00100.TOKEN_ESTADO_CREADO:
+                        mensajeError = "W-GS00100-6";
+                        break;
                     default:
+                        mensajeError = "W-GS00100-1";
                         log.warn("W-GS00100-1 user={} estado={}", userName, estado);
                         break;
                 }
-                return String.format("{error: '%s'}", mensajeError);
+                return String.format("{ \"error\": \"%s\"}", mensajeError);
             }
 
             @Override
@@ -128,11 +140,12 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/v3/**").permitAll();
-        //http.authorizeRequests().antMatchers("/swagger-ui").permitAll();
+        // http.authorizeRequests().antMatchers("/swagger-ui").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
 
         List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
         for (VPermisoRol vpr : listaVPermisoRol) {
+            // TODO: Quitar luego de tener los permisos claros.
             log.warn(vpr.toString());
             http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
 
