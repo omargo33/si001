@@ -1,18 +1,79 @@
 {
-    "@@locale": "template",
+    "@@locale": "en_US",       
     "helloWorld": "Hello World!",    
 
     "app": "SI00100",
     "description": "SI00100 - Information Sistem Version 1.0",
+    "from": "power by",
+    "business": "QAPAQ",
 
-    "login_title": "Sistema de /nInformación",
+    "login_title": "Sistema de \nInformación",
     "login_subtitle": "Administración de Proyectos",
-    "login_username": "Usuario",
-    "login_password": "Contraseña",
-    "login_event_ingresar": "Ingresar",
-    "login_event_recuperar": "¿Olvido su Contraseña?",    
     
+    "login_username_label": "Usuario",
+    "login_username_hint": "nombreUsuario",
+    
+    "login_password_label": "Contraseña",
+    "login_password_hint": "******",
+    
+    "login_acceso": "Acceder",
+    "login_recuperar_clave": "Recuperar Clave",
+    
+    "login_password_old_label": "Contraseña Anterior",
+    "login_password_old_hint": "******",
+    "login_password_new_label": "Contraseña Nueva",
+    "login_password_new_hint": "******",
+    "login_password_repeat_label": "Repetir Contraseña Nueva",
+    "login_password_repeat_hint": "******",
+    "login_email_label": "Correo del Usuario",
+    "login_email_hint": "suNombre@suDominio.com",
+ 
+    "login_event_ingresar": "Ingresar",
+    "login_event_recuperar": "¿Olvido su Contraseña?",
+    "login_event_recuperar_clave": "Recuperar",
+    "login_event_cambiar_clave": "Cambiar Contraseña",
+ 
+    "login_msg_recuperar_0": "Usuario encontrado",
+    "login_msg_recuperar_1": "Se ha enviado un correo a su cuenta de correo electrónico con las instrucciones para recuperar su contraseña.",    
+
     "images_svg_login": "assets/images/undraw_secure_login_pdn4.svg",    
     "images_svg_mail": "assets/images/1814108_email_envenlope_letter_mail_icon.svg",
-    "images_svg_burbuja": "assets/images/1814099_chat_cloud_speech_talk_text_icon.svg"
+    "images_svg_error": "assets/images/1814078_close_no_reject_icon.svg",
+    "images_svg_burbuja": "assets/images/1814099_chat_cloud_speech_talk_text_icon.svg",
+    
+    "event_cancel": "Cancelar",
+    "event_save": "Guardar",
+    "event_edit": "Editar",
+    "event_delete": "Eliminar",
+    "event_new": "Nuevo",
+    "event_search": "Buscar",
+    "event_close": "Cerrar",
+    "event_back": "Atras",
+    "event_next": "Siguiente",
+    "event_finish": "Finalizar",
+    "event_ok": "Aceptar",
+    "event_yes": "Si",
+    "event_no": "No",
+    "event_confirm": "Confirmar",
+
+    "validation_required": "Campo requerido",
+    "validation_email": "Correo electrónico no válido",
+    "validation_minlength": "Debe ingresar al menos %s caracteres",
+    "validation_maxlength": "Debe ingresar máximo %s caracteres",
+    "validation_min": "Debe ingresar un valor mayor o igual a %s",
+    "validation_max": "Debe ingresar un valor menor o igual a %s",
+    "validation_pattern": "El valor ingresado no es válido",
+    "validation_password": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula y un número",
+    "validation_password_old": "La contraseña anterior no es correcta",
+    "validation_password_new": "La contraseña nueva no es correcta",
+    "validation_password_repeat": "Las contraseñas no coinciden",
+    "validation_password_repeat_0": "La contraseña nueva no puede ser igual a la anterior",
+
+    "side_menu_title": "Menú Principal",
+    "side_menu_home": "Inicio",
+    "side_menu_close_session": "Cerrar Sesión",
+
+
+    "wait_title": "Proceso en curso",
+    "wait_subtitle": "Espere un momento por favor"
 }

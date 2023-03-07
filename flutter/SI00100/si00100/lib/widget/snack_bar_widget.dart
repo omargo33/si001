@@ -44,7 +44,7 @@ class SnackBarWidget extends StatelessWidget {
                     const SizedBox(height: 17),
                     Text(
                       titulo,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

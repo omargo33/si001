@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:localization/localization.dart';
@@ -91,10 +92,13 @@ class MyApp extends StatelessWidget {
         LocalJsonLocalization.delegate,
         // delegate from form builder package.
         FormBuilderLocalizations.delegate,
+        // delegate from CupertinoAlertDialog
+        DefaultCupertinoLocalizations.delegate,
+        // delegate text
+        DefaultWidgetsLocalizations.delegate,
       ],
 
-      /// TODO validar si es necesario
-      /// supportedLocales: FormBuilderLocalizations.delegate.supportedLocales,
+      /// TODO generar login page y luego cambiar a dashboard y registros internos.
       //initialRoute: LoginPage.routeName,
       home: const LoginPage(),
     );

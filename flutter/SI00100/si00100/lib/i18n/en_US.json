@@ -71,5 +71,32 @@
 
     "side_menu_title": "Menú Principal",
     "side_menu_home": "Inicio",
-    "side_menu_close_session": "Cerrar Sesión"
+    "side_menu_close_session": "Cerrar Sesión",
+
+    "alert_wait_title": "Proceso en curso",
+    "alert_wait_subtitle": "Espere un momento por favor",
+    "alert_cancel_button": "Cancelar",
+    "alert_net_error": "Error de acceso a red",
+    "alert_net_error_subtitle": "Por favor verifique su conexión a internet",
+    "alert_title_http_status_error": "Error de acceso al servidor: %s",
+    "alert_subtitle_no_define": "Error no definido",
+
+
+    "E-GS00100-8":	"Registro no existe",
+    "E-GS00100-18":	"Formato de fecha incorrecto, YYYY-MM-DD HH:MM:SS",
+    "W-GS00100-1":	"La seguridad de usuario no se ejecuto y se presenta en al evaluar",
+    "E-GS00100-2":	"El campo no debe ser nulo",
+    "E-GS00100-3":	"El campo no puede estar vacio",
+    "E-GS00100-4":	"El indice del modulo ya existe",
+    "E-GS00100-5":	"El nombre del modulo ya existe", 
+    "E-GS00100-6":	"El nombre de usuario ya existe",
+    "E-GS00100-7":	"Campo Relacionado a otro recurso no existe",
+    "W-GS00100-2":	"No esta definido el mensaje de error de ComonController",
+    "W-GS00100-3":	"Autentification Ejecutada",
+    "W-GS00100-4":	"Autentification no Ejecutada",
+    "E-GS00100-9":	"usuarioRechazado No se ejecuto correctamente el JSON de salida",
+    "W-GS00100-5":	"Problemas al identificar el usuario",
+    "W-GS00100-6":	"Credencial Inválida",
+    "W-GS00100-7":	"Usuario Excede el número de intentos validos.",
+    "W-GS00100-8":	"Token inactivo"
 }
