@@ -31,6 +31,11 @@ class AlertDialogWidget extends StatelessWidget {
     );
   }
 
+  // hide wait dialog
+  hideWait(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
   // Alerta de error
   error(BuildContext context, String title, String subtitle) {
     return showDialog(
@@ -70,9 +75,65 @@ class AlertDialogWidget extends StatelessWidget {
     );
   }
 
-  // hide wait dialog
-  hideWait(BuildContext context) {
-    Navigator.of(context).pop();
+  ///Info dialog
+  info(BuildContext context, String title, String subtitle, String icono) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: 90,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: AppColors.spaceCadetMC[700]!,
+              ),
+              child: Row(
+                children: [
+                  const SizedBox(width: 10),
+                  SvgPicture.asset(
+                    icono,
+                    height: 80,
+                    width: 80,
+                    color: AppColors.whiteMC[700],
+                  ),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 17),
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: AppColors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            color: AppColors.whiteMC[700],
+                            fontSize: 14,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+            ),
+          ],
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
   }
 
   // generate dialog content

@@ -28,5 +28,5 @@ public interface ParametroRepositorio extends JpaRepository<Parametro, Long> {
          * @param id
          * @return
          */
-        public List<Parametro> findByIdModulo(Long idModulo);        
+        public List<Parametro> findByIdModulo(Long idModulo);
 }

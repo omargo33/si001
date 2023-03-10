@@ -20,5 +20,7 @@ public interface TokenRefreshControlador {
     public List<String> getRoles(String username);
 
     public void refresh(HttpServletRequest request, HttpServletResponse response);
+
+    public void lostPassword(HttpServletRequest request, HttpServletResponse response);
     
 }

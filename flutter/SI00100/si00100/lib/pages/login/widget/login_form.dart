@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:localization/localization.dart';
 import 'package:si00100/controller/login_controller.dart';
-import 'package:si00100/widget/snack_bar_widget.dart';
+import 'package:si00100/pages/widgets.dart';
 import 'package:si00100/widget/hx_widget.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -18,6 +18,9 @@ class LoginForm extends StatefulWidget {
 /// Button de login
 class _LoginForm extends State<LoginForm> {
   int _formKey = 1;
+
+  final AlertDialogWidget _alertDialogWidget = const AlertDialogWidget();
+
   static const int _formKeyLogin = 0;
   static const int _formKeyRecobrar = 2;
 
@@ -42,63 +45,35 @@ class _LoginForm extends State<LoginForm> {
   /// Evento de recuperar clave
   ///
   void _onPressedRecuperarClave() {
-    // TODO implementar recuperar clave
-    // SI DA ERROR SE MUESTRA
-    //DialogWidget.showError(context, "Error clave", "oportunidades + mensaje del rest");
-
-    // ELSE
-    setState(() {
-      _formKey = _formKeyLogin;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: SnackBarWidget(
-            titulo: 'login_msg_recuperar_0'.i18n(),
-            subtitulo: 'login_msg_recuperar_1'.i18n(),
-            icono: "images_svg_mail".i18n()),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-    );
+    _alertDialogWidget.info(context, 'login_msg_recuperar_0'.i18n(),
+        'login_msg_recuperar_1'.i18n(), "images_svg_mail".i18n());
   }
 
-  /// Evento de cambiar clave
-  ///
-  void _onPressedCambiarClave() {
-    // TODO si sale error
-
-    // else
-    // vuelve a la pantalla de login
-    /*setState(() {
-      _formKey = _formKeyLogin;
-    });*/
-  }
-
+  /// Event login
+  /// consume rest
+  /// delete data login
+  /// send to dahsboard
   _onPressedLogin() async {
     LoginController loginController = LoginController();
-
-    loginController.login(context, _userFieldKey.currentState?.value,
+    await loginController.login(context, _userFieldKey.currentState?.value,
         _passwordFieldKey.currentState?.value);
 
-    _userFieldKey.currentState?.reset();
-    _userFieldKey.currentState?.setValue(null);
+    if (loginController.isLogin) {
+      _userFieldKey.currentState?.reset();
+      _userFieldKey.currentState?.setValue(null);
 
-    _passwordFieldKey.currentState?.reset();
-    _passwordFieldKey.currentState?.setValue(null);
-
-    // Si es correcto pero hay que cambiar la clave
-    /*setState(() {
-      _formKey = _formKeyCambiarClave;
-    });*/
-
-    // Si es correcto y no hay que cambiar la clave
-    // Navigator.pushNamed(context, '/home');
+      _passwordFieldKey.currentState?.reset();
+      _passwordFieldKey.currentState?.setValue(null);
+    } else {
+      print("is login b");
+      print(loginController.isLogin);
+      //TODO: ir a dashboard
+      // Si es correcto y no hay que cambiar la clave
+      // Navigator.pushNamed(context, '/home');
+    }
   }
 
   /// Formulario de recuperar clave
-  ///
   _formRecuperar() {
     return FormBuilder(
       key: _formRecoveryPassBuilderKey,
@@ -222,7 +197,6 @@ class _LoginForm extends State<LoginForm> {
   }
 
   /// build formulario de login
-  ///
   @override
   Widget build(BuildContext context) {
     switch (_formKey) {

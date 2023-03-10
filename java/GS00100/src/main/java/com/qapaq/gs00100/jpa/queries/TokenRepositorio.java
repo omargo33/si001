@@ -53,11 +53,22 @@ public interface TokenRepositorio extends PagingAndSortingRepository<Token, Long
         
 
         /**
-         * Metodo para buscar un objeto por correo y con estado distinto a eliminado
-         * (X).
+         * Metodo para buscar un objeto por correo, con tipo = C con estado distinto a eliminado (X).
          */
-        @Query("SELECT t FROM Token t WHERE t.correo = ?1 AND t.estado <> 'X'")
+        @Query("SELECT t FROM Token t WHERE t.correo = ?1 AND t.tipo = 'C' AND t.estado <> 'X'")
         public Token findByCorreo(String correo);
+
+        /**
+         * Metodo para buscar un objeto por facebook, con tipo = F con estado distinto a eliminado (X).
+         */
+        @Query("SELECT t FROM Token t WHERE t.correo = ?1 AND t.tipo = 'F' AND t.estado <> 'X'")
+        public Token findByFacebook(String face);
+
+        /**
+         * Metodo para buscar un objeto por google, con tipo = G con estado distinto a eliminado (X).
+         */
+        @Query("SELECT t FROM Token t WHERE t.correo = ?1 AND t.tipo = 'G' AND t.estado <> 'X'")
+        public Token findByGoogle(String google);        
 
         /**
          * Metodo para cambiar el borrado por id. Cambiando estado a X.
@@ -77,4 +88,8 @@ public interface TokenRepositorio extends PagingAndSortingRepository<Token, Long
          */
         @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM Token t WHERE t.socialNick = ?1 AND t.tipo = ?2 AND t.idUsuario <> ?3 AND t.estado <> 'X'")
         public boolean existsBySocialNickAndTipoAndIdUsuario(String socialNick, String tipo, Long idUsuario);
+
+        /**
+         * 
+         */
 }

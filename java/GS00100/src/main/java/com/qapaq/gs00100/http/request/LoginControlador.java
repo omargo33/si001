@@ -1,23 +1,31 @@
 package com.qapaq.gs00100.http.request;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qapaq.ConstantesTools;
 import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.VGroupMembers;
 import com.qapaq.gs00100.servicio.TokenServicio;
 import com.qapaq.gs00100.servicio.VGroupMembersServicio;
 import com.qapaq.http.request.ComonRefreshTokenControlador;
 import com.qapaq.http.request.TokenRefreshControlador;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para controlar las peticiones de las ciudades.
@@ -31,10 +39,17 @@ import com.qapaq.http.request.TokenRefreshControlador;
  */
 @RestController
 @RequestMapping(value = "/login")
+@Slf4j
 public class LoginControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
 
     private TokenServicio tokenServicio;
     private VGroupMembersServicio vGroupMembersServicio;
+
+    @Value("${app.name}")
+    private String appName;
+
+    @Value("${app.version}")
+    private String appVersion;
 
     /**
      * Constructor de la clase.
@@ -55,7 +70,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
      * 
      */
     @Override
-    public boolean isActiveUser(String username) {        
+    public boolean isActiveUser(String username) {
         return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username, ConstantesGS00100.TIPO_USER_NAME);
     }
 
@@ -70,11 +85,11 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
     public List<String> getRoles(String username) {
         List<String> roles = new ArrayList<>();
         List<VGroupMembers> listvGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(username);
-        
-        for (VGroupMembers a : listvGroupMembers){
+
+        for (VGroupMembers a : listvGroupMembers) {
             roles.add(a.getName());
         }
-        
+
         return roles;
     }
 
@@ -83,10 +98,38 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
      * 
      * @param request
      * @param response
-     */        
+     */
     @Override
-    @GetMapping(value = "/refresh")
+    @PostMapping(value = "/refresh")
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
         super.refresh(request, response);
+    }
+
+    /**
+     * Método para refrescar enviar password al correo.
+     */
+    @Override
+    @PostMapping(value = "/lostPassword")
+    public void lostPassword(HttpServletRequest request, HttpServletResponse response) {        
+        String correo =String.valueOf(request.getParameter(ConstantesTools.EMAIL));
+        String ip = request.getRemoteAddr() + request.getRemoteHost() + ":" + request.getRemotePort();
+        String userAgent = request.getHeader("User-Agent");
+
+        log.warn("correo {} ip {} userAgent {}", correo, ip, userAgent);
+        boolean estado = tokenServicio.enviarToken(correo, ip, userAgent, appName + "-" + appVersion);
+
+        if (!estado) {
+            //response.setHeader("error", "W-GS00100-5");
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", "W-GS00100-5");
+            response.setContentType("application/json");
+            try {
+                new ObjectMapper().writeValue(response.getOutputStream(), error);
+            } catch (Exception ex) {
+                log.error("W-GS00100-5 {}", ex.getMessage());
+            }
+        }
     }
 }

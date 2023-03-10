@@ -31,8 +31,7 @@ public class ParametroServicio {
     public ParametroServicio(ParametroRepositorio parametroRepositorio, ModuloServicio moduloServicio) {
         this.parametroRepositorio = parametroRepositorio;
         this.moduloServicio = moduloServicio;
-    }
-    
+    }    
 
     /**
      * Metodo para buscar parametros de un modulo.
@@ -59,5 +58,17 @@ public class ParametroServicio {
         }
 
         return mapParametros;
+    }
+
+    /**
+     * Metodo para buscar un parametro de un modulo.
+     * 
+      * @param indiceModulo
+      * @param indiceParametro
+      * @return
+      */
+    public Parametro findByIdModuloAndIndice(String indiceModulo, String indiceParametro) {
+        Modulo modulo = moduloServicio.findByIndice(indiceModulo);
+        return parametroRepositorio.findByIdModuloAndIndice(modulo.getIdModulo(), indiceParametro);
     }
 }

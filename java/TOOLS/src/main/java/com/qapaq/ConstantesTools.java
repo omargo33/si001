@@ -19,6 +19,7 @@ public class ConstantesTools {
     public static final String SPEC = "AES";
     public static final String USER_NAME = "username";
 	public static final String PASSWORD = "password";
+    public static final String EMAIL = "email";
     public static final int ITERACIONES = 65556;
     public static final int KEY_LENGTH = 256;
     

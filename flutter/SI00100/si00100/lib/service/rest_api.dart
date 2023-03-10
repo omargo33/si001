@@ -32,6 +32,8 @@ class RestApiDio {
             context,
             _evaluarErrorJson(dioError.response!.data),
             "alert_title_http_status_error".i18n(['$statusCode']));
+      } else {
+        _alertDialogWidget.error(context, dioError.message as String, 'Error');
       }
     }
   }

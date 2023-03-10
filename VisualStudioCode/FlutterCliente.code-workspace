@@ -8,6 +8,15 @@
 		},
 		{
 			"path": "../java/SI00100"
+		},
+		{
+			"path": "../java/TOOLS"
+		},
+		{
+			"path": "../java/AR00100"
+		},
+		{
+			"path": "../java/GA00100"
 		}
 	],
 	"settings": {
@@ -17,6 +26,7 @@
 			"yaml": false,
 			"plaintext": false,
 			"markdown": false
-		}
+		},
+		"java.configuration.updateBuildConfiguration": "interactive"
 	}
 }

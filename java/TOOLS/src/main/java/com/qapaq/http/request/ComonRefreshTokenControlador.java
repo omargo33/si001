@@ -56,6 +56,10 @@ public class ComonRefreshTokenControlador {
         return roles;
     }
 
+    public void lostPassword(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+
 
     /**
      * Método para refrescar el token.
