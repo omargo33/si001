@@ -98,7 +98,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
             public String generarMensajeError(HttpServletRequest request) {
                 String mensajeError = "W-GS00100-6";
                 String userName = request.getParameter(ConstantesTools.USER_NAME);
-                String ip = request.getRemoteAddr() + request.getRemoteHost() + ":" + request.getRemotePort();
+                String ip = request.getRemoteAddr() +" " + request.getRemoteHost() + ":" + request.getRemotePort();
                 String userAgent = request.getHeader("User-Agent");
 
                 usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);

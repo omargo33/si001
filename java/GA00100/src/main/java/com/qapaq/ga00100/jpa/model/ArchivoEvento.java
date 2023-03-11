@@ -18,37 +18,37 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad JPA creada desde la consulta: "SELECT id_formato, indice, nombre, formato_html, usuario, usuario_fecha, usuario_programa FROM GA_001_00.formato"
+ * Entidad JPA creada desde la consulta: "SELECT id_archivo_evento, id_archivo, informacion, tipo, usuario, usuario_fecha, usuario_programa FROM GA_001_00.archivo_evento"
  * 
- * Con codigo autonumerico en la columna id_formato.
+ * Con codigo autonumerico en la columna id_archivo_evento.
  * 
- * @author o.velez@qapaq.io
+ * @author o.velez@jardinazuayo.fin.ec
  * @date 2023-03-09
  * 
  */
 @Entity
-@Table(name = "formato", schema = "GA_001_00")
+@Table(name = "archivo_evento", schema = "GA_001_00")
 @Getter
 @Setter
 @ToString
-public class Formato implements Serializable {
+public class ArchivoEvento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_formato")
-    private Long idFormato;
+    @Column(name = "id_archivo_evento")
+    private Long idArchivoEvento;
 
-    @Column(name = "indice", length = 32)
-    private String indice;
-
-    @NotBlank(message = "E-GA00100-12")
-    @Column(name = "nombre", length = 128)
-    private String nombre;
+    @Column(name = "id_archivo")
+    private Long idArchivo;
 
     @NotBlank(message = "E-GA00100-12")
-    @Column(name = "formato_html", length = 4096)
-    private String formatoHtml;
+    @Column(name = "informacion", length = 512)
+    private String informacion;
+
+    @NotBlank(message = "E-GA00100-12")
+    @Column(name = "tipo", length = 8)
+    private String tipo;
 
     @Column(name = "usuario", length = 128)
     private String usuario;

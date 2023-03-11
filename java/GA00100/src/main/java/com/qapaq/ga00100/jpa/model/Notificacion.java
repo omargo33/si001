@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -40,27 +41,34 @@ public class Notificacion implements Serializable {
     @Column(name = "id_notificacion")
     private Long idNotificacion;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "id_formato")
     private Long idFormato;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "id_servicio")
     private Long idServicio;
 
     @Column(name = "titulo", length = 256)
     private String titulo;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "contenido", length = 4096)
     private String contenido;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "direccion_envio", length = 256)
     private String direccionEnvio;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "estado", length = 8)
     private String estado;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "anular", length = 8)
     private String anular;
 
+    @NotBlank(message = "E-GA00100-12")
     @Column(name = "fecha_envio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEnvio;
@@ -74,10 +82,12 @@ public class Notificacion implements Serializable {
 
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;      
-
     
     @OneToMany(targetEntity = Formato.class)
     @JoinColumn(name = "id_formato", referencedColumnName = "id_formato")    
-    private List<Formato> formatoList;    
+    private Formato formato;    
 
+    @OneToMany(targetEntity = Servicio.class)
+    @JoinColumn(name = "id_servicio", referencedColumnName = "id_servicio")
+    private Servicio servicio;
 }

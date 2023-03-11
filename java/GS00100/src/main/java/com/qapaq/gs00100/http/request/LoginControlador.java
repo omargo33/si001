@@ -112,14 +112,13 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
     @PostMapping(value = "/lostPassword")
     public void lostPassword(HttpServletRequest request, HttpServletResponse response) {        
         String correo =String.valueOf(request.getParameter(ConstantesTools.EMAIL));
-        String ip = request.getRemoteAddr() + request.getRemoteHost() + ":" + request.getRemotePort();
+        String ip = request.getRemoteAddr() + " " + request.getRemoteHost() + ":" + request.getRemotePort();
         String userAgent = request.getHeader("User-Agent");
 
         log.warn("correo {} ip {} userAgent {}", correo, ip, userAgent);
         boolean estado = tokenServicio.enviarToken(correo, ip, userAgent, appName + "-" + appVersion);
 
-        if (!estado) {
-            //response.setHeader("error", "W-GS00100-5");
+        if (!estado) {         
             response.setStatus(HttpStatus.FORBIDDEN.value());
 
             Map<String, String> error = new HashMap<>();
@@ -130,6 +129,8 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
             } catch (Exception ex) {
                 log.error("W-GS00100-5 {}", ex.getMessage());
             }
+        }else {
+            response.setStatus(HttpStatus.OK.value());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.qapaq.ga00100.jpa.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,26 +18,26 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad JPA creada desde la consulta: "SELECT id_formato, indice, nombre, formato_html, usuario, usuario_fecha, usuario_programa FROM GA_001_00.formato"
+ * Entidad JPA creada desde la consulta: "SELECT id_servicio, indice, nombre, valor_01, valor_02, tipo, usuario, usuario_fecha, usuario_programa FROM GA_001_00.servicio"
  * 
- * Con codigo autonumerico en la columna id_formato.
+ * Con codigo autonumerico en la columna id_servicio.
  * 
  * @author o.velez@qapaq.io
- * @date 2023-03-09
+ * @date 2023-03-10
  * 
  */
 @Entity
-@Table(name = "formato", schema = "GA_001_00")
+@Table(name = "servicio", schema = "GA_001_00")
 @Getter
 @Setter
 @ToString
-public class Formato implements Serializable {
+public class Servicio implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_formato")
-    private Long idFormato;
+    @Column(name = "id_servicio")
+    private Long idServicio;
 
     @Column(name = "indice", length = 32)
     private String indice;
@@ -47,8 +47,14 @@ public class Formato implements Serializable {
     private String nombre;
 
     @NotBlank(message = "E-GA00100-12")
-    @Column(name = "formato_html", length = 4096)
-    private String formatoHtml;
+    @Column(name = "valor_01", length = 512)
+    private String valor01;
+
+    @Column(name = "valor_02", length = 512)
+    private String valor02;
+
+    @Column(name = "tipo", length = 8)
+    private String tipo;
 
     @Column(name = "usuario", length = 128)
     private String usuario;
