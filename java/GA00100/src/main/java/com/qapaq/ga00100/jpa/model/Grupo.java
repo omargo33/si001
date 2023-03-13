@@ -1,6 +1,7 @@
 package com.qapaq.ga00100.jpa.model;
 
 import java.util.Date;
+import java.util.List;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -9,6 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OrderBy;
+import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
@@ -36,7 +41,7 @@ public class Grupo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_grupo")
+    @Column(name = "id_grupo", insertable = false, updatable = false)
     private Long idGrupo;
 
     @Column(name = "id")
@@ -76,4 +81,12 @@ public class Grupo implements Serializable {
 
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;
+
+    /**
+	 * Relacion con Grupo-Archivo
+	 */
+	@OneToMany(targetEntity = Archivo.class, fetch = FetchType.LAZY)	
+	@JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")	
+	@OrderBy("usuarioFecha Asc")	
+	private List<Archivo> ArchivoList;
 }

@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -44,10 +44,10 @@ public class Archivo implements Serializable {
     private Long idArchivo;
     
     @NotBlank(message = "E-GA00100-12")
-    @Column(name = "id_grupo")
+    @Column(name = "id_grupo", insertable = false, updatable = false)
     private Long idGrupo;
 
-    @NotBlank(message = "E-GA00100-12")
+    @NotBlank(message = "E-GA00100-12")    
     @Column(name = "nombre_ramdon", length = 128)
     private String nombreRamdon;
 
@@ -79,13 +79,5 @@ public class Archivo implements Serializable {
     private Date usuarioFecha;
 
     @Column(name = "usuario_programa", length = 256)
-    private String usuarioPrograma;
-
-    @OneToOne(targetEntity = Grupo.class)
-    @JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")
-    private Grupo grupo;
-
-    @OneToMany(targetEntity = ArchivoEvento.class)
-    @JoinColumn(name = "id_archivo", referencedColumnName = "id_archivo")
-    private List<ArchivoEvento> archivoEventos;
+    private String usuarioPrograma;	
 }

@@ -1,0 +1,31 @@
+##
+## o.velez@qapaq.io
+## 
+## login
+@username=admin  
+@password=12341234
+@email=omargo33@hotmail.com
+@servicioLogin=http://127.0.0.1:8080/gs_001_10/login
+@servicio=http://127.0.0.1:8084/ga_001_10/archivo
+          
+###
+# @name rdpAuth
+
+post {{servicioLogin}}
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+post {{servicioLogin}}/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
+
+### enviar clave por correo
+post {{servicioLogin}}/lostPassword
+Content-Type: application/x-www-form-urlencoded
+
+email={{email}}
+
+### listar todos
+get {{servicio}}/
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}

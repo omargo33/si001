@@ -15,8 +15,7 @@ public class ConstantesGS00100 {
     }
 
     public static final String TIPO_USER_NAME="C";
-    public static final String PARAMETRO_INTENTOS_FALLIDOS="001";
-    public static final String PARAMETRO_TIEMPO_ESPERA="002";
+    
     public static final String PARAMETRO_RE_CAPTCHA="003";
     public static final String PARAMETRO_EXPRESION_REGULAR="004";
     public static final String PARAMETRO_SERVIDOR_DEFAULT_SEGURIDADES="100";
@@ -24,15 +23,7 @@ public class ConstantesGS00100 {
     public static final String PARAMETRO_NOTIFICACION_CREAR_CREAR="301";
     public static final String PARAMETRO_CAMBIO_CLAVE="302";
 
-    public static final String TOKEN_ESTADO_INACTIVO="I";
-    public static final String TOKEN_ESTADO_CREADO="C";
-    public static final String TOKEN_ESTADO_ACTIVO="A";    
-    public static final String TOKEN_ESTADO_USUARIO_NO_EXISTE = "<NO DATA>";
-    public static final String TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS = "<EXCEEDS NUMBER OF ATTEMPTS>";
     
     public static final String MODULO_ESTADO_INACTIVO="I";
-    public static final String MODULO_ESTADO_ACTIVO="A";
-
-    public static final String USUARIO_ESTADO_INACTIVO="I";
-    public static final String USUARIO_ESTADO_ACTIVO="A";
+    public static final String MODULO_ESTADO_ACTIVO="A";    
 }

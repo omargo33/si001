@@ -11,10 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,11 +43,11 @@ public class Notificacion implements Serializable {
     private Long idNotificacion;
 
     @NotBlank(message = "E-GA00100-12")
-    @Column(name = "id_formato")
+    @Column(name = "id_formato", insertable = false, updatable = false)
     private Long idFormato;
 
     @NotBlank(message = "E-GA00100-12")
-    @Column(name = "id_servicio")
+    @Column(name = "id_servicio", insertable = false, updatable = false)
     private Long idServicio;
 
     @Column(name = "titulo", length = 256)
@@ -83,11 +84,11 @@ public class Notificacion implements Serializable {
     @Column(name = "usuario_programa", length = 256)
     private String usuarioPrograma;      
     
-    @OneToMany(targetEntity = Formato.class)
+    @OneToOne(targetEntity = Formato.class)
     @JoinColumn(name = "id_formato", referencedColumnName = "id_formato")    
     private Formato formato;    
 
-    @OneToMany(targetEntity = Servicio.class)
+    @OneToOne(targetEntity = Servicio.class)
     @JoinColumn(name = "id_servicio", referencedColumnName = "id_servicio")
     private Servicio servicio;
 }
