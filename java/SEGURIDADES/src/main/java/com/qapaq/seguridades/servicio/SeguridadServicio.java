@@ -36,11 +36,15 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SeguridadServicio implements UserDetailsService {
 
-    @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @Autowired
     private VGroupMembersServicio vGroupMembersServicio;
+
+    @Autowired
+    public SeguridadServicio(UsuarioServicio usuarioServicio, VGroupMembersServicio vGroupMembersServicio) {
+        this.usuarioServicio = usuarioServicio;
+        this.vGroupMembersServicio = vGroupMembersServicio;
+    }
 
     /**
      * Método para validar el usuario y roles.
@@ -52,7 +56,8 @@ public class SeguridadServicio implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         String estado = usuarioServicio.validarUsuarioLogin(userName);
-        //if (estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_ACTIVO) == 0 || estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_CREADO) == 0) {
+        // if (estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_ACTIVO) == 0 ||
+        // estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_CREADO) == 0) {
 
         if (estado.compareTo("A") == 0 || estado.compareTo("C") == 0) {
             List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(userName);
@@ -64,6 +69,6 @@ public class SeguridadServicio implements UserDetailsService {
             return new User(userName, usuarioServicio.getTokenUsuario().getTokenPassword(), authorities);
         } else {
             throw new UsernameNotFoundException("Usuario no encontrado");
-        }        
+        }
     }
 }

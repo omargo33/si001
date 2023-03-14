@@ -12,6 +12,8 @@ import com.qapaq.catalogos.jpa.model.Modulo;
 import com.qapaq.catalogos.jpa.model.Parametro;
 import com.qapaq.catalogos.jpa.queries.ParametroRepositorio;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Objeto para dar soporte a servicio REST de Parametro.
  * 
@@ -21,6 +23,7 @@ import com.qapaq.catalogos.jpa.queries.ParametroRepositorio;
  */
 @Service
 @Transactional
+@Slf4j
 public class ParametroServicio {
 
     private ParametroRepositorio parametroRepositorio;
@@ -50,8 +53,10 @@ public class ParametroServicio {
      * @return
      */
     public Map<String,Parametro> findByIndiceModulo(String indiceModulo) {
+        log.info("indiceModulo {}",indiceModulo);
         Map<String,Parametro> mapParametros = new HashMap<>();         
         Modulo modulo = moduloServicio.findByIndice(indiceModulo);
+        log.info(modulo.toString());
         List <Parametro> parametros = parametroRepositorio.findByIdModulo(modulo.getIdModulo());
         for (Parametro parametro : parametros) {            
             mapParametros.put(parametro.getIndice(), parametro);            

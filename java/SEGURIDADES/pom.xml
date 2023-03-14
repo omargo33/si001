@@ -42,12 +42,16 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--jwt
-		por autho0 -->
+		<!--jwt por autho0 -->
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>3.18.1</version>
+		</dependency>
+		<!-- dependencia para el manejo de seguridades -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<!-- dependencia de tools personalizados -->
 		<dependency>

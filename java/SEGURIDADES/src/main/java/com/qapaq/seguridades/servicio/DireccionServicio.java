@@ -23,8 +23,13 @@ import com.qapaq.seguridades.jpa.queries.DireccionRepositorio;
 @Transactional
 public class DireccionServicio {
 
-    @Autowired
+    
     private DireccionRepositorio direccionRepositorio;
+
+    @Autowired
+    public DireccionServicio(DireccionRepositorio direccionRepositorio) {
+        this.direccionRepositorio = direccionRepositorio;
+    }
 
     /**
      * Metodo para insertar un nuevo dato.
