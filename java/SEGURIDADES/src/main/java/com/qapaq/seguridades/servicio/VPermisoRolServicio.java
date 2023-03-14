@@ -17,7 +17,7 @@ import com.qapaq.seguridades.jpa.model.VPermisoRol;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 public class VPermisoRolServicio {
 
     private final VPermisoRolRepositorio vPermisoRepositorio;

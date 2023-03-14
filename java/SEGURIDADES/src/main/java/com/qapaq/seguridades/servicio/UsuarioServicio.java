@@ -36,7 +36,7 @@ import com.qapaq.seguridades.ConstantesSeguridades;
  */
 @Slf4j
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 public class UsuarioServicio {
 
     @Value("${app.name}")

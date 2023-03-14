@@ -20,7 +20,7 @@ import com.qapaq.catalogos.jpa.queries.ParametroRepositorio;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 public class ParametroServicio {
 
     private ParametroRepositorio parametroRepositorio;

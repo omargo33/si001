@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 @Slf4j
 public class TokenServicio {
 

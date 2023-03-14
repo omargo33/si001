@@ -20,7 +20,7 @@ import com.qapaq.seguridades.jpa.queries.DireccionRepositorio;
  * 
  */
 @Service
-@Transactional("ar001001TransactionManager")
+@Transactional
 public class DireccionServicio {
 
     @Autowired

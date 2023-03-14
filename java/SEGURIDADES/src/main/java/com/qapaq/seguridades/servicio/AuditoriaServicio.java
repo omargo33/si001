@@ -22,13 +22,11 @@ import com.qapaq.seguridades.jpa.queries.AuditoriaRepositorio;
  * 
  */
 @Service
-@Transactional("ar001001TransactionManager")
+@Transactional
 public class AuditoriaServicio {
 
     private AuditoriaRepositorio auditoriaRepositorio;
-
     private AuditoriaParametroRepositorio auditoriaParametroRepositorio;
-
     private AuditoriaEventoRepositorio auditoriaEventoRepositorio;
 
     private Auditoria auditoria;
@@ -43,7 +41,7 @@ public class AuditoriaServicio {
         this.auditoriaParametroRepositorio = auditoriaParametroRepositorio;
         this.auditoriaEventoRepositorio = auditoriaEventoRepositorio;
     }
-
+    
     /**
      * Metodo para crear una nueva auditoria.
      * 

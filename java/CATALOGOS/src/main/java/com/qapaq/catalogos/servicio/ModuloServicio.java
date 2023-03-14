@@ -19,7 +19,7 @@ import com.qapaq.catalogos.jpa.queries.ModuloRepositorio;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 public class ModuloServicio {
 
     private final ModuloRepositorio moduloRepositorio;
