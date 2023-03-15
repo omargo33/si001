@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qapaq.catalogos.jpa.model.Modulo;
 import com.qapaq.catalogos.jpa.queries.ModuloRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 
 /**
  * Objeto para dar soporte a servicio REST de modulo
@@ -20,19 +22,12 @@ import com.qapaq.catalogos.jpa.queries.ModuloRepositorio;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ModuloServicio {
 
-    private final ModuloRepositorio moduloRepositorio;
-    /**
-     * Metodo para crear los repositorios.
-     * @param moduloRepositorio
-     *
-     */
     @Autowired
-    public ModuloServicio(ModuloRepositorio moduloRepositorio) {
-        this.moduloRepositorio = moduloRepositorio;
-    }
-
+    private final ModuloRepositorio moduloRepositorio;
+    
     /**
      * Metodo para mostrar todos los modulos.
      */

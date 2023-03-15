@@ -1,0 +1,28 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## Login
+@url=127.0.0.1:8080/lg_001_00/login
+@username=admin
+@password=12341234
+@email=omargo33@hotmail.com
+
+###
+# @name rdpAuth
+
+post http://{{url}}
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### solicitar token refresh
+post http://{{url}}/refresh
+Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
+
+### solicitar una nueva clave
+post http://{{url}}/lostPassword
+Content-Type: application/x-www-form-urlencoded
+
+email={{email}}
