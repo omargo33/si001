@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qapaq.ConstantesTools;
+import com.qapaq.lg00100.ConstantesLG00100;
 import com.qapaq.lg00100.http.request.Common.ComonRefreshTokenControlador;
 import com.qapaq.lg00100.http.request.Common.TokenRefreshControlador;
 import com.qapaq.lg00100.jpa.model.VGroupMembers;
@@ -49,19 +50,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
     private String appVersion;
 
     /**
-     * Constructor de la clase.
-     * 
-     * @param monitorServicio
-     */
-   /**  @Autowired
-    public LoginControlador(TokenServicio tokenServicio, VGroupMembersServicio vGroupMembersServicio) {
-        this.tokenServicio = tokenServicio;
-        this.vGroupMembersServicio = vGroupMembersServicio;
-    }
-*/
-
-    /**
-     * Método para validar el usuario.
+     * Método para validar si un usuario existe.
      * 
      * @param username
      * @return
@@ -69,8 +58,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
      */
     @Override
     public boolean isActiveUser(String username) {
-        //return tokenServicio.existsBySocialNickAndTipoAndIdTokenNot(username," ConstantesGS00100.TIPO_USER_NAME");
-        return true;
+        return tokenServicio.validarUsuario(username, ConstantesLG00100.TOKEN_TIPO_CORREO);
     }
 
     /**
@@ -119,7 +107,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
             response.setStatus(HttpStatus.FORBIDDEN.value());
 
             Map<String, String> error = new HashMap<>();
-            error.put("error_message", "W-GS00100-5");
+            error.put("error", "W-GS00100-5");
             response.setContentType("application/json");
             try {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);

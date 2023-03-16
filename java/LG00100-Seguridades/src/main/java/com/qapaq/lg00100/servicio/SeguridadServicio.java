@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.qapaq.lg00100.jpa.model.VGroupMembers;
 
-//import com.qapaq.gs00100.ConstantesGS00100;
+import com.qapaq.lg00100.ConstantesLG00100;
+import com.qapaq.lg00100.jpa.model.VGroupMembers;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +41,6 @@ public class SeguridadServicio implements UserDetailsService {
     @Autowired
     private VGroupMembersServicio vGroupMembersServicio;
 
-
     /**
      * Método para validar el usuario y roles.
      * 
@@ -52,10 +51,8 @@ public class SeguridadServicio implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         String estado = usuarioServicio.validarUsuarioLogin(userName);
-        // if (estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_ACTIVO) == 0 ||
-        // estado.compareTo(ConstantesGS00100.TOKEN_ESTADO_CREADO) == 0) {
-
-        if (estado.compareTo("A") == 0 || estado.compareTo("C") == 0) {
+        if (estado.compareTo(ConstantesLG00100.TOKEN_ESTADO_ACTIVO) == 0
+                || estado.compareTo(ConstantesLG00100.TOKEN_ESTADO_CREADO) == 0) {
             List<VGroupMembers> listaVGroupMembers = vGroupMembersServicio.findByNombreVGroupMembers(userName);
             final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             for (VGroupMembers vGroupMembers : listaVGroupMembers) {

@@ -59,7 +59,14 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
 
     private VPermisoRolServicio vPermisoRolServicio;
 
-
+    /**
+     * Constructor de la clase.
+     * 
+     * @param userDetailsService
+     * @param bCryptPasswordEncoder
+     * @param usuarioServicio
+     * @param vPermisoRolServicio
+     */
     public Seguridad(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder,
             UsuarioServicio usuarioServicio, VPermisoRolServicio vPermisoRolServicio) {
         this.userDetailsService = userDetailsService;
@@ -96,58 +103,15 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean()) {
-
-            @Override
-            public String generarMensajeError(HttpServletRequest request) {
-                String mensajeError = "W-GS00100-6";
-                String userName = request.getParameter(ConstantesTools.USER_NAME);
-                String ip = request.getRemoteAddr() +" " + request.getRemoteHost() + ":" + request.getRemotePort();
-                String userAgent = request.getHeader("User-Agent");
-
-                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
-                String estado = usuarioServicio.validarUsuarioLogin(userName);
-                switch (estado) {
-                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
-                        mensajeError = "W-GS00100-7";
-                        break;
-                    case ConstantesLG00100.TOKEN_ESTADO_INACTIVO:
-                        mensajeError = "W-GS00100-8";
-                        break;
-                    case ConstantesLG00100.TOKEN_ESTADO_ACTIVO:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    case ConstantesLG00100.TOKEN_ESTADO_CREADO:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    default:
-                        mensajeError = "W-GS00100-1";
-                        log.warn("W-GS00100-1 user={} estado={}", userName, estado);
-                        break;
-                }
-                return String.format("{ \"error\": \"%s\"}", mensajeError);
-            }
-
-            @Override
-            public void ejecutaPostIngreso(HttpServletRequest request) {
-                String userName = request.getParameter(ConstantesTools.USER_NAME);
-                usuarioServicio.inicialiarContadoresIngreso(userName);
-            }
-        };
-
+        AuthenticationFilter authenticationFilter = crearAuthenticationFilter();
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login/**").permitAll();        
-        http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
+        http.authorizeRequests().antMatchers("/login/**").permitAll();
 
         List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
-        for (VPermisoRol vpr : listaVPermisoRol) {        
-            log.warn(vpr.toString());
+        for (VPermisoRol vpr : listaVPermisoRol) {
             http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
 
             if (vpr.getCrear() > 0) {
@@ -176,5 +140,60 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    /**
+     * Método para crear el filtro de autentificacion.
+     * 
+     * @return
+     */
+    private AuthenticationFilter crearAuthenticationFilter() throws Exception {
+
+        return new AuthenticationFilter(authenticationManagerBean()) {
+
+            @Override
+            public String generarMensajeError(HttpServletRequest request) {
+                String mensajeError = "W-GS00100-6";
+                String userName = request.getParameter(ConstantesTools.USER_NAME);
+                String ip = request.getRemoteAddr() + " " + request.getRemoteHost() + ":" + request.getRemotePort();
+                String userAgent = request.getHeader("User-Agent");
+
+                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
+                String estado = usuarioServicio.validarUsuarioLogin(userName);
+                switch (estado) {
+                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
+                        mensajeError = "W-GS00100-6";
+                        break;
+                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
+                        mensajeError = "W-GS00100-7";
+                        break;
+                    case ConstantesLG00100.TOKEN_ESTADO_INACTIVO:
+                        mensajeError = "W-GS00100-8";
+                        break;
+                    case ConstantesLG00100.TOKEN_ESTADO_ACTIVO:
+                        mensajeError = "W-GS00100-6";
+                        break;
+                    case ConstantesLG00100.TOKEN_ESTADO_CREADO:
+                        mensajeError = "W-GS00100-6";
+                        break;
+                    default:
+                        mensajeError = "W-GS00100-1";
+                        log.warn("W-GS00100-1 user={} estado={}", userName, estado);
+                        break;
+                }
+                return String.format("{ \"error\": \"%s\"}", mensajeError);
+            }
+
+            /**
+             * Método para ejecutar acciones después de ingresar.
+             * 
+             * @param request
+             */
+            @Override
+            public void ejecutaPostIngreso(HttpServletRequest request) {
+                String userName = request.getParameter(ConstantesTools.USER_NAME);
+                usuarioServicio.inicialiarContadoresIngreso(userName);
+            }
+        };
     }
 }

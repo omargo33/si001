@@ -15,7 +15,7 @@ import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
 import com.qapaq.lg00100.jpa.model.Token;
 import com.qapaq.security.GeneradorClaves;
 import com.qapaq.security.Hash;
-
+import com.qapaq.catalogos.servicio.NotificacionServicio;
 import com.qapaq.lg00100.ConstantesLG00100;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,9 @@ public class TokenServicio {
     private final AuditoriaServicio auditoriaServicio;
     @Autowired
     private final TokenRepositorio tokenRepositorio;
-    
+
+    @Autowired
+    private final NotificacionServicio notificacionServicio;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -92,8 +94,7 @@ public class TokenServicio {
      * @param tipo
      */
     public Token findBySocialNickAndTipo(String socialNick, String tipo) {
-        return tokenRepositorio.findBySocialNickAndTipo(socialNick, tipo);
-    }
+        return tokenRepositorio.findBySocialNickAndTipo(socialNick, tipo);   }
 
     /**
      * Metodo para enviar token y enviar por mail.
@@ -126,7 +127,13 @@ public class TokenServicio {
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
         tokenRepositorio.save(token);
 
-        log.info("Se envia correo a: {} con el password {} ",  correo, password);
+        // TODO: Enviar correo pendiente
+        log.info("Se envia correo a: {} con el password {} ", correo, password);
+        
+        
+        notificacionServicio.createNotificacion((long)1, (long) 1,"titulo", "body contenido","omargo33@hotmail.com",
+        "N", new Date(),  "usuario", "usuarioPrograma", null, null);
+
         return true;
     }
 
@@ -145,5 +152,12 @@ public class TokenServicio {
         this.auditoriaServicio.agregarParametro("ip", ip, ConstantesLG00100.DIRECCION_IN);
         this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesLG00100.DIRECCION_IN);
         this.auditoriaServicio.agregarEnvento(userAgent, ConstantesLG00100.TIPO_EVENTO_SEGURIDADES);
-    }    
+    }
+
+    /**
+     * Metodo para validar si un usuario existe.
+     */
+    public boolean validarUsuario(String correo, String tipo) {
+        return tokenRepositorio.existsBySocialNickAndTipo(correo, tipo);
+    }
 }
