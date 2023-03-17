@@ -3,11 +3,9 @@ package com.qapaq.ca00100.jpa.queries;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.ca00100.jpa.model.Parametro;
 
-@Repository
 public interface ParametroRepositorio extends JpaRepository<Parametro, Long> {
 
         /**

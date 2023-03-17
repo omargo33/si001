@@ -10,17 +10,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ComponentScan({
-		"com.qapaq.catalogos.*",
+		"com.qapaq.ca00100.*",
 		"com.qapaq.lg00100.*",
 })
 
 @EntityScan({
-		"com.qapaq.catalogos.jpa.model",
+		"com.qapaq.ca00100.jpa.model",
 		"com.qapaq.lg00100.jpa.model",
 })
 
 @EnableJpaRepositories({
-		"com.qapaq.catalogos.jpa.queries",
+		"com.qapaq.ca00100.jpa.queries",
 		"com.qapaq.lg00100.jpa.queries"
 })
 

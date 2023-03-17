@@ -7,7 +7,7 @@ package com.qapaq.ca00100;
  * @date 2023-02-12
  * 
  */
-public class ConstantesCatalogos {
+public class ConstantesCA00100 {
     public static final String NOTIFICACION_ANULAR = "S";
     public static final String NOTIFICACION_NO_ANULAR = "N";
     public static final String NOTIFICACION_PARAMETRO_PARAMETRO = "P";

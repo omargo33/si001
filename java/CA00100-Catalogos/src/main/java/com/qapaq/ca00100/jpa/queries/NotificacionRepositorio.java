@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.ca00100.jpa.model.Notificacion;
 
@@ -12,7 +11,6 @@ import com.qapaq.ca00100.jpa.model.Notificacion;
 /**
  * Interfaces para CRUD de JPA Notificacion.
  */
-@Repository
 public interface NotificacionRepositorio extends PagingAndSortingRepository<Notificacion, Long> {
 
     /**

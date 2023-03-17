@@ -1,7 +1,10 @@
 package com.qapaq.lg00100.servicio;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +18,13 @@ import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
 import com.qapaq.lg00100.jpa.model.Token;
 import com.qapaq.security.GeneradorClaves;
 import com.qapaq.security.Hash;
+import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.servicio.AuditoriaServicio;
 import com.qapaq.ca00100.servicio.NotificacionServicio;
+import com.qapaq.ca00100.servicio.ParametroServicio;
 import com.qapaq.lg00100.ConstantesLG00100;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Objeto para dar soporte a servicio REST de token.
@@ -31,12 +35,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Transactional
-@Slf4j
 @RequiredArgsConstructor
 public class TokenServicio {
 
     @Value("${app.name}")
     private String appName;
+
+    @Value("${spring.mvc.format.date-time}")
+    private String formatoFecha;
 
     @Autowired
     private final AuditoriaServicio auditoriaServicio;
@@ -45,6 +51,10 @@ public class TokenServicio {
 
     @Autowired
     private final NotificacionServicio notificacionServicio;
+
+    @Autowired
+    private final ParametroServicio parametroServicio;
+
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -95,7 +105,8 @@ public class TokenServicio {
      * @param tipo
      */
     public Token findBySocialNickAndTipo(String socialNick, String tipo) {
-        return tokenRepositorio.findBySocialNickAndTipo(socialNick, tipo);   }
+        return tokenRepositorio.findBySocialNickAndTipo(socialNick, tipo);
+    }
 
     /**
      * Metodo para enviar token y enviar por mail.
@@ -127,15 +138,33 @@ public class TokenServicio {
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
         tokenRepositorio.save(token);
-
-        // TODO: Enviar correo pendiente
-        log.info("Se envia correo a: {} con el password {} ", correo, password);
-        
-        
-        notificacionServicio.createNotificacion((long)1, (long) 1,"titulo", "body contenido","omargo33@hotmail.com",
-        "N", new Date(),  "usuario", "usuarioPrograma", null, null);
-
+        enviarNotificacionCrearClave(correo, password, ip, userAgent, token.getUsuario(), usuarioPrograma);
         return true;
+    }
+
+    /**
+     * Metodo para enviar notificaciones de crear correo.
+     */
+    public void enviarNotificacionCrearClave(String correo, String password, String ip, String userAgent,
+            String usuario, String usuarioPrograma) {
+
+        Long idFormato = parametroServicio.findByIdModuloAndIndice(appName, "300").getValorNumero01();
+        Long idServicio = parametroServicio.findByIdModuloAndIndice(appName, "300").getValorNumero02();
+        String urlSitio = parametroServicio.findByIdModuloAndIndice(appName, "50").getValorTexto01();
+        
+        //TODO: cambiar asuntos y contenido por bundles
+        String asunto = "";
+        String contenido = "" + urlSitio;
+        Date fecha = new Date();
+
+        // fecha formato
+        SimpleDateFormat dateFormatoFecha = new SimpleDateFormat(formatoFecha);
+        Map<String, String> mapaParametros = new HashMap<String, String>();
+        mapaParametros.put("hora", dateFormatoFecha.format(fecha));
+        mapaParametros.put("ip", ip);
+        mapaParametros.put("dispositivo", userAgent);
+        notificacionServicio.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
+                ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
     }
 
     /**

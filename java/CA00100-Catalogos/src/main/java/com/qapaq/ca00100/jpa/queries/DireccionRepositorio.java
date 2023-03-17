@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.ca00100.jpa.model.Direccion;
 
@@ -17,7 +16,6 @@ import com.qapaq.ca00100.jpa.model.Direccion;
  * @date 2022-11-25
  * 
  */
-@Repository
 public interface DireccionRepositorio extends JpaRepository<Direccion, Long> {
 
     /**

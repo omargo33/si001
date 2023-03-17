@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qapaq.ca00100.ConstantesCatalogos;
+import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.jpa.model.Notificacion;
 import com.qapaq.ca00100.jpa.model.NotificacionParametro;
 import com.qapaq.ca00100.jpa.queries.NotificacionParametroRepositorio;
@@ -64,7 +64,7 @@ public class NotificacionServicio {
         notificacion.setTitulo(StringUtils.truncate(titulo, 256));
         notificacion.setContenido(StringUtils.truncate(contenido, 4096));
         notificacion.setDireccionEnvio(StringUtils.truncate(direccionEnvio, 256));
-        notificacion.setEstado( ConstantesCatalogos.NOTIFICACION_ESTADO_PENDIENTE);
+        notificacion.setEstado( ConstantesCA00100.NOTIFICACION_ESTADO_PENDIENTE);
         notificacion.setAnular(StringUtils.truncate(anular, 8));
         notificacion.setFechaEnvio(fechaEnvio);
         notificacion.setUsuarioFecha(new Date());
@@ -78,7 +78,7 @@ public class NotificacionServicio {
                     notificacion.getIdNotificacion(), 
                     entry.getKey(), 
                     entry.getValue(), 
-                    ConstantesCatalogos.NOTIFICACION_PARAMETRO_PARAMETRO);
+                    ConstantesCA00100.NOTIFICACION_PARAMETRO_PARAMETRO);
             }
         }
 
@@ -88,7 +88,7 @@ public class NotificacionServicio {
                     notificacion.getIdNotificacion(), 
                     entry.getKey(), 
                     entry.getValue(), 
-                    ConstantesCatalogos.NOTIFICACION_PARAMETRO_ADJUNTO);
+                    ConstantesCA00100.NOTIFICACION_PARAMETRO_ADJUNTO);
             }
         }
     }

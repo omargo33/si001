@@ -2,7 +2,6 @@ package com.qapaq.ca00100.jpa.queries;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.ca00100.jpa.model.AuditoriaParametro;
 
@@ -13,7 +12,6 @@ import com.qapaq.ca00100.jpa.model.AuditoriaParametro;
  * @date 2022-12-02
  * 
  */
-@Repository
 public interface AuditoriaParametroRepositorio extends JpaRepository<AuditoriaParametro, Long > {
 
     /**

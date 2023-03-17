@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 import com.qapaq.lg00100.jpa.model.Token;
 
 /**
@@ -16,7 +15,6 @@ import com.qapaq.lg00100.jpa.model.Token;
  * @date 2022-10-30
  * 
  */
-@Repository
 public interface TokenRepositorio extends PagingAndSortingRepository<Token, Long> {
         /**
          * Metodo para buscar un objeto por id y con estado distinto a eliminado (X).
