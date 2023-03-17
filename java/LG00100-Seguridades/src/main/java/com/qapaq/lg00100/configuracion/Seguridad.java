@@ -81,7 +81,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-    @Override
+    /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
@@ -136,7 +136,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
      * 
      * @return
      */
-    @Bean
+    /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();

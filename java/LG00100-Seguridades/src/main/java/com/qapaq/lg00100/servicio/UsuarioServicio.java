@@ -13,9 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.catalogos.jpa.model.Parametro;
-import com.qapaq.catalogos.servicio.ParametroServicio;
-import com.qapaq.lg00100.jpa.model.Direccion;
 import com.qapaq.lg00100.jpa.model.Token;
 import com.qapaq.lg00100.jpa.model.Usuario;
 import com.qapaq.lg00100.jpa.queries.UsuarioRepositorio;
@@ -25,6 +22,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import com.qapaq.ca00100.jpa.model.Direccion;
+import com.qapaq.ca00100.jpa.model.Parametro;
+import com.qapaq.ca00100.servicio.AuditoriaServicio;
+import com.qapaq.ca00100.servicio.DireccionServicio;
+import com.qapaq.ca00100.servicio.ParametroServicio;
 import com.qapaq.lg00100.ConstantesLG00100;
 
 

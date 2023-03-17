@@ -71,7 +71,7 @@
 		<!-- dependencia para el manejo de catalogos -->
 		<dependency>
 			<groupId>com.qapaq</groupId>
-			<artifactId>catalogos</artifactId>
+			<artifactId>ca00100</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<!-- dependencia de tools personalizados -->

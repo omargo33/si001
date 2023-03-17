@@ -15,7 +15,8 @@ import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
 import com.qapaq.lg00100.jpa.model.Token;
 import com.qapaq.security.GeneradorClaves;
 import com.qapaq.security.Hash;
-import com.qapaq.catalogos.servicio.NotificacionServicio;
+import com.qapaq.ca00100.servicio.AuditoriaServicio;
+import com.qapaq.ca00100.servicio.NotificacionServicio;
 import com.qapaq.lg00100.ConstantesLG00100;
 
 import lombok.RequiredArgsConstructor;
