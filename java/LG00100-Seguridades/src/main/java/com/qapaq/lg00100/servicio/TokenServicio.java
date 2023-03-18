@@ -14,15 +14,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
-import com.qapaq.lg00100.jpa.model.Token;
-import com.qapaq.security.GeneradorClaves;
-import com.qapaq.security.Hash;
+import com.qapaq.bundle.Bundles;
+import com.qapaq.bundle.BundleFactory;
 import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.servicio.AuditoriaServicio;
 import com.qapaq.ca00100.servicio.NotificacionServicio;
 import com.qapaq.ca00100.servicio.ParametroServicio;
 import com.qapaq.lg00100.ConstantesLG00100;
+import com.qapaq.lg00100.jpa.model.Token;
+import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
+import com.qapaq.security.GeneradorClaves;
+import com.qapaq.security.Hash;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,6 +48,7 @@ public class TokenServicio {
 
     @Autowired
     private final AuditoriaServicio auditoriaServicio;
+    
     @Autowired
     private final TokenRepositorio tokenRepositorio;
 
@@ -56,6 +59,8 @@ public class TokenServicio {
     private final ParametroServicio parametroServicio;
 
     private final PasswordEncoder passwordEncoder;
+
+    private static final Bundles BUNDLES = BundleFactory.crearBundle("info");
 
     /**
      * Metodo para buscar por idToken.
@@ -144,6 +149,21 @@ public class TokenServicio {
 
     /**
      * Metodo para enviar notificaciones de crear correo.
+     * 
+     * Obtiene los parametros con los indices 300 y 50
+     * Crea los asuntos y contenidos
+     * 
+     * Agrega los parametros de hora ip y dispositivo
+     * 
+     * Pone en la cola de envios de correos.
+     * 
+     * @param correo
+     * @param password
+     * @param ip
+     * @param userAgent
+     * @param usuario
+     * @param usuarioPrograma
+     * 
      */
     public void enviarNotificacionCrearClave(String correo, String password, String ip, String userAgent,
             String usuario, String usuarioPrograma) {
@@ -152,12 +172,10 @@ public class TokenServicio {
         Long idServicio = parametroServicio.findByIdModuloAndIndice(appName, "300").getValorNumero02();
         String urlSitio = parametroServicio.findByIdModuloAndIndice(appName, "50").getValorTexto01();
         
-        //TODO: cambiar asuntos y contenido por bundles
-        String asunto = "";
-        String contenido = "" + urlSitio;
+        String asunto = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.asunto");
+        String contenido = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.cuerpo",usuario,password,urlSitio);
         Date fecha = new Date();
 
-        // fecha formato
         SimpleDateFormat dateFormatoFecha = new SimpleDateFormat(formatoFecha);
         Map<String, String> mapaParametros = new HashMap<String, String>();
         mapaParametros.put("hora", dateFormatoFecha.format(fecha));

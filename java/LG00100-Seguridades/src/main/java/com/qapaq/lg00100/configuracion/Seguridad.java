@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ import com.qapaq.lg00100.jpa.model.VPermisoRol;
 import com.qapaq.lg00100.servicio.UsuarioServicio;
 import com.qapaq.lg00100.servicio.VPermisoRolServicio;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,38 +43,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class Seguridad extends WebSecurityConfigurerAdapter {
-
-    private final UserDetailsService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${spring.application.name}")
     private String appName;
 
-   
-
     @Value("${server.servlet.context-path}")
     private String contexto;
 
+    @Autowired
+    private final UserDetailsService userDetailsService;
+    
+    @Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @Autowired
     private VPermisoRolServicio vPermisoRolServicio;
-
-    /**
-     * Constructor de la clase.
-     * 
-     * @param userDetailsService
-     * @param bCryptPasswordEncoder
-     * @param usuarioServicio
-     * @param vPermisoRolServicio
-     */
-    public Seguridad(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder,
-            UsuarioServicio usuarioServicio, VPermisoRolServicio vPermisoRolServicio) {
-        this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.usuarioServicio = usuarioServicio;
-        this.vPermisoRolServicio = vPermisoRolServicio;
-    }
 
     /**
      * Método para configurar la autenticación.

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qapaq.lg00100.ConstantesLG00100;
 import com.qapaq.lg00100.jpa.model.VGroupMembers;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class SeguridadServicio implements UserDetailsService {
 
     @Autowired
