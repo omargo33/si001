@@ -43,11 +43,9 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
     @Autowired  
     private VGroupMembersServicio vGroupMembersServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
 
     /**
      * Método para validar si un usuario existe.
@@ -101,7 +99,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
         String correo =String.valueOf(request.getParameter(ConstantesTools.EMAIL));
         String ip = request.getRemoteAddr() + " " + request.getRemoteHost() + ":" + request.getRemotePort();
         String userAgent = request.getHeader("User-Agent");
-        boolean estado = tokenServicio.crearEnviarToken(correo, ip, userAgent, appName + "-" + appVersion);
+        boolean estado = tokenServicio.crearEnviarToken(correo, ip, userAgent, appName  );
 
         if (!estado) {         
             response.setStatus(HttpStatus.FORBIDDEN.value());

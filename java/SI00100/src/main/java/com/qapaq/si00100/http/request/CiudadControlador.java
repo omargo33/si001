@@ -25,6 +25,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Ciudad;
 import com.qapaq.si00100.servicio.CiudadServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de las ciudades.
  * 
@@ -34,24 +36,13 @@ import com.qapaq.si00100.servicio.CiudadServicio;
  */
 @RestController
 @RequestMapping(value = "/ciudades")
+@RequiredArgsConstructor
 public class CiudadControlador extends ComonControlador{
+    @Autowired
     private CiudadServicio ciudadServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
-    /**
-     * Constructor de la clase.
-     * 
-     * @param ciudadServicio
-     */
-    @Autowired
-    public CiudadControlador(CiudadServicio ciudadServicio) {
-        this.ciudadServicio = ciudadServicio;
-    }
 
     /**
      * Metodo para obtener todos las ciudades.
@@ -87,7 +78,7 @@ public class CiudadControlador extends ComonControlador{
      */
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     public @ResponseBody Ciudad createCiudad(@Valid @RequestBody Ciudad ciudad, HttpServletRequest request) {
-        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName+ " " + appVersion);
+        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName  );
     }
 
     /**
@@ -98,7 +89,7 @@ public class CiudadControlador extends ComonControlador{
       */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
     public @ResponseBody Ciudad updateCiudad(@Valid @RequestBody Ciudad ciudad, HttpServletRequest request) {
-        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName+ " " + appVersion);
+        return ciudadServicio.saveCiudad(ciudad, evaluarUsuario(request), appName  );
     }
 
     /**

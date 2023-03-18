@@ -24,6 +24,8 @@ import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.Localizacion;
 import com.qapaq.si00100.servicio.LocalizacionServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de localizaciones.
  * 
@@ -33,20 +35,15 @@ import com.qapaq.si00100.servicio.LocalizacionServicio;
  */
 @RestController
 @RequestMapping(value = "/localizaciones")
+@RequiredArgsConstructor
 public class LocalizacionControlador extends ComonControlador {
 
-    LocalizacionServicio localizacionServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-
     @Autowired
-    public LocalizacionControlador(LocalizacionServicio localizacionServicio) {
-        this.localizacionServicio = localizacionServicio;
-    }
+    LocalizacionServicio localizacionServicio;
 
     /**
      * Metodo para obtener todos las localizaciones.
@@ -89,7 +86,7 @@ public class LocalizacionControlador extends ComonControlador {
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public Localizacion createLocalizacion(@Valid @RequestBody Localizacion localizacion, HttpServletRequest request) {
-        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName + " " + appVersion);
+        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName   );
     }
 
     /**
@@ -101,7 +98,7 @@ public class LocalizacionControlador extends ComonControlador {
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ResponseBody  
     public Localizacion updateLocalizacion(@Valid @RequestBody Localizacion localizacion, HttpServletRequest request) {
-        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName + " " + appVersion);
+        return localizacionServicio.saveLocalizacion(localizacion, evaluarUsuario(request), appName   );
     }
 
     /**

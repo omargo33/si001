@@ -19,6 +19,7 @@ import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
 import com.qapaq.security.GeneradorClaves;
 import com.qapaq.security.Hash;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,31 +32,20 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional("gs001001TransactionManager")
 @Slf4j
+@RequiredArgsConstructor
 public class TokenServicio {
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
+    @Autowired
     private final AuditoriaServicio auditoriaServicio;
+    @Autowired
     private final TokenRepositorio tokenRepositorio;
+    @Autowired
     private final ParametroServicio parametroServicio;
+    @Autowired
 
     private final PasswordEncoder passwordEncoder;
-
-    /**
-     * Metodo para crear los repositorios.
-     * 
-     * @param moduloRepositorio
-     *
-     */
-    @Autowired
-    public TokenServicio(AuditoriaServicio auditoriaServicio, TokenRepositorio tokenRepositorio,
-            ParametroServicio parametroServicio, PasswordEncoder passwordEncoder) {
-        this.auditoriaServicio = auditoriaServicio;
-        this.tokenRepositorio = tokenRepositorio;
-        this.parametroServicio = parametroServicio;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     /**
      * Metodo para buscar por idToken.

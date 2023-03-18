@@ -46,11 +46,10 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
+   
 
     @Value("${server.servlet.context-path}")
     private String contexto;
@@ -158,7 +157,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
                 String ip = request.getRemoteAddr() + " " + request.getRemoteHost() + ":" + request.getRemotePort();
                 String userAgent = request.getHeader("User-Agent");
 
-                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName + "-" + appVersion);
+                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName  );
                 String estado = usuarioServicio.validarUsuarioLogin(userName);
                 switch (estado) {
                     case ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:

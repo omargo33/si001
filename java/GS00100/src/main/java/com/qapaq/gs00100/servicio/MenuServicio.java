@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qapaq.gs00100.jpa.model.Menu;
 import com.qapaq.gs00100.jpa.queries.MenuRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 
 /**
  * Objeto para dar soporte a servicio REST de modulo
@@ -21,14 +23,11 @@ import com.qapaq.gs00100.jpa.queries.MenuRepositorio;
  */
 @Service
 @Transactional("gs001001TransactionManager")
+@RequiredArgsConstructor
 public class MenuServicio {
 
-    private final MenuRepositorio menuRepositorio;
-
     @Autowired
-    public MenuServicio(MenuRepositorio menuRepositorio) {
-        this.menuRepositorio = menuRepositorio;
-    }
+    private final MenuRepositorio menuRepositorio;
 
     /**
      * Metodo para mostrar un menu por id.

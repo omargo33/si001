@@ -23,6 +23,7 @@ import com.qapaq.gs00100.jpa.queries.UsuarioRepositorio;
 import com.qapaq.security.Hash;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.qapaq.ar00100.ContantesAR00100;
@@ -38,39 +39,30 @@ import com.qapaq.ar00100.jpa.model.Direccion;
 @Slf4j
 @Service
 @Transactional("gs001001TransactionManager")
+@RequiredArgsConstructor
 public class UsuarioServicio {
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
     private UsuarioRepositorio usuarioRepositorio;
 
+    @Autowired
     private final TokenServicio tokenServicio;
+    @Autowired
+
     private final DireccionServicio direccionServicio;
+    @Autowired
+
     private final AuditoriaServicio auditoriaServicio;
+    @Autowired
+
     private final ParametroServicio parametroServicio;
 
     @Getter
     private Token tokenUsuario;
     private Map<String, Parametro> mapaParametros;
 
-    /**
-     * Metodo para crear los repositorios.
-     * 
-     * @param moduloRepositorio
-     *
-     */
-    @Autowired
-    public UsuarioServicio(UsuarioRepositorio usuarioRepositorio, TokenServicio tokenServicio,
-            DireccionServicio direccionServicio, AuditoriaServicio auditoriaServicio,
-            ParametroServicio parametroServicio) {
-        this.usuarioRepositorio = usuarioRepositorio;
-        this.tokenServicio = tokenServicio;
-        this.direccionServicio = direccionServicio;
-        this.auditoriaServicio = auditoriaServicio;
-        this.parametroServicio = parametroServicio;
-
-    }
 
     @PostConstruct
     public void init() {

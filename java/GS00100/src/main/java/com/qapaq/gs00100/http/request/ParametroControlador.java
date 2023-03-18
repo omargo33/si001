@@ -13,6 +13,8 @@ import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.servicio.ParametroServicio;
 import com.qapaq.http.request.ComonControlador;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de parametro
  * 
@@ -22,20 +24,13 @@ import com.qapaq.http.request.ComonControlador;
  */
 @RestController
 @RequestMapping(value = "/parametros")
+@RequiredArgsConstructor
 public class ParametroControlador extends ComonControlador {
 
+   @Autowired
    ParametroServicio parametroService;
 
-   /**
-    * Metodo para crear la clase.
-    * 
-    * @param parametroService
-    */
-   @Autowired
-   public ParametroControlador(ParametroServicio parametroService) {
-      this.parametroService = parametroService;
-   }
-
+   
    /**
     * Metodo para mostrar todos los parametros.
     */

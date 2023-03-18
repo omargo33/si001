@@ -12,6 +12,8 @@ import com.qapaq.gs00100.jpa.model.Modulo;
 import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.jpa.queries.ParametroRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de Parametro.
  * 
@@ -21,17 +23,15 @@ import com.qapaq.gs00100.jpa.queries.ParametroRepositorio;
  */
 @Service
 @Transactional("gs001001TransactionManager")
+@RequiredArgsConstructor
 public class ParametroServicio {
 
+    @Autowired
     private ParametroRepositorio parametroRepositorio;
 
+    @Autowired
     private ModuloServicio moduloServicio;
 
-    @Autowired
-    public ParametroServicio(ParametroRepositorio parametroRepositorio, ModuloServicio moduloServicio) {
-        this.parametroRepositorio = parametroRepositorio;
-        this.moduloServicio = moduloServicio;
-    }    
 
     /**
      * Metodo para buscar parametros de un modulo.

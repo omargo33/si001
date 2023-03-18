@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.MonitorAlerta;
 import com.qapaq.si00100.servicio.MonitorAlertaServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de monitores
  * alertas.
@@ -32,20 +34,16 @@ import com.qapaq.si00100.servicio.MonitorAlertaServicio;
  */
 @RestController
 @RequestMapping(value = "/monitores_alertas")
+@RequiredArgsConstructor
 public class MonitorAlertaControlador extends ComonControlador {
 
-    MonitorAlertaServicio monitorAlertaServicio;
-
-    @Value("${app.name}")
+    
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-
+    
     @Autowired
-    public MonitorAlertaControlador(MonitorAlertaServicio monitorAlertaServicio) {
-        this.monitorAlertaServicio = monitorAlertaServicio;
-    }
+    MonitorAlertaServicio monitorAlertaServicio;
 
     /**
      * Metodo para obtener todos los monitores alertas.
@@ -88,7 +86,7 @@ public class MonitorAlertaControlador extends ComonControlador {
      */
     @PostMapping(value = "/")
     public MonitorAlerta saveMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta, HttpServletRequest request) {
-        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName + " " + appVersion);
+        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName   );
     }
 
     /**
@@ -99,7 +97,7 @@ public class MonitorAlertaControlador extends ComonControlador {
      */
     @PutMapping(value = "/")
     public MonitorAlerta updateMonitorAlerta(@Valid @RequestBody MonitorAlerta monitorAlerta, HttpServletRequest request) {
-        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName + " " + appVersion);
+        return monitorAlertaServicio.saveMonitorAlerta(monitorAlerta, evaluarUsuario(request), appName   );
     }
 
     /**

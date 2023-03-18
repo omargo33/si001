@@ -17,6 +17,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Clima;
 import com.qapaq.si00100.servicio.ClimaServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones del clima.
  * 
@@ -26,19 +28,11 @@ import com.qapaq.si00100.servicio.ClimaServicio;
  */
 @RestController
 @RequestMapping(value = "/climas")
+@RequiredArgsConstructor
 public class ClimaControlador extends ComonControlador {
 
-    private ClimaServicio climaServicio;
-
-    /**
-     * Constructor de la clase.
-     * 
-     * @param climaServicio
-     */
     @Autowired
-    public ClimaControlador(ClimaServicio climaServicio) {
-        this.climaServicio = climaServicio;
-    }
+    private ClimaServicio climaServicio;
 
     /**
      * Metodo para obtener todos las clima paginados.

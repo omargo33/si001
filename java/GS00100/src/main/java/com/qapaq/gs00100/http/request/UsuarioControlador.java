@@ -22,6 +22,8 @@ import com.qapaq.gs00100.jpa.model.Usuario;
 import com.qapaq.gs00100.servicio.UsuarioServicio;
 import com.qapaq.http.request.ComonControlador;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de modulo
  * 
@@ -31,14 +33,12 @@ import com.qapaq.http.request.ComonControlador;
  */
 @RestController
 @RequestMapping(value = "/usuarios")
+@RequiredArgsConstructor
 public class UsuarioControlador extends ComonControlador {
 
+    @Autowired
     UsuarioServicio usuarioService;
 
-    @Autowired
-    public UsuarioControlador(UsuarioServicio usuarioService) {
-        this.usuarioService = usuarioService;
-    }
 
     /**
      * Metodo para mostrar todos los usuarios de forma paginada.

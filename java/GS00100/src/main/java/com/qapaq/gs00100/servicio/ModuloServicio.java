@@ -13,6 +13,8 @@ import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Modulo;
 import com.qapaq.gs00100.jpa.queries.ModuloRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de modulo
  * 
@@ -22,19 +24,12 @@ import com.qapaq.gs00100.jpa.queries.ModuloRepositorio;
  */
 @Service
 @Transactional("gs001001TransactionManager")
+@RequiredArgsConstructor
 public class ModuloServicio {
 
-    private final ModuloRepositorio moduloRepositorio;
-    /**
-     * Metodo para crear los repositorios.
-     * @param moduloRepositorio
-     *
-     */
     @Autowired
-    public ModuloServicio(ModuloRepositorio moduloRepositorio) {
-        this.moduloRepositorio = moduloRepositorio;
-    }
-
+    private final ModuloRepositorio moduloRepositorio;
+    
     /**
      * Metodo para mostrar todos los modulos.
      */

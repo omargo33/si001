@@ -1,13 +1,8 @@
 package com.qapaq.ga00100.http.request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,15 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qapaq.ga00100.ConstantesGA00100;
 import com.qapaq.http.request.ComonControlador;
 import com.qapaq.ga00100.servicio.ArchivoServicio;
 import com.qapaq.ga00100.jpa.model.Archivo;
@@ -46,11 +38,8 @@ public class ArchivoControlador  extends ComonControlador {
     @Autowired
     public ArchivoServicio archivoServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
 
     /**
      * Metodo para obtener todos los archivos.

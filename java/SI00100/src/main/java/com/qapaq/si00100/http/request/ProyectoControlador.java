@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Proyecto;
 import com.qapaq.si00100.servicio.ProyectoServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de proyectos.
  * 
@@ -31,82 +33,77 @@ import com.qapaq.si00100.servicio.ProyectoServicio;
  */
 @RestController
 @RequestMapping(value = "/proyectos")
-public class ProyectoControlador extends ComonControlador{
+@RequiredArgsConstructor
+public class ProyectoControlador extends ComonControlador {
 
-        private final ProyectoServicio proyectoServicio;
+    @Autowired
+    private final ProyectoServicio proyectoServicio;
 
-        @Value("${app.name}")
-        private String appName;
+    @Value("${spring.application.name}")
+    private String appName;
 
-        @Value("${app.version}")
-        private String appVersion;
+    /**
+     * Metodo para obtener todos los proyectos.
+     * 
+     * @return
+     */
+    @GetMapping("/")
+    public List<Proyecto> getAllProyecto(Pageable pageable) {
+        return proyectoServicio.findAllProyecto(pageable);
+    }
 
-        @Autowired
-        public ProyectoControlador(ProyectoServicio proyectoServicio) {
-            this.proyectoServicio = proyectoServicio;
-        }
-        
-        /**
-        * Metodo para obtener todos los proyectos.
-        * 
-        * @return
-        */
-        @GetMapping("/")
-        public List<Proyecto> getAllProyecto(Pageable pageable) {
-            return proyectoServicio.findAllProyecto(pageable);
-        }
-        
-        /**
-        * Metodo para obtener un proyecto por id.
-        * 
-        * @param id
-        * @return
-        */
-        @GetMapping("/{id}")
-        public Proyecto getProyectoById(@PathVariable("id") Long id) {
-            return proyectoServicio.findProyectoById(id);
-        }
+    /**
+     * Metodo para obtener un proyecto por id.
+     * 
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Proyecto getProyectoById(@PathVariable("id") Long id) {
+        return proyectoServicio.findProyectoById(id);
+    }
 
-        /**
-         * Metodo para obtener un proyecto por nombre y paginado.
-         * @param proyecto
-         * @return
-         */
-        @GetMapping("/nombre={nombre}")
-        public List<Proyecto> getProyectoByNombre(@PathVariable("nombre") String nombre, Pageable pageable) {
-            return proyectoServicio.findProyectoByNombre(nombre, pageable);
-        }
-        
-        /**
-        * Metodo para guardar un proyecto.
-        * 
-        * @param proyecto
-        * @return
-        */
-        @PostMapping("/")
-        public Proyecto saveProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
-            return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName+" "+ appVersion);
-        }
-        
-        /**
-        * Metodo para actualizar un proyecto.
-        * 
-        * @param proyecto
-        * @return
-        */
-        @PutMapping("/")
-        public Proyecto updateProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
-            return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName+" "+ appVersion);
-        }
-        
-        /**
-        * Metodo para eliminar un proyecto.
-        * 
-        * @param id
-        * @return
-        */
-        @DeleteMapping("/{id}")
-        public void deleteMonitorComando(@PathVariable Long id) throws ForeignKeyException {        
-            proyectoServicio.deleteProyectoById(id);
-        }    
+    /**
+     * Metodo para obtener un proyecto por nombre y paginado.
+     * 
+     * @param proyecto
+     * @return
+     */
+    @GetMapping("/nombre={nombre}")
+    public List<Proyecto> getProyectoByNombre(@PathVariable("nombre") String nombre, Pageable pageable) {
+        return proyectoServicio.findProyectoByNombre(nombre, pageable);
+    }
+
+    /**
+     * Metodo para guardar un proyecto.
+     * 
+     * @param proyecto
+     * @return
+     */
+    @PostMapping("/")
+    public Proyecto saveProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
+        return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName);
+    }
+
+    /**
+     * Metodo para actualizar un proyecto.
+     * 
+     * @param proyecto
+     * @return
+     */
+    @PutMapping("/")
+    public Proyecto updateProyecto(@Valid @RequestBody Proyecto proyecto, HttpServletRequest request) {
+        return proyectoServicio.saveProyecto(proyecto, evaluarUsuario(request), appName);
+    }
+
+    /**
+     * Metodo para eliminar un proyecto.
+     * 
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public void deleteMonitorComando(@PathVariable Long id) throws ForeignKeyException {
+        proyectoServicio.deleteProyectoById(id);
+    }
 }

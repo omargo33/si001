@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.RecursoMonitor;
 import com.qapaq.si00100.servicio.RecursoMonitorServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de RecursosMonitores.
  * 
@@ -31,19 +33,14 @@ import com.qapaq.si00100.servicio.RecursoMonitorServicio;
  */
 @RestController
 @RequestMapping(value = "/recursos_monitores")
+@RequiredArgsConstructor
 public class RecursoMonitorControlador extends ComonControlador {
-    private RecursoMonitorServicio recursoMonitorServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-
     @Autowired
-    public RecursoMonitorControlador(RecursoMonitorServicio recursoMonitorServicio) {
-        this.recursoMonitorServicio = recursoMonitorServicio;
-    }
+    private RecursoMonitorServicio recursoMonitorServicio;
 
     /**
      * Metodo para obtener un recursoMonitor por id_monitor y paginado
@@ -74,7 +71,7 @@ public class RecursoMonitorControlador extends ComonControlador {
      */
     @PostMapping("/")
     public RecursoMonitor createRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor, HttpServletRequest request) {
-        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName+" "+appVersion);
+        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName  );
     }
 
     /**
@@ -82,7 +79,7 @@ public class RecursoMonitorControlador extends ComonControlador {
      */
     @PutMapping("/")
     public RecursoMonitor updateRecursoMonitor(@Valid @RequestBody RecursoMonitor recursoMonitor, HttpServletRequest request) {
-        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName+" "+appVersion);
+        return recursoMonitorServicio.saveRecursoMonitor(recursoMonitor,evaluarUsuario(request), appName  );
     }
 
     /**

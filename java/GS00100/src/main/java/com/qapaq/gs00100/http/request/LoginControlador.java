@@ -25,6 +25,7 @@ import com.qapaq.gs00100.servicio.VGroupMembersServicio;
 import com.qapaq.http.request.ComonRefreshTokenControlador;
 import com.qapaq.http.request.TokenRefreshControlador;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,27 +41,16 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/login")
 @Slf4j
+@RequiredArgsConstructor
 public class LoginControlador extends ComonRefreshTokenControlador implements TokenRefreshControlador {
 
+    @Autowired
     private TokenServicio tokenServicio;
+    @Autowired
     private VGroupMembersServicio vGroupMembersServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
-    /**
-     * Constructor de la clase.
-     * 
-     * @param monitorServicio
-     */
-    @Autowired
-    public LoginControlador(TokenServicio tokenServicio, VGroupMembersServicio vGroupMembersServicio) {
-        this.tokenServicio = tokenServicio;
-        this.vGroupMembersServicio = vGroupMembersServicio;
-    }
 
     /**
      * Método para validar el usuario.
@@ -116,7 +106,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
         String userAgent = request.getHeader("User-Agent");
 
         log.warn("correo {} ip {} userAgent {}", correo, ip, userAgent);
-        boolean estado = tokenServicio.enviarToken(correo, ip, userAgent, appName + "-" + appVersion);
+        boolean estado = tokenServicio.enviarToken(correo, ip, userAgent, appName  );
 
         if (!estado) {         
             response.setStatus(HttpStatus.FORBIDDEN.value());

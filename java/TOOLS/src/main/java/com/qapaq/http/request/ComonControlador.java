@@ -38,11 +38,9 @@ public class ComonControlador {
 
     private Object[] arguments;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
 
     /**
      * Metodo para informar errores de validacion.
@@ -207,15 +205,15 @@ public class ComonControlador {
      */
     public String getUsuarioPrograma(String usuarioPrograma) {
         if (usuarioPrograma == null || usuarioPrograma.isEmpty()) {
-            usuarioPrograma = "noCliente@" + appName + "-" + appVersion;
+            usuarioPrograma = "noCliente@" + appName  ;
             return usuarioPrograma;
         }
 
         int separador = usuarioPrograma.indexOf("@");
         if (separador > 0) {
-            usuarioPrograma = usuarioPrograma.substring(0, separador) + "@" + appName + "-" + appVersion;
+            usuarioPrograma = usuarioPrograma.substring(0, separador) + "@" + appName  ;
         } else {
-            usuarioPrograma = usuarioPrograma + "@" + appName + "-"  + appVersion;
+            usuarioPrograma = usuarioPrograma + "@" + appName;
         }
 
         return usuarioPrograma;

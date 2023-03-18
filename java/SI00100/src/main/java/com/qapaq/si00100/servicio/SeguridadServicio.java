@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.qapaq.si00100.jpa.model.Monitor;
 import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase de servicio Seguridad Monitor repositorio.
  * 
@@ -21,23 +23,16 @@ import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
  * @date 2020-10-09
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
- * @see security 
+ * @see security
  * 
  */
 @Service
 @Transactional
-public class SeguridadServicio implements UserDetailsService{
-    private MonitorRepositorio monitorRepositorio;
+@RequiredArgsConstructor
+public class SeguridadServicio implements UserDetailsService {
 
-    /**
-     * Constructor de la clase.
-     * 
-     * @param monitorRepositorio
-     */
     @Autowired
-    public SeguridadServicio(MonitorRepositorio monitorRepositorio) {
-        this.monitorRepositorio = monitorRepositorio;
-    }
+    private MonitorRepositorio monitorRepositorio;
 
     /**
      * Método para cargar el usuario.
@@ -48,14 +43,14 @@ public class SeguridadServicio implements UserDetailsService{
      */
     @Override
     public UserDetails loadUserByUsername(String monitorMacAddres) throws UsernameNotFoundException {
-        Monitor monitor = this.monitorRepositorio.findByMacAddress(monitorMacAddres,monitorMacAddres);
+        Monitor monitor = this.monitorRepositorio.findByMacAddress(monitorMacAddres, monitorMacAddres);
 
-        if (monitor == null) {   
+        if (monitor == null) {
             throw new UsernameNotFoundException("E-SI00100-22");
         }
 
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();        
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_MONITOR"));
-        return new User(monitor.getNombre(), monitor.getClave(),authorities);
+        return new User(monitor.getNombre(), monitor.getClave(), authorities);
     }
 }

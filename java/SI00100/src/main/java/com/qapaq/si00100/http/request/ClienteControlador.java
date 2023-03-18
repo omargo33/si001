@@ -27,6 +27,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Cliente;
 import com.qapaq.si00100.servicio.ClienteServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de los clientes.
  * 
@@ -36,24 +38,14 @@ import com.qapaq.si00100.servicio.ClienteServicio;
  */
 @RestController
 @RequestMapping(value = "/clientes")
+@RequiredArgsConstructor
 public class ClienteControlador extends ComonControlador {
+    
+    @Autowired
     private ClienteServicio clienteServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
-    /**
-     * Constructor de la clase.
-     * 
-     * @param clienteServicio
-     */
-    @Autowired
-    public ClienteControlador(ClienteServicio clienteServicio) {
-        this.clienteServicio = clienteServicio;
-    }
 
     /**
      * Metodo para obtener todos los clientes.
@@ -106,7 +98,7 @@ public class ClienteControlador extends ComonControlador {
      */
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")    
     public Cliente createCliente(@Valid @RequestBody Cliente cliente,  HttpServletRequest request) {
-        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName + " " + appVersion);
+        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName   );
     }
 
     /**
@@ -116,7 +108,7 @@ public class ClienteControlador extends ComonControlador {
      */
     @PutMapping(value = "/", consumes = "application/json", produces = "application/json")    
     public Cliente actualizarCliente(@Valid @RequestBody Cliente cliente, HttpServletRequest request) {
-        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName + " " + appVersion);
+        return clienteServicio.saveCliente(cliente, evaluarUsuario(request), appName   );
     }
 
     /**

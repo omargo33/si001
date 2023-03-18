@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Monitor;
 import com.qapaq.si00100.servicio.MonitorServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de monitores.
  * 
@@ -31,20 +33,15 @@ import com.qapaq.si00100.servicio.MonitorServicio;
  */
 @RestController
 @RequestMapping(value = "/monitores")
+@RequiredArgsConstructor
 public class MonitorControlador extends ComonControlador {
     
+    @Autowired
         MonitorServicio monitorServicio;
     
-        @Value("${app.name}")
+        @Value("${spring.application.name}")
         private String appName;
     
-        @Value("${app.version}")
-        private String appVersion;
-    
-        @Autowired
-        public MonitorControlador(MonitorServicio monitorServicio) {
-            this.monitorServicio = monitorServicio;
-        }
     
         /**
         * Metodo para obtener todos los monitores.
@@ -86,7 +83,7 @@ public class MonitorControlador extends ComonControlador {
         */
         @PostMapping(value = "/")
         public Monitor createMonitor(@Valid @RequestBody Monitor monitor, HttpServletRequest request) {
-            return monitorServicio.saveMonitor(monitor, evaluarUsuario(request), appName+" "+appVersion);
+            return monitorServicio.saveMonitor(monitor, evaluarUsuario(request), appName  );
         }
     
         /**
@@ -97,7 +94,7 @@ public class MonitorControlador extends ComonControlador {
         */
         @PutMapping(value = "/")
         public Monitor updateMonitor(@Valid @RequestBody Monitor monitor, HttpServletRequest request) {
-            return monitorServicio.saveMonitor(monitor,evaluarUsuario(request), appName+" "+appVersion);
+            return monitorServicio.saveMonitor(monitor,evaluarUsuario(request), appName  );
         }
     
         /**

@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.MonitorComando;
 import com.qapaq.si00100.servicio.MonitorComandoServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de monitor comando.
  * 
@@ -31,20 +33,14 @@ import com.qapaq.si00100.servicio.MonitorComandoServicio;
  */
 @RestController
 @RequestMapping(value = "/monitores_comandos")
+@RequiredArgsConstructor
 public class MonitorComandoControlador extends ComonControlador{
 
+    @Autowired
     MonitorComandoServicio monitorComandoServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
-    @Autowired
-    public MonitorComandoControlador(MonitorComandoServicio monitorComandoServicio) {
-        this.monitorComandoServicio = monitorComandoServicio;
-    }
 
     /**
      * Metodo para obtener todos los monitores comando.
@@ -86,7 +82,7 @@ public class MonitorComandoControlador extends ComonControlador{
      */
     @PostMapping(value = "/")
     public MonitorComando saveMonitorComando(@Valid @RequestBody MonitorComando monitorComando, HttpServletRequest request) {
-        return monitorComandoServicio.saveMonitorComando(monitorComando, evaluarUsuario(request), appName + " " + appVersion);
+        return monitorComandoServicio.saveMonitorComando(monitorComando, evaluarUsuario(request), appName   );
     }
 
     /**
@@ -97,7 +93,7 @@ public class MonitorComandoControlador extends ComonControlador{
      */
     @PutMapping(value = "/")
     public MonitorComando updateMonitorComando(@Valid @RequestBody MonitorComando monitorComando, HttpServletRequest request) {
-        return monitorComandoServicio.saveMonitorComando(monitorComando, evaluarUsuario(request), appName + " " + appVersion);
+        return monitorComandoServicio.saveMonitorComando(monitorComando, evaluarUsuario(request), appName   );
     }
 
     /**

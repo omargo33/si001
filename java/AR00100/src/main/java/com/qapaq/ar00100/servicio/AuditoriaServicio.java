@@ -14,6 +14,8 @@ import com.qapaq.ar00100.jpa.queries.AuditoriaEventoRepositorio;
 import com.qapaq.ar00100.jpa.queries.AuditoriaParametroRepositorio;
 import com.qapaq.ar00100.jpa.queries.AuditoriaRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase de servicio CRUD para Auditoria completa.
  * 
@@ -23,27 +25,23 @@ import com.qapaq.ar00100.jpa.queries.AuditoriaRepositorio;
  */
 @Service
 @Transactional("ar001001TransactionManager")
+@RequiredArgsConstructor
 public class AuditoriaServicio {
 
+    @Autowired
     private AuditoriaRepositorio auditoriaRepositorio;
 
+    @Autowired
     private AuditoriaParametroRepositorio auditoriaParametroRepositorio;
 
+    @Autowired
     private AuditoriaEventoRepositorio auditoriaEventoRepositorio;
 
     private Auditoria auditoria;
 
     private int orden;
 
-    @Autowired
-    public AuditoriaServicio(AuditoriaRepositorio auditoriaRepositorio,
-            AuditoriaParametroRepositorio auditoriaParametroRepositorio,
-            AuditoriaEventoRepositorio auditoriaEventoRepositorio) {
-        this.auditoriaRepositorio = auditoriaRepositorio;
-        this.auditoriaParametroRepositorio = auditoriaParametroRepositorio;
-        this.auditoriaEventoRepositorio = auditoriaEventoRepositorio;
-    }
-
+   
     /**
      * Metodo para crear una nueva auditoria.
      * 

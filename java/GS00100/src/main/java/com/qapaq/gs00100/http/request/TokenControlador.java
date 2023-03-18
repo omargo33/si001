@@ -22,6 +22,8 @@ import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.servicio.TokenServicio;
 import com.qapaq.http.request.ComonControlador;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de tokens
  * 
@@ -31,19 +33,11 @@ import com.qapaq.http.request.ComonControlador;
  */
 @RestController
 @RequestMapping(value = "/tokens")
+@RequiredArgsConstructor
 public class TokenControlador extends ComonControlador {
 
-   TokenServicio tokenService;
-
-   /**
-    * Metodo para crear la clase.
-    * 
-    * @param tokenService
-    */
    @Autowired
-   public TokenControlador(TokenServicio tokenService) {
-      this.tokenService = tokenService;
-   }
+   TokenServicio tokenService;
 
    /**
     * Metodo para mostrar un token por id.

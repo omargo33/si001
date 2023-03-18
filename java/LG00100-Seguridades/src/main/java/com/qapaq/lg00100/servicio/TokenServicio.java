@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenServicio {
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
     @Value("${spring.mvc.format.date-time}")

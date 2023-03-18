@@ -13,6 +13,8 @@ import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.VRecursoMonitor;
 import com.qapaq.si00100.servicio.VRecursoMonitorServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de las ciudades.
  * 
@@ -22,19 +24,11 @@ import com.qapaq.si00100.servicio.VRecursoMonitorServicio;
  */
 @RestController
 @RequestMapping(value = "/v_recursos_monitores")
+@RequiredArgsConstructor
 public class VRecursoMonitorControlador extends ComonControlador {
-
+    @Autowired
     private VRecursoMonitorServicio vRecursoMonitorServicio;
 
-    /**
-     * Constructor de la clase.
-     * 
-     * @param vRecursoMonitorServicio
-     */
-    @Autowired
-    public VRecursoMonitorControlador(VRecursoMonitorServicio vRecursoMonitorServicio) {
-        this.vRecursoMonitorServicio = vRecursoMonitorServicio;
-    }
 
     /**
      * Metodo para obtener todos los recursos monitores buscando por nombre desde el token.

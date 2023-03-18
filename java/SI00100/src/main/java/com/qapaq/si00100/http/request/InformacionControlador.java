@@ -25,6 +25,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Informacion;
 import com.qapaq.si00100.servicio.InformacionServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de Informacion.
  * 
@@ -34,19 +36,14 @@ import com.qapaq.si00100.servicio.InformacionServicio;
  */
 @RestController
 @RequestMapping(value = "/informaciones")
-public class InformacionControlador extends ComonControlador{
+@RequiredArgsConstructor
+public class InformacionControlador extends ComonControlador {
 
-    InformacionServicio informacionServicio;
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-
     @Autowired
-    public InformacionControlador(InformacionServicio informacionServicio) {
-        this.informacionServicio = informacionServicio;
-    }
+    InformacionServicio informacionServicio;
 
     /**
      * Metodo para obtener todos las informaciones.
@@ -87,8 +84,9 @@ public class InformacionControlador extends ComonControlador{
      * @return
      */
     @PostMapping(value = "/")
-    public @ResponseBody Informacion saveInformacion(@Valid @RequestBody Informacion informacion, HttpServletRequest request) {
-        return informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName + " " + appVersion);
+    public @ResponseBody Informacion saveInformacion(@Valid @RequestBody Informacion informacion,
+            HttpServletRequest request) {
+        return informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName);
     }
 
     /**
@@ -99,7 +97,7 @@ public class InformacionControlador extends ComonControlador{
      */
     @PutMapping(value = "/")
     public void updateInformacion(@Valid @RequestBody Informacion informacion, HttpServletRequest request) {
-        informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName + " " + appVersion);
+        informacionServicio.saveInformacion(informacion, evaluarUsuario(request), appName);
     }
 
     /**
@@ -111,6 +109,6 @@ public class InformacionControlador extends ComonControlador{
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInformacion(@PathVariable Long id) throws ForeignKeyException {
-            informacionServicio.deleteInformacionById(id);
-    }    
+        informacionServicio.deleteInformacionById(id);
+    }
 }

@@ -1,15 +1,11 @@
 package com.qapaq.ga00100.servicio;
 
 import java.util.Date;
-import java.util.List;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.ga00100.jpa.model.Archivo;
 import com.qapaq.ga00100.jpa.model.ArchivoEvento;
-import com.qapaq.ga00100.jpa.queries.ArchivoRepositorio;
 import com.qapaq.ga00100.jpa.queries.ArchivoEventoRepositorio;
 import org.apache.commons.lang3.StringUtils;
 

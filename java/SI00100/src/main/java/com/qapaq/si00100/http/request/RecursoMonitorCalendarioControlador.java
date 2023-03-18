@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qapaq.si00100.servicio.RecursoMonitorCalendarioServicio;
+
+import lombok.RequiredArgsConstructor;
+
 import com.qapaq.http.request.ComonControlador;
 import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.RecursoMonitorCalendario;
@@ -31,20 +34,16 @@ import com.qapaq.si00100.jpa.model.RecursoMonitorCalendario;
  */
 @RestController
 @RequestMapping(value = "/recursos_monitores_calendarios")
+@RequiredArgsConstructor
 public class RecursoMonitorCalendarioControlador extends ComonControlador {
 
-    private RecursoMonitorCalendarioServicio recursoMonitorCalendarioServicio;
-
-    @Value("${app.name}")
+    
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-    
     @Autowired
-    public RecursoMonitorCalendarioControlador(RecursoMonitorCalendarioServicio recursoMonitorCalendarioServicio) {
-        this.recursoMonitorCalendarioServicio = recursoMonitorCalendarioServicio;
-    }
+    private RecursoMonitorCalendarioServicio recursoMonitorCalendarioServicio;
+
 
     /**
      * Metodo para obtener un recursoMonitorCalendario por id_recursoMonitorCalendario.
@@ -67,7 +66,7 @@ public class RecursoMonitorCalendarioControlador extends ComonControlador {
      */
     @PutMapping("/")
     public RecursoMonitorCalendario createRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario, HttpServletRequest request) {
-        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario,evaluarUsuario(request), appName+" "+appVersion);
+        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario,evaluarUsuario(request), appName  );
     } 
 
     /**
@@ -75,7 +74,7 @@ public class RecursoMonitorCalendarioControlador extends ComonControlador {
      */
     @PostMapping("/")
     public RecursoMonitorCalendario updateRecursoMonitorCalendario(@Valid @RequestBody RecursoMonitorCalendario recursoMonitorCalendario, HttpServletRequest request) {
-        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario, evaluarUsuario(request), appName+" "+appVersion);
+        return recursoMonitorCalendarioServicio.save(recursoMonitorCalendario, evaluarUsuario(request), appName  );
     }
 
     /**

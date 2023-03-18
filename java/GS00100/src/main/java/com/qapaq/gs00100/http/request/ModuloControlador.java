@@ -22,6 +22,8 @@ import com.qapaq.gs00100.jpa.model.Modulo;
 import com.qapaq.gs00100.servicio.ModuloServicio;
 import com.qapaq.http.request.ComonControlador;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Objeto para dar soporte a servicio REST de modulo
  * 
@@ -31,19 +33,11 @@ import com.qapaq.http.request.ComonControlador;
  */
 @RestController
 @RequestMapping(value = "/modulos")
+@RequiredArgsConstructor
 public class ModuloControlador extends ComonControlador {
 
-   ModuloServicio moduloService;
-
-   /**
-    * Metodo para crear la clase.
-    * 
-    * @param moduloService
-    */
    @Autowired
-   public ModuloControlador(ModuloServicio moduloService) {
-      this.moduloService = moduloService;
-   }
+   ModuloServicio moduloService;
 
    /**
     * Metodo para mostrar todos los modulos.

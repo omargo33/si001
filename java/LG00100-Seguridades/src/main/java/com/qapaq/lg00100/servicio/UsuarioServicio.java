@@ -43,7 +43,7 @@ import com.qapaq.lg00100.ConstantesLG00100;
 @RequiredArgsConstructor
 public class UsuarioServicio {
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
     @Autowired

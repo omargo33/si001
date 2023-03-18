@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qapaq.ga00100.jpa.model.Archivo;
-import com.qapaq.ga00100.jpa.model.ArchivoEvento;
 import com.qapaq.ga00100.jpa.queries.ArchivoRepositorio;
-import com.qapaq.ga00100.jpa.queries.ArchivoEventoRepositorio;
 
 import com.qapaq.ga00100.ConstantesGA00100;
 

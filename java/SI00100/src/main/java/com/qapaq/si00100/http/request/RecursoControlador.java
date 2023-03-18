@@ -22,6 +22,8 @@ import com.qapaq.jpa.exception.ForeignKeyException;
 import com.qapaq.si00100.jpa.model.Recurso;
 import com.qapaq.si00100.servicio.RecursoServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de Recursos.
  * 
@@ -31,20 +33,14 @@ import com.qapaq.si00100.servicio.RecursoServicio;
  */
 @RestController
 @RequestMapping(value = "/recursos")
+@RequiredArgsConstructor
 public class RecursoControlador extends ComonControlador {
 
+    @Autowired
     private final RecursoServicio recursoServicio;
 
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${app.version}")
-    private String appVersion;
-
-    @Autowired
-    public RecursoControlador(RecursoServicio recursoServicio) {
-        this.recursoServicio = recursoServicio;
-    }
 
     /**
      * Metodo para obtener todos los recursos.
@@ -79,7 +75,7 @@ public class RecursoControlador extends ComonControlador {
      */
     @PostMapping("/")
     public Recurso createRecurso(@Valid @RequestBody Recurso recurso, HttpServletRequest request) {
-        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName + " " + appVersion);
+        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName   );
     }
 
     /**
@@ -87,7 +83,7 @@ public class RecursoControlador extends ComonControlador {
      */
     @PutMapping("/")
     public Recurso updateRecurso(@Valid @RequestBody Recurso recurso, HttpServletRequest request) {
-        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName + " " + appVersion);
+        return recursoServicio.saveRecurso(recurso, evaluarUsuario(request), appName   );
     }
 
     @DeleteMapping("/{id}")

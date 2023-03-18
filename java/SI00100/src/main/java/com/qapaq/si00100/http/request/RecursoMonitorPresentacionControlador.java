@@ -19,6 +19,8 @@ import com.qapaq.http.request.ComonControlador;
 import com.qapaq.si00100.jpa.model.RecursoMonitorPresentacion;
 import com.qapaq.si00100.servicio.RecursoMonitorPresentacionServicio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Clase para controlar las peticiones de CRUD para servicio de
  * RecursosMonitoresCalendario.
@@ -29,21 +31,14 @@ import com.qapaq.si00100.servicio.RecursoMonitorPresentacionServicio;
  */
 @RestController
 @RequestMapping(value = "/recursos_monitores_presentaciones")
+@RequiredArgsConstructor
 public class RecursoMonitorPresentacionControlador extends ComonControlador {
 
-    private RecursoMonitorPresentacionServicio recursoMonitorPresentacionServicio;
-
-    @Value("${app.name}")
+    @Value("${spring.application.name}")
     private String appName;
 
-    @Value("${app.version}")
-    private String appVersion;
-
     @Autowired
-    public RecursoMonitorPresentacionControlador(
-            RecursoMonitorPresentacionServicio recursoMonitorPresentacionServicio) {
-        this.recursoMonitorPresentacionServicio = recursoMonitorPresentacionServicio;
-    }
+    private RecursoMonitorPresentacionServicio recursoMonitorPresentacionServicio;
 
     /**
      * Metodo para obtener un recursoMonitorPresentacion por
@@ -72,6 +67,6 @@ public class RecursoMonitorPresentacionControlador extends ComonControlador {
     public RecursoMonitorPresentacion createRecursoMonitorPresentacion(
             @Valid @RequestBody RecursoMonitorPresentacion recursoMonitorPresentacion, HttpServletRequest request) {
         return recursoMonitorPresentacionServicio.save(recursoMonitorPresentacion, evaluarUsuario(request),
-                appName + " " + appVersion);
+                appName   );
     }
 }

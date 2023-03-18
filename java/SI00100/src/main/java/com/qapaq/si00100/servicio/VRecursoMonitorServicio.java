@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.qapaq.si00100.jpa.model.VRecursoMonitor;
 import com.qapaq.si00100.jpa.queries.VRecursoMonitorRepositorio;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Servicio de v recurso monitor.
  * 
@@ -19,15 +21,12 @@ import com.qapaq.si00100.jpa.queries.VRecursoMonitorRepositorio;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class VRecursoMonitorServicio {
 
+    @Autowired
     private final VRecursoMonitorRepositorio vRecursoMonitorRepositorio;
 
-    @Autowired
-    public VRecursoMonitorServicio(VRecursoMonitorRepositorio vRecursoMonitorRepositorio) {
-        this.vRecursoMonitorRepositorio = vRecursoMonitorRepositorio;
-    }
-    
     /**
      * Metodo para buscar todos los v_recursos_monitores por nombre.
      * 
@@ -36,5 +35,5 @@ public class VRecursoMonitorServicio {
      */
     public List<VRecursoMonitor> findAllByNombre(String nombre) {
         return vRecursoMonitorRepositorio.findAllByNombre(nombre);
-    }    
+    }
 }
