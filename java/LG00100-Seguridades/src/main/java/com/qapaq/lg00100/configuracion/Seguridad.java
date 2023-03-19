@@ -20,12 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.qapaq.ConstantesTools;
-import com.qapaq.lg00100.filter.AuthenticationFilter;
-import com.qapaq.lg00100.filter.AuthorizationFilter;
+import com.qapaq.ca00100.jpa.model.VPermisoRol;
+import com.qapaq.ca00100.servicio.VPermisoRolServicio;
+import com.qapaq.filter.AuthenticationFilter;
+import com.qapaq.filter.AuthorizationFilter;
 import com.qapaq.lg00100.ConstantesLG00100;
-import com.qapaq.lg00100.jpa.model.VPermisoRol;
 import com.qapaq.lg00100.servicio.UsuarioServicio;
-import com.qapaq.lg00100.servicio.VPermisoRolServicio;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

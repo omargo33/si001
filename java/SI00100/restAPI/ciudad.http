@@ -8,11 +8,12 @@
 @servicio=127.0.0.1:8081/si_001_00/ciudades
 @username=admin
 @password=12341234
+@servicioSeguridades=192.168.1.2:8080/lg_001_00/login
 
 ###
 # @name rdpAuth
 
-post http://127.0.0.1:8080/seguridades/login
+post http://{{servicioSeguridades}}
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}
@@ -20,8 +21,6 @@ username={{username}}&password={{password}}
 ### solicitar token refresh
 get http://127.0.0.1:8081/si_001_00/login/refresh
 Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
-
-
 
 ### listar todos
 get http://{{servicio}}/
