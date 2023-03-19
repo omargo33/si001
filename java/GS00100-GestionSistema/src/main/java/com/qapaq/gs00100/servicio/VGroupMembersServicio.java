@@ -15,7 +15,7 @@ import com.qapaq.gs00100.jpa.model.VGroupMembers;
  * Objeto para dar soporte a servicio REST de V grupo members
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 @RequiredArgsConstructor
 public class VGroupMembersServicio {
 

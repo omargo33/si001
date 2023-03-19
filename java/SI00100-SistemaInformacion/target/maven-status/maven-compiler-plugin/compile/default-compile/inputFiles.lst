@@ -61,7 +61,6 @@
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/validadores/ClienteCorreoValidator.java
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/servicio/RecursoMonitorCalendarioServicio.java
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/validadores/MonitorNombre.java
-/home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/servicio/SeguridadServicio.java
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/validadores/CiudadNombreValidator.java
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/http/request/ClienteControlador.java
 /home/ovelez/Documentos/clientes/qapaq/si001/java/SI00100-SistemaInformacion/src/main/java/com/qapaq/si00100/servicio/MonitorAlertaServicio.java

@@ -47,7 +47,6 @@ com/qapaq/si00100/validadores/MonitorSerie.class
 com/qapaq/si00100/http/request/MonitorControlador.class
 com/qapaq/si00100/SI00100Application.class
 com/qapaq/si00100/jpa/queries/RecursoMonitorPresentacionRepositorio.class
-com/qapaq/si00100/servicio/SeguridadServicio.class
 com/qapaq/si00100/jpa/model/RecursoMonitor.class
 com/qapaq/si00100/http/request/RecursoMonitorPresentacionControlador.class
 com/qapaq/si00100/jpa/model/Proyecto.class

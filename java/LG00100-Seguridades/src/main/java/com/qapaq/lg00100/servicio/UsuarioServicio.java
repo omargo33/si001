@@ -22,12 +22,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.jpa.model.Direccion;
 import com.qapaq.ca00100.jpa.model.Parametro;
 import com.qapaq.ca00100.servicio.AuditoriaServicio;
 import com.qapaq.ca00100.servicio.DireccionServicio;
 import com.qapaq.ca00100.servicio.ParametroServicio;
-import com.qapaq.lg00100.ConstantesLG00100;
 
 
 /**
@@ -112,7 +112,7 @@ public class UsuarioServicio {
      */
     public Usuario guardarUsuario(Usuario usuario, String usuarioManager, String usuarioPrograma) {
         if (usuario.getIdUsuario() == null || usuario.getIdUsuario() <= 0) {
-            usuario.setEstado(ConstantesLG00100.USUARIO_ESTADO_INACTIVO);
+            usuario.setEstado(ConstantesCA00100.USUARIO_ESTADO_INACTIVO);
             usuario.setContadorIngreso(0);
             usuario.setContadorFecha(new Date());
         }
@@ -133,23 +133,23 @@ public class UsuarioServicio {
         Usuario usuario = usuarioRepositorio.findByNick(userName);
         
         if (usuario == null) {
-            return ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
         }
 
         long contadorIngreso = usuario.getContadorIngreso();
         Date contadorFecha = usuario.getContadorFecha();
         Date fechaActual = new Date();
-        long intentosMaximo = mapaParametros.get(ConstantesLG00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
-        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesLG00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
+        long intentosMaximo = mapaParametros.get(ConstantesCA00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
+        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesCA00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
 
         if (contadorIngreso >= intentosMaximo
                 && fechaActual.getTime() < (contadorFecha.getTime() + tiempoBloqueo)) {
-            return ConstantesLG00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS;
         }
-        tokenUsuario = tokenServicio.findBySocialNickAndTipo(userName, ConstantesLG00100.TOKEN_TIPO_CORREO);
+        tokenUsuario = tokenServicio.findBySocialNickAndTipo(userName, ConstantesCA00100.TOKEN_TIPO_CORREO);
 
         if(tokenUsuario==null){
-            return ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
         }
         
         return tokenUsuario.getEstado();
@@ -204,11 +204,11 @@ public class UsuarioServicio {
             String usuarioPrograma) {
 
         this.auditoriaServicio.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("nick", nombre, ConstantesLG00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesLG00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("userAgent", userAgent, ConstantesLG00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesLG00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ConstantesLG00100.TIPO_EVENTO_CUIDADO);
+        this.auditoriaServicio.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
     }
 
     /**

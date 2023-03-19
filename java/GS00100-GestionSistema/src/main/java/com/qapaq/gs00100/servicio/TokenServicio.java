@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.ar00100.ContantesAR00100;
-import com.qapaq.ar00100.servicio.AuditoriaServicio;
+import com.qapaq.ca00100.ConstantesCA00100;
+import com.qapaq.ca00100.servicio.AuditoriaServicio;
 import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 @Slf4j
 @RequiredArgsConstructor
 public class TokenServicio {
@@ -70,18 +70,20 @@ public class TokenServicio {
      * @return
      */
     public Token guardarToken(Token token, String usuario, String usuarioPrograma) {
-        token.setEstado(ConstantesGS00100.TOKEN_ESTADO_ACTIVO);
+        token.setEstado(ConstantesCA00100.TOKEN_ESTADO_ACTIVO);
         token.setValidador(
                 Hash.crearHash(String.valueOf(token.getIdUsuario()), token.getTipo(), token.getSocialNick()));
         token.setUsuario(StringUtils.truncate(usuario, 128));
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
         return tokenRepositorio.save(token);
-    }
 
+        
+    }
     /**
      * Metodo para borrar un token de manera logico.
      * 
+
      * @param idToken
      */
     public void deleteByIdToken(Long idToken) {
@@ -123,7 +125,7 @@ public class TokenServicio {
         }
 
         String password = GeneradorClaves.getPassword(GeneradorClaves.KEY_ALFANUMERICOS, 10);
-        token.setEstado(ConstantesGS00100.TOKEN_ESTADO_CREADO);
+        token.setEstado(ConstantesCA00100.TOKEN_ESTADO_CREADO);
         token.setTokenPassword(passwordEncoder.encode(password));
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
@@ -145,10 +147,10 @@ public class TokenServicio {
      */
     private void auditarSolicitudesFallidos(String correo, String ip, String userAgent, String usuarioPrograma) {
         this.auditoriaServicio.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("correo", correo, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarEnvento(userAgent, ContantesAR00100.TIPO_EVENTO_SEGURIDADES);
+        this.auditoriaServicio.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicio.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
     }
 
     /**

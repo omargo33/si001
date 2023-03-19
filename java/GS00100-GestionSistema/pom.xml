@@ -92,7 +92,7 @@
 		<!-- dependencia de JPA Base de auditoria -->
 		<dependency>
 			<groupId>com.qapaq</groupId>
-			<artifactId>ar00100</artifactId>
+			<artifactId>ca00100</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<!-- dependencia de springdoc-openapi-ui -->

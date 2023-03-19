@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.ar00100.servicio.AuditoriaServicio;
-import com.qapaq.ar00100.servicio.DireccionServicio;
 import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.jpa.model.Token;
@@ -26,8 +24,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import com.qapaq.ar00100.ContantesAR00100;
-import com.qapaq.ar00100.jpa.model.Direccion;
+import com.qapaq.ca00100.ConstantesCA00100;
+import com.qapaq.ca00100.jpa.model.Direccion;
+import com.qapaq.ca00100.servicio.AuditoriaServicio;
+import com.qapaq.ca00100.servicio.DireccionServicio;
 
 /**
  * Objeto para dar soporte a servicio REST de usuario.
@@ -38,7 +38,7 @@ import com.qapaq.ar00100.jpa.model.Direccion;
  */
 @Slf4j
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 @RequiredArgsConstructor
 public class UsuarioServicio {
 
@@ -111,7 +111,7 @@ public class UsuarioServicio {
      */
     public Usuario guardarUsuario(Usuario usuario, String usuarioManager, String usuarioPrograma) {
         if (usuario.getIdUsuario() == null || usuario.getIdUsuario() <= 0) {
-            usuario.setEstado(ConstantesGS00100.USUARIO_ESTADO_INACTIVO);
+            usuario.setEstado(ConstantesCA00100.USUARIO_ESTADO_INACTIVO);
             usuario.setContadorIngreso(0);
             usuario.setContadorFecha(new Date());
         }
@@ -132,23 +132,23 @@ public class UsuarioServicio {
         Usuario usuario = usuarioRepositorio.findByNick(userName);
         
         if (usuario == null) {
-            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
         }
 
         long contadorIngreso = usuario.getContadorIngreso();
         Date contadorFecha = usuario.getContadorFecha();
         Date fechaActual = new Date();
-        long intentosMaximo = mapaParametros.get(ConstantesGS00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
-        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesGS00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
+        long intentosMaximo = mapaParametros.get(ConstantesCA00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
+        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesCA00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
 
         if (contadorIngreso >= intentosMaximo
                 && fechaActual.getTime() < (contadorFecha.getTime() + tiempoBloqueo)) {
-            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS;
         }
         tokenUsuario = tokenServicio.findBySocialNickAndTipo(userName, ConstantesGS00100.TIPO_USER_NAME);
 
         if(tokenUsuario==null){
-            return ConstantesGS00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
+            return ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE;
         }
         
         return tokenUsuario.getEstado();
@@ -202,13 +202,12 @@ public class UsuarioServicio {
             String usuario,
             String usuarioPrograma) {
 
-        this.auditoriaServicio.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("nick", nombre, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("userAgent", userAgent, ContantesAR00100.DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ContantesAR00100.DIRECCION_IN);
-
-        this.auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ContantesAR00100.TIPO_EVENTO_CUIDADO);
+        auditoriaServicio.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
+        auditoriaServicio.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicio.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
     }
 
     /**

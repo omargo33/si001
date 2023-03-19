@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qapaq.ConstantesTools;
 import com.qapaq.http.request.Common.ComonRefreshTokenControlador;
 import com.qapaq.http.request.Common.TokenRefreshControlador;
-import com.qapaq.lg00100.ConstantesLG00100;
+import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.lg00100.jpa.model.VGroupMembers;
 import com.qapaq.lg00100.servicio.TokenServicio;
 import com.qapaq.lg00100.servicio.VGroupMembersServicio;
@@ -56,7 +56,7 @@ public class LoginControlador extends ComonRefreshTokenControlador implements To
      */
     @Override
     public boolean isActiveUser(String username) {
-        return tokenServicio.validarUsuario(username, ConstantesLG00100.TOKEN_TIPO_CORREO);
+        return tokenServicio.validarUsuario(username, ConstantesCA00100.TOKEN_TIPO_CORREO);
     }
 
     /**

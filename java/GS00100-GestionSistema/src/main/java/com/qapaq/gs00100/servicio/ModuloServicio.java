@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  * 
  */
 @Service
-@Transactional("gs001001TransactionManager")
+@Transactional
 @RequiredArgsConstructor
 public class ModuloServicio {
 

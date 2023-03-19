@@ -20,11 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.qapaq.ConstantesTools;
+import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.jpa.model.VPermisoRol;
 import com.qapaq.ca00100.servicio.VPermisoRolServicio;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
-import com.qapaq.lg00100.ConstantesLG00100;
 import com.qapaq.lg00100.servicio.UsuarioServicio;
 
 import lombok.RequiredArgsConstructor;
@@ -150,19 +150,19 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
                 usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName  );
                 String estado = usuarioServicio.validarUsuarioLogin(userName);
                 switch (estado) {
-                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
+                    case ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
                         mensajeError = "W-GS00100-6";
                         break;
-                    case ConstantesLG00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
+                    case ConstantesCA00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
                         mensajeError = "W-GS00100-7";
                         break;
-                    case ConstantesLG00100.TOKEN_ESTADO_INACTIVO:
+                    case ConstantesCA00100.TOKEN_ESTADO_INACTIVO:
                         mensajeError = "W-GS00100-8";
                         break;
-                    case ConstantesLG00100.TOKEN_ESTADO_ACTIVO:
+                    case ConstantesCA00100.TOKEN_ESTADO_ACTIVO:
                         mensajeError = "W-GS00100-6";
                         break;
-                    case ConstantesLG00100.TOKEN_ESTADO_CREADO:
+                    case ConstantesCA00100.TOKEN_ESTADO_CREADO:
                         mensajeError = "W-GS00100-6";
                         break;
                     default:
