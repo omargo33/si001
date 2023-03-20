@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * Objeto de llamado principal del sistema.
@@ -26,15 +26,21 @@ import org.springframework.context.annotation.FilterType;
 @ComponentScan(basePackages = {
         "com.qapaq.gs00100.http.request",
         "com.qapaq.gs00100.servicio",
-        "com.qapaq.ar00100.servicio",
-        "com.qapaq.ca00100.servicio",
         "com.qapaq.gs00100.validadores",
         "com.qapaq.gs00100.configuracion",
+
+        "com.qapaq.ca00100.http.request",
+        "com.qapaq.ca00100.servicio",
+
 })
 @EntityScan(basePackages = {
         "com.qapaq.gs00100.jpa.model",
-        "com.qapaq.ar00100.jpa.model",
         "com.qapaq.ca00100.jpa.model",
+})
+
+@EnableJpaRepositories(basePackages = {
+        "com.qapaq.gs00100.jpa.queries",
+        "com.qapaq.ca00100.jpa.queries",
 })
 
 @SpringBootApplication

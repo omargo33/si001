@@ -4,7 +4,7 @@
 ## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 ## 
 ## Login
-@url=192.168.1.2:8080/lg_001_00/login
+@url=192.168.1.2:8080/lg_001_10/login
 @username=admin
 @password=12341234
 @email=omargo33@hotmail.com

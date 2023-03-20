@@ -17,8 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.qapaq.ca00100.jpa.model.VPermisoRol;
-import com.qapaq.ca00100.servicio.VPermisoRolServicio;
+import com.qapaq.ca00100.jpa.model.VPermisoRolCat;
+import com.qapaq.ca00100.servicio.VPermisoRolServicioCat;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     private String contexto;
 
     @Autowired
-    private VPermisoRolServicio vPermisoRolServicio;
+    private VPermisoRolServicioCat vPermisoRolServicioCat;
 
     /**
      * Método para configurar la autenticación.
@@ -78,8 +78,8 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
-        List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
-        for (VPermisoRol vpr : listaVPermisoRol) {
+        List<VPermisoRolCat> listaVPermisoRolCat = vPermisoRolServicioCat.findByNickAndIndiceModulo(appName);
+        for (VPermisoRolCat vpr : listaVPermisoRolCat) {
             http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
 
             if (vpr.getCrear() > 0) {

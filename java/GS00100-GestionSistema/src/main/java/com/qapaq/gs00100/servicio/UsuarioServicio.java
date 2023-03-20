@@ -24,10 +24,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.jpa.model.Direccion;
+import com.qapaq.ca00100.jpa.model.DireccionCat;
 import com.qapaq.gs00100.jpa.model.Token;
-import com.qapaq.ca00100.servicio.AuditoriaServicio;
-import com.qapaq.ca00100.servicio.DireccionServicio;
+import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
+import com.qapaq.ca00100.servicio.DireccionServicioCat;
 
 /**
  * Objeto para dar soporte a servicio REST de usuario.
@@ -52,10 +52,10 @@ public class UsuarioServicio {
     private final TokenServicio tokenServicio;
     
     @Autowired
-    private final DireccionServicio direccionServicio;
+    private final DireccionServicioCat direccionServicioCat;
     
     @Autowired
-    private final AuditoriaServicio auditoriaServicio;
+    private final AuditoriaServicioCat auditoriaServicioCat;
     
     @Autowired
     private final ParametroServicio parametroServicio;
@@ -176,11 +176,11 @@ public class UsuarioServicio {
                 usuario.setContadorIngreso(usuario.getContadorIngreso() + 1);
                 usuario.setContadorFecha(new Date());
             } else {
-                Direccion direccion = new Direccion();
-                direccion.setElemento("usuarioRechazado()");
-                direccion.setDireccionDispositivo(ip);
-                direccion.setNavegadorDispositivo(userAgent);
-                direccionServicio.saveDireccion(direccion, userName, usuarioPrograma);
+                DireccionCat direccionCat = new DireccionCat();
+                direccionCat.setElemento("usuarioRechazado()");
+                direccionCat.setDireccionDispositivo(ip);
+                direccionCat.setNavegadorDispositivo(userAgent);
+                direccionServicioCat.saveDireccion(direccionCat, userName, usuarioPrograma);
             }
         } catch (Exception e) {
             log.error("E-GS00100-9 {}", userName);
@@ -203,12 +203,12 @@ public class UsuarioServicio {
             String usuario,
             String usuarioPrograma) {
 
-        auditoriaServicio.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
-        auditoriaServicio.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicio.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
+        auditoriaServicioCat.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
+        auditoriaServicioCat.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
     }
 
     /**

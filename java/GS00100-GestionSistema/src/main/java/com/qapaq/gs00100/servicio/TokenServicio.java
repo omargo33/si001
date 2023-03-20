@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.servicio.AuditoriaServicio;
+import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
 import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
 import com.qapaq.security.GeneradorClaves;
@@ -37,7 +37,7 @@ public class TokenServicio {
     @Value("${spring.application.name}")
     private String appName;
     @Autowired
-    private final AuditoriaServicio auditoriaServicio;
+    private final AuditoriaServicioCat auditoriaServicioCat;
     @Autowired
     private final TokenRepositorio tokenRepositorio;
     @Autowired
@@ -144,11 +144,11 @@ public class TokenServicio {
      * 
      */
     private void auditarSolicitudesFallidos(String correo, String ip, String userAgent, String usuarioPrograma) {
-        this.auditoriaServicio.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
+        auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
+        auditoriaServicioCat.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
     }
 
     /**

@@ -5,24 +5,24 @@
 ## 
 ## 
 ## Consultas modulos
-@servicio=127.0.0.1:8080/gs_001_10/modulos
+@url=192.168.1.2:8080/lg_001_10/login
 @username=admin
 @password=12341234
+@servicio=127.0.0.1:8082/gs_001_10
 
 ###
 # @name rdpAuth
-
-post http://127.0.0.1:8080/gs_001_10/login
+post http://{{url}}
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}
 
 ### solicitar token refresh
-get http://127.0.0.1:8080/gs_001_10/login/refresh
+post http://{{url}}/refresh
 Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
 
 ### listar todos
-get http://{{servicio}}/
+get http://{{servicio}}/modulos
 Authorization: Bearer {{rdpAuth.response.headers.access-token}}
 
 ### pagina 0 dos elementos y ordenado por nombre

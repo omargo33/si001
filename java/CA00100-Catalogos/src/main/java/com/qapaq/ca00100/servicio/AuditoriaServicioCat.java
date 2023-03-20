@@ -93,14 +93,14 @@ public class AuditoriaServicioCat {
      * @return
      */
     private AuditoriaEventoCat crearAuditoriaEvento (String descripcion, String tipo, int i){
-        AuditoriaEventoCat auditoriaEvento = new AuditoriaEventoCat();
-        auditoriaEvento.setIdAuditoria(auditoriaCat.getIdAuditoria());
-        auditoriaEvento.setUsuarioFecha(new Date());
-        auditoriaEvento.setTipo(StringUtils.truncate(tipo,8));
-        auditoriaEvento.setOrden(orden);
-        auditoriaEvento.setDescripcion(descripcion);
-        auditoriaEvento.setParte(i);
-        return auditoriaEvento;
+        AuditoriaEventoCat auditoriaEventoCat = new AuditoriaEventoCat();
+        auditoriaEventoCat.setIdAuditoria(auditoriaCat.getIdAuditoria());
+        auditoriaEventoCat.setUsuarioFecha(new Date());
+        auditoriaEventoCat.setTipo(StringUtils.truncate(tipo,8));
+        auditoriaEventoCat.setOrden(orden);
+        auditoriaEventoCat.setDescripcion(descripcion);
+        auditoriaEventoCat.setParte(i);
+        return auditoriaEventoCat;
     }
 
     /**
