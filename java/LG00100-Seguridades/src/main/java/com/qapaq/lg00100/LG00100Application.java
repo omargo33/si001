@@ -41,4 +41,3 @@ public class LG00100Application {
 		return new BCryptPasswordEncoder();
 	}
 }
-

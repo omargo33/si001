@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.Modulo;
 
@@ -17,7 +16,6 @@ import com.qapaq.gs00100.jpa.model.Modulo;
  * @date 2022-09-10
  * 
  */
-@Repository
 public interface ModuloRepositorio extends PagingAndSortingRepository<Modulo, Long> {
 
     /**

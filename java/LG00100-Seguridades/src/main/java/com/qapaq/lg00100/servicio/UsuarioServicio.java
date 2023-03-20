@@ -23,11 +23,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.jpa.model.Direccion;
-import com.qapaq.ca00100.jpa.model.Parametro;
-import com.qapaq.ca00100.servicio.AuditoriaServicio;
-import com.qapaq.ca00100.servicio.DireccionServicio;
-import com.qapaq.ca00100.servicio.ParametroServicio;
+import com.qapaq.ca00100.jpa.model.DireccionCat;
+import com.qapaq.ca00100.jpa.model.ParametroCat;
+import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
+import com.qapaq.ca00100.servicio.DireccionServicioCat;
+import com.qapaq.ca00100.servicio.ParametroServicioCat;
 
 
 /**
@@ -53,21 +53,21 @@ public class UsuarioServicio {
     private final TokenServicio tokenServicio;
 
     @Autowired
-    private final DireccionServicio direccionServicio;
+    private final DireccionServicioCat direccionServicioCat;
 
     @Autowired
-    private final AuditoriaServicio auditoriaServicio;
+    private final AuditoriaServicioCat auditoriaServicioCat;
     
     @Autowired
-    private final ParametroServicio parametroServicio;
+    private final ParametroServicioCat parametroServicioCat;
 
     @Getter
     private Token tokenUsuario;
-    private Map<String, Parametro> mapaParametros;
+    private Map<String, ParametroCat> mapaParametrosCat;
 
     @PostConstruct
     public void init() {
-        mapaParametros = parametroServicio.findByIndiceModulo(appName);
+        mapaParametrosCat = parametroServicioCat.findByIndiceModulo(appName);
     }
 
     /**
@@ -139,8 +139,8 @@ public class UsuarioServicio {
         long contadorIngreso = usuario.getContadorIngreso();
         Date contadorFecha = usuario.getContadorFecha();
         Date fechaActual = new Date();
-        long intentosMaximo = mapaParametros.get(ConstantesCA00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
-        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametros.get(ConstantesCA00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
+        long intentosMaximo = mapaParametrosCat.get(ConstantesCA00100.PARAMETRO_INTENTOS_FALLIDOS).getValorNumero01();
+        long tiempoBloqueo = (60 * 60 * 1000) *  mapaParametrosCat.get(ConstantesCA00100.PARAMETRO_TIEMPO_ESPERA).getValorNumero01();
 
         if (contadorIngreso >= intentosMaximo
                 && fechaActual.getTime() < (contadorFecha.getTime() + tiempoBloqueo)) {
@@ -176,11 +176,11 @@ public class UsuarioServicio {
                 usuario.setContadorIngreso(usuario.getContadorIngreso() + 1);
                 usuario.setContadorFecha(new Date());
             } else {
-                Direccion direccion = new Direccion();
-                direccion.setElemento("usuarioRechazado()");
-                direccion.setDireccionDispositivo(ip);
-                direccion.setNavegadorDispositivo(userAgent);
-                direccionServicio.saveDireccion(direccion, userName, usuarioPrograma);
+                DireccionCat direccionCat = new DireccionCat();
+                direccionCat.setElemento("usuarioRechazado()");
+                direccionCat.setDireccionDispositivo(ip);
+                direccionCat.setNavegadorDispositivo(userAgent);
+                direccionServicioCat.saveDireccion(direccionCat, userName, usuarioPrograma);
             }
         } catch (Exception e) {
             log.error("E-GS00100-9 {}", userName);
@@ -203,12 +203,12 @@ public class UsuarioServicio {
             String usuario,
             String usuarioPrograma) {
 
-        this.auditoriaServicio.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
+        this.auditoriaServicioCat.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
+        this.auditoriaServicioCat.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
     }
 
     /**

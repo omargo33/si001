@@ -3,11 +3,16 @@ package com.qapaq.gs00100.jpa.queries;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.Parametro;
 
-@Repository
+
+/**
+ * Interface para la clase Parametro.
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2023-03-19
+ */
 public interface ParametroRepositorio extends JpaRepository<Parametro, Long> {
 
         /**

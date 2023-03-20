@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.CodigoDefinidoUsuario;
 
@@ -15,7 +14,6 @@ import com.qapaq.gs00100.jpa.model.CodigoDefinidoUsuario;
  * @date 2022-09-09
  * 
  */
-@Repository
 public interface CodigoDefinidoUsuarioRepositorio extends JpaRepository <CodigoDefinidoUsuario, Long>{
 
         /**

@@ -1,5 +1,4 @@
 package com.qapaq.gs00100.jpa.model;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

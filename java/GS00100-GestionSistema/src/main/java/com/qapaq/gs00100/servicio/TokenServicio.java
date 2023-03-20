@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.servicio.AuditoriaServicio;
-import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
 import com.qapaq.security.GeneradorClaves;
@@ -83,7 +82,6 @@ public class TokenServicio {
     /**
      * Metodo para borrar un token de manera logico.
      * 
-
      * @param idToken
      */
     public void deleteByIdToken(Long idToken) {

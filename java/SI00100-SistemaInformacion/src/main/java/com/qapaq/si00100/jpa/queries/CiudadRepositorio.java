@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 import com.qapaq.si00100.jpa.model.Ciudad;
 
@@ -14,7 +13,6 @@ import com.qapaq.si00100.jpa.model.Ciudad;
  * @author o.velez
  * @date 2020-10-05
  */
-@Repository
 public interface CiudadRepositorio extends PagingAndSortingRepository<Ciudad, Long> {
 
     /**

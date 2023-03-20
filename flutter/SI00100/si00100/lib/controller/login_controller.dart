@@ -11,6 +11,7 @@ class LoginController {
   final RestApiDio _rest = RestApiDio();
   final AlertDialogWidget _alertDialogWidget = const AlertDialogWidget();
   bool _isLogin = false;
+  bool _isRecover = false;
 
   /// Login
   // TODO: implement encripcion
@@ -50,4 +51,37 @@ class LoginController {
 
   // is login
   bool get isLogin => _isLogin;
+
+  /// recurperar clave
+  recover(BuildContext context, String email) async {
+    _alertDialogWidget.wait(context);
+    _isRecover = false;
+    Preferences.init();
+    _rest.init();
+
+    await Future.delayed(const Duration(milliseconds: 700));
+
+    await _rest
+        .getDio()
+        .post(
+          '${StaticUrl.urlAPILogin}/lostPassword',
+          data: {'email': email},
+          options: Options(
+            headers: {
+              Headers.contentTypeHeader: "application/x-www-form-urlencoded",
+            },
+          ),
+        )
+        .then((onResponse) async {
+      _alertDialogWidget.hideWait(context);
+      _isRecover = true;
+    }).catchError((e) {
+      _alertDialogWidget.hideWait(context);
+      _rest.analyzeError(context, e as DioError);
+      _isRecover = false;
+    });
+  }
+
+//is recover
+  bool get isRecover => _isRecover;
 }

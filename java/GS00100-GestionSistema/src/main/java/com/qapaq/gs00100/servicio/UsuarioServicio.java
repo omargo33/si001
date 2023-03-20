@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Parametro;
-import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.model.Usuario;
 import com.qapaq.gs00100.jpa.queries.UsuarioRepositorio;
 import com.qapaq.security.Hash;
@@ -26,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.jpa.model.Direccion;
+import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.ca00100.servicio.AuditoriaServicio;
 import com.qapaq.ca00100.servicio.DireccionServicio;
 
@@ -45,18 +45,19 @@ public class UsuarioServicio {
     @Value("${spring.application.name}")
     private String appName;
 
+    @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
     private final TokenServicio tokenServicio;
+    
     @Autowired
-
     private final DireccionServicio direccionServicio;
+    
     @Autowired
-
     private final AuditoriaServicio auditoriaServicio;
+    
     @Autowired
-
     private final ParametroServicio parametroServicio;
 
     @Getter

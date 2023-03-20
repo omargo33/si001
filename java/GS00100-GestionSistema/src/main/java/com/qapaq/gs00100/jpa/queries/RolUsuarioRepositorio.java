@@ -3,11 +3,16 @@ package com.qapaq.gs00100.jpa.queries;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.RolUsuario;
 
-@Repository
+
+/**
+ * Interface para la clase RolUsuario.
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2023-03-10
+ */
 public interface RolUsuarioRepositorio extends JpaRepository<RolUsuario, Long> {
 
         /**

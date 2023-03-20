@@ -2,7 +2,6 @@ package com.qapaq.gs00100.jpa.queries;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.TokenServidor;
 
@@ -13,7 +12,6 @@ import com.qapaq.gs00100.jpa.model.TokenServidor;
  * @date 2022-09-11
  * 
  */
-@Repository
 public interface TokenServidorRepositorio extends JpaRepository<TokenServidor, Long> {
     /**
      * Metodo para buscar un objeto por id y con estado distinto a eliminado (X).

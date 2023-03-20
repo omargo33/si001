@@ -21,8 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.qapaq.ConstantesTools;
 import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.jpa.model.VPermisoRol;
-import com.qapaq.ca00100.servicio.VPermisoRolServicio;
+import com.qapaq.ca00100.jpa.model.VPermisoRolCat;
+import com.qapaq.ca00100.servicio.VPermisoRolServicioCat;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
 import com.qapaq.lg00100.servicio.UsuarioServicio;
@@ -62,7 +62,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     private UsuarioServicio usuarioServicio;
 
     @Autowired
-    private VPermisoRolServicio vPermisoRolServicio;
+    private VPermisoRolServicioCat vPermisoRolServicioCat;
 
     /**
      * Método para configurar la autenticación.
@@ -99,8 +99,8 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
 
-        List<VPermisoRol> listaVPermisoRol = vPermisoRolServicio.findByNickAndIndiceModulo(appName);
-        for (VPermisoRol vpr : listaVPermisoRol) {
+        List<VPermisoRolCat> listaVPermisoRolCat = vPermisoRolServicioCat.findByNickAndIndiceModulo(appName);
+        for (VPermisoRolCat vpr : listaVPermisoRolCat) {
             http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
 
             if (vpr.getCrear() > 0) {
@@ -144,7 +144,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
             public String generarMensajeError(HttpServletRequest request) {
                 String mensajeError = "W-GS00100-6";
                 String userName = request.getParameter(ConstantesTools.USER_NAME);
-                String ip = request.getRemoteAddr() + " " + request.getRemoteHost() + ":" + request.getRemotePort();
+                String ip = (request.getRemoteAddr() + " " + request.getRemoteHost()).trim() + ":" + request.getRemotePort();
                 String userAgent = request.getHeader("User-Agent");
 
                 usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName  );

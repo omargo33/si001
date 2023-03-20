@@ -17,10 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qapaq.bundle.Bundles;
 import com.qapaq.bundle.BundleFactory;
 import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.servicio.AuditoriaServicio;
-import com.qapaq.ca00100.servicio.NotificacionServicio;
-import com.qapaq.ca00100.servicio.ParametroServicio;
-import com.qapaq.lg00100.ConstantesLG00100;
+import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
+import com.qapaq.ca00100.servicio.NotificacionServicioCat;
+import com.qapaq.ca00100.servicio.ParametroServicioCat;
 import com.qapaq.lg00100.jpa.model.Token;
 import com.qapaq.lg00100.jpa.queries.TokenRepositorio;
 import com.qapaq.security.GeneradorClaves;
@@ -47,16 +46,16 @@ public class TokenServicio {
     private String formatoFecha;
 
     @Autowired
-    private final AuditoriaServicio auditoriaServicio;
-    
+    private final AuditoriaServicioCat auditoriaServicioCat;
+
     @Autowired
     private final TokenRepositorio tokenRepositorio;
 
     @Autowired
-    private final NotificacionServicio notificacionServicio;
+    private final NotificacionServicioCat notificacionServicioCat;
 
     @Autowired
-    private final ParametroServicio parametroServicio;
+    private final ParametroServicioCat parametroServicioCat;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -168,12 +167,13 @@ public class TokenServicio {
     public void enviarNotificacionCrearClave(String correo, String password, String ip, String userAgent,
             String usuario, String usuarioPrograma) {
 
-        Long idFormato = parametroServicio.findByIdModuloAndIndice(appName, "300").getValorNumero01();
-        Long idServicio = parametroServicio.findByIdModuloAndIndice(appName, "300").getValorNumero02();
-        String urlSitio = parametroServicio.findByIdModuloAndIndice(appName, "50").getValorTexto01();
-        
+        Long idFormato = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero01();
+        Long idServicio = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero02();
+        String urlSitio = parametroServicioCat.findByIdModuloAndIndice(appName, "50").getValorTexto01();
+
         String asunto = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.asunto");
-        String contenido = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.cuerpo",usuario,password,urlSitio);
+        String contenido = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.cuerpo", usuario, password,
+                urlSitio);
         Date fecha = new Date();
 
         SimpleDateFormat dateFormatoFecha = new SimpleDateFormat(formatoFecha);
@@ -181,7 +181,7 @@ public class TokenServicio {
         mapaParametros.put("hora", dateFormatoFecha.format(fecha));
         mapaParametros.put("ip", ip);
         mapaParametros.put("dispositivo", userAgent);
-        notificacionServicio.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
+        notificacionServicioCat.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
                 ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
     }
 
@@ -195,11 +195,12 @@ public class TokenServicio {
      * 
      */
     private void auditarSolicitudesFallidos(String correo, String ip, String userAgent, String usuarioPrograma) {
-        this.auditoriaServicio.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
-        this.auditoriaServicio.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        this.auditoriaServicio.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
+        this.auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
+        this.auditoriaServicioCat.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma,
+                ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        this.auditoriaServicioCat.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
     }
 
     /**

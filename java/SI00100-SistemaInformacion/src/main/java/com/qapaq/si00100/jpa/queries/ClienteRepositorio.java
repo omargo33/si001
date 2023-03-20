@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * Interfaces para busqueda de clientes.
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Repository;
  * @date 2020-10-02
  * 
  */
-@Repository
 public interface ClienteRepositorio extends PagingAndSortingRepository<Cliente, Long> {
 
     /**

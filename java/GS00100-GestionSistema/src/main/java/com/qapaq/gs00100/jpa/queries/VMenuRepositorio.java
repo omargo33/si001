@@ -3,11 +3,15 @@ package com.qapaq.gs00100.jpa.queries;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.VMenu;
 
-@Repository
+/**
+ * Interface para la clase VMenu.
+ * 
+ * @author o.velez@qapaq.io
+ * @date 2023-03-10
+ */
 public interface VMenuRepositorio extends JpaRepository<VMenu, Long> {
 
         /**

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.si00100.jpa.model.Clima;
 
@@ -16,7 +15,6 @@ import com.qapaq.si00100.jpa.model.Clima;
  * @date 2020-10-05
  * 
  */
-@Repository
 public interface ClimaRepositorio extends PagingAndSortingRepository<Clima, Long> {
 
     /**

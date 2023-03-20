@@ -1,7 +1,6 @@
 package com.qapaq.gs00100.jpa.queries;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.VUsers;
 
@@ -13,7 +12,6 @@ import com.qapaq.gs00100.jpa.model.VUsers;
  * @date 2022-09-11
  * 
  */
-@Repository
 public interface VUsersRepositorio extends JpaRepository<VUsers, Long> {
 
     /**

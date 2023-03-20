@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * Objeto de llamado principal del sistema.
@@ -14,9 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author o.velez@qapaq.io
  * @date 2020-08-02
  * 
- * Datos de configuracion de la aplicacion que son agregadas por las seguridades por API.
+ *       Datos de configuracion de la aplicacion que son agregadas por las
+ *       seguridades por API.
  * 
- * @EnableJpaRepositories(basePackages = {"com.qapaq.gs00100.jpa.queries", "com.qapaq.ar00100.jpa.queries",})
+ * @EnableJpaRepositories(basePackages = {"com.qapaq.gs00100.jpa.queries",
+ *                                     "com.qapaq.ar00100.jpa.queries",})
  * 
  * @see seguridad
  */
@@ -24,13 +27,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         "com.qapaq.gs00100.http.request",
         "com.qapaq.gs00100.servicio",
         "com.qapaq.ar00100.servicio",
+        "com.qapaq.ca00100.servicio",
         "com.qapaq.gs00100.validadores",
         "com.qapaq.gs00100.configuracion",
 })
 @EntityScan(basePackages = {
         "com.qapaq.gs00100.jpa.model",
         "com.qapaq.ar00100.jpa.model",
+        "com.qapaq.ca00100.jpa.model",
 })
+
 @SpringBootApplication
 public class GS00100Application {
 

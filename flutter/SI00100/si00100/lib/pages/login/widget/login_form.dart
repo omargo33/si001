@@ -24,6 +24,8 @@ class _LoginForm extends State<LoginForm> {
   static const int _formKeyLogin = 0;
   static const int _formKeyRecobrar = 2;
 
+  LoginController loginController = LoginController();
+
   /// Formulario de login
   final _formLoginBuilderKey = GlobalKey<FormBuilderState>();
   final _userFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -44,9 +46,18 @@ class _LoginForm extends State<LoginForm> {
 
   /// Evento de recuperar clave
   ///
-  void _onPressedRecuperarClave() {
-    _alertDialogWidget.info(context, 'login_msg_recuperar_0'.i18n(),
-        'login_msg_recuperar_1'.i18n(), "images_svg_mail".i18n());
+  _onPressedRecuperarClave() async {
+    await loginController.recover(context, _emailFieldKey.currentState?.value);
+
+    if (loginController.isRecover) {
+      _emailFieldKey.currentState?.reset();
+      _emailFieldKey.currentState?.setValue(null);
+      setState(() {
+        _formKey = _formKeyLogin;
+      });
+      _alertDialogWidget.info(context, 'login_msg_recuperar_0'.i18n(),
+          'login_msg_recuperar_1'.i18n(), "images_svg_mail".i18n());
+    } else {}
   }
 
   /// Event login
@@ -54,14 +65,12 @@ class _LoginForm extends State<LoginForm> {
   /// delete data login
   /// send to dahsboard
   _onPressedLogin() async {
-    LoginController loginController = LoginController();
     await loginController.login(context, _userFieldKey.currentState?.value,
         _passwordFieldKey.currentState?.value);
 
     if (loginController.isLogin) {
       _userFieldKey.currentState?.reset();
       _userFieldKey.currentState?.setValue(null);
-
       _passwordFieldKey.currentState?.reset();
       _passwordFieldKey.currentState?.setValue(null);
     } else {

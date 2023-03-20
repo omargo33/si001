@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.si00100.jpa.model.MonitorAlerta;
 
@@ -16,7 +15,6 @@ import com.qapaq.si00100.jpa.model.MonitorAlerta;
  * @date 2020-10-09
  * 
  */
-@Repository
 public interface MonitorAlertaRepositorio extends PagingAndSortingRepository<MonitorAlerta, Long> {
 
         /**

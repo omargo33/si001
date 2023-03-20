@@ -3,7 +3,6 @@ package com.qapaq.gs00100.jpa.queries;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.gs00100.jpa.model.Permiso;
 
@@ -14,7 +13,6 @@ import com.qapaq.gs00100.jpa.model.Permiso;
  * @date 2022-09-10
  * 
  */
-@Repository
 public interface PermisoRepositorio extends JpaRepository<Permiso, Long> {
 
         /**

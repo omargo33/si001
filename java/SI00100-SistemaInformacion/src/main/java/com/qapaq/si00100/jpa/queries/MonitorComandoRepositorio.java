@@ -5,18 +5,16 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.si00100.jpa.model.MonitorComando;
 
 /**
  * Interfaces para CRUD de JPA MonitorComando.
  * 
- * @author o.velez
+ * @author o.velez@qapaq.io
  * @date 2020-10-14
  * 
  */
-@Repository
 public interface MonitorComandoRepositorio extends PagingAndSortingRepository<MonitorComando, Long> {
         
         /**

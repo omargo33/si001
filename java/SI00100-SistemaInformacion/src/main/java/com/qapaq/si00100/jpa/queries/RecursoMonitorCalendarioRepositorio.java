@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import com.qapaq.si00100.jpa.model.RecursoMonitorCalendario;
 
@@ -16,7 +15,6 @@ import com.qapaq.si00100.jpa.model.RecursoMonitorCalendario;
  * @date 2020-10-16
  * 
  */
-@Repository
 public interface  RecursoMonitorCalendarioRepositorio extends PagingAndSortingRepository<RecursoMonitorCalendario, Long> {
     
     /**

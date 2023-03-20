@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.servicio.ParametroServicio;
+
 import com.qapaq.http.request.ComonControlador;
 
 import lombok.RequiredArgsConstructor;
