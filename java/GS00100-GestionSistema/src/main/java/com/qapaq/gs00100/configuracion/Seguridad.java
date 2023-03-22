@@ -1,8 +1,6 @@
-package com.qapaq.lg00100.configuracion;
+package com.qapaq.gs00100.configuracion;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,14 +17,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.qapaq.ConstantesTools;
-import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.jpa.model.VPermisoRolCat;
 import com.qapaq.ca00100.servicio.VPermisoRolServicioCat;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
-import com.qapaq.lg00100.servicio.UsuarioServicio;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,20 +40,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class Seguridad extends WebSecurityConfigurerAdapter {
 
-    @Value("${spring.application.name}")
-    private String appName;
-
-    @Value("${server.servlet.context-path}")
-    private String contexto;
-
     @Autowired
     private final UserDetailsService userDetailsService;
     
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+    @Value("${spring.application.name}")
+    private String appName;
+
+    @Value("${server.servlet.context-path}")
+    private String contexto;
 
     @Autowired
     private VPermisoRolServicioCat vPermisoRolServicioCat;
@@ -70,7 +61,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-    /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
@@ -78,30 +69,19 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     /**
      * Método para configurar la seguridad de la aplicación.
      * 
-     * http.authorizeRequests().antMatchers(HttpMethod.GET,
-     * "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.PUT,
-     * "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.POST,
-     * "/modulos/**").hasRole("ADM");
-     * http.authorizeRequests().antMatchers(HttpMethod.DELETE,
-     * "/modulos/**").hasRole("ADM");
-     * 
      * @param http
      * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        AuthenticationFilter authenticationFilter = crearAuthenticationFilter();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
         authenticationFilter.setFilterProcessesUrl("/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login/**").permitAll();
-
+      
         List<VPermisoRolCat> listaVPermisoRolCat = vPermisoRolServicioCat.findByNickAndIndiceModulo(appName);
         for (VPermisoRolCat vpr : listaVPermisoRolCat) {
-
             http.authorizeRequests().antMatchers(HttpMethod.GET, vpr.getUrl()).hasAuthority(vpr.getRol());
 
             if (vpr.getCrear() > 0) {
@@ -126,64 +106,9 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
      * 
      * @return
      */
-    /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    /**
-     * Método para crear el filtro de autentificacion.
-     * 
-     * @return
-     */
-    private AuthenticationFilter crearAuthenticationFilter() throws Exception {
-
-        return new AuthenticationFilter(authenticationManagerBean()) {
-
-            @Override
-            public String generarMensajeError(HttpServletRequest request) {
-                String mensajeError = "W-GS00100-6";
-                String userName = request.getParameter(ConstantesTools.USER_NAME);
-                String ip = (request.getRemoteAddr() + " " + request.getRemoteHost()).trim() + ":" + request.getRemotePort();
-                String userAgent = request.getHeader("User-Agent");
-
-                usuarioServicio.usuarioRechazado(ip, userAgent, userName, appName  );
-                String estado = usuarioServicio.validarUsuarioLogin(userName);
-                switch (estado) {
-                    case ConstantesCA00100.TOKEN_ESTADO_USUARIO_NO_EXISTE:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    case ConstantesCA00100.TOKEN_ESTADO_USUARIO_EXCEDE_NUMERO_INTENTOS:
-                        mensajeError = "W-GS00100-7";
-                        break;
-                    case ConstantesCA00100.TOKEN_ESTADO_INACTIVO:
-                        mensajeError = "W-GS00100-8";
-                        break;
-                    case ConstantesCA00100.TOKEN_ESTADO_ACTIVO:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    case ConstantesCA00100.TOKEN_ESTADO_CREADO:
-                        mensajeError = "W-GS00100-6";
-                        break;
-                    default:
-                        mensajeError = "W-GS00100-1";
-                        log.warn("W-GS00100-1 user={} estado={}", userName, estado);
-                        break;
-                }
-                return String.format("{ \"error\": \"%s\"}", mensajeError);
-            }
-
-            /**
-             * Método para ejecutar acciones después de ingresar.
-             * 
-             * @param request
-             */
-            @Override
-            public void ejecutaPostIngreso(HttpServletRequest request) {
-                String userName = request.getParameter(ConstantesTools.USER_NAME);
-                usuarioServicio.inicialiarContadoresIngreso(userName);
-            }
-        };
     }
 }

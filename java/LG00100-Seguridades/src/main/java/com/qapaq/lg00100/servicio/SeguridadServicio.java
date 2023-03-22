@@ -52,6 +52,7 @@ public class SeguridadServicio implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        
         String estado = usuarioServicio.validarUsuarioLogin(userName);
         if (estado.compareTo(ConstantesCA00100.TOKEN_ESTADO_ACTIVO) == 0
                 || estado.compareTo(ConstantesCA00100.TOKEN_ESTADO_CREADO) == 0) {

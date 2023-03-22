@@ -24,6 +24,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qapaq.ConstantesTools;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Clase para personalizar el filtro de autorización.
  * 
@@ -67,6 +69,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             if (authorizationHeader != null && authorizationHeader.startsWith(ConstantesTools.TOKEN_PREFIX)){
                 try {
                     String token = authorizationHeader.substring(ConstantesTools.TOKEN_PREFIX.length());
+                    
                     Algorithm algorithm = Algorithm.HMAC256(ConstantesTools.getPassword());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);

@@ -5,22 +5,23 @@
 ## 
 ## 
 ## Consultas CIUDADES
-@servicio=192.168.1.2:8081/si_001_00/ciudades
+
+@url=192.168.1.2:8080/lg_001_10/login
 @username=admin
-@password=12341234
+@password=BeY9JjUyVz
+@servicio=127.0.0.1:8082/gs_001_10
 
 ###
 # @name rdpAuth
 
-post http://127.0.0.1:8080/seguridades/login
+post http://{{url}}
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}
 
 ### solicitar token refresh
-get http://127.0.0.1:8081/si_001_00/login/refresh
+post http://{{url}}/refresh
 Authorization: Bearer {{rdpAuth.response.headers.refresh-token}}
-
 
 
 ### listar todos
