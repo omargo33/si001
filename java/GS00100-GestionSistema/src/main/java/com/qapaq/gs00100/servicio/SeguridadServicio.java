@@ -27,7 +27,7 @@ public class SeguridadServicio implements UserDetailsService {
         boolean estado = true;
 
         if (estado) {
-            log.info(userName);
+            log.info(":p chequear {}",userName);
             return null;
         } else {
             throw new UsernameNotFoundException("Usuario no encontrado");

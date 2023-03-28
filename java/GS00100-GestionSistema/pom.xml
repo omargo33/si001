@@ -13,7 +13,6 @@
 	<groupId>com.qapaq</groupId>
 	<artifactId>gs00100</artifactId>
 	<version>1.0.0</version>
-	<packaging>war</packaging>
 	<name>gs00100</name>
 	<description>REST GS00100 General Setup</description>
 	<properties>

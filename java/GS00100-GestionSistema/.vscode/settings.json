@@ -2,4 +2,5 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "java.jdt.ls.java.home": "/home/ovelez/Oracle/jdk-17.0.6",
     "java.configuration.updateBuildConfiguration": "interactive",
+    "java.debug.settings.onBuildFailureProceed": true,
 }

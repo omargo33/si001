@@ -30,7 +30,7 @@ import com.qapaq.http.request.ComonControlador;
  * 
  */
 @RestController
-@RequestMapping(value = "/Menus")
+@RequestMapping(value = "/menus")
 public class MenuControlador extends ComonControlador {
 
    @Autowired

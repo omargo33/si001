@@ -67,6 +67,8 @@ public class UsuarioServicio {
 
     @PostConstruct
     public void init() {
+        log.info(":p UsuarioServicio.init() {}", appName);
+        
         mapaParametros = parametroServicio.findByIndiceModulo(appName);
     }
 
