@@ -1,25 +1,33 @@
 package com.qapaq.gs00100.servicio;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qapaq.bundle.BundleFactory;
+import com.qapaq.bundle.Bundles;
 import com.qapaq.ca00100.ConstantesCA00100;
 import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
+import com.qapaq.ca00100.servicio.NotificacionServicioCat;
+import com.qapaq.ca00100.servicio.ParametroServicioCat;
 import com.qapaq.gs00100.jpa.model.Token;
+import com.qapaq.gs00100.jpa.pojo.UsuarioClave;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
 import com.qapaq.security.GeneradorClaves;
 import com.qapaq.security.Hash;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Objeto para dar soporte a servicio REST de token.
@@ -30,21 +38,28 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Transactional
-@Slf4j
 @RequiredArgsConstructor
 public class TokenServicio {
 
     @Value("${spring.application.name}")
     private String appName;
+
+    @Value("${spring.mvc.format.date-time}")
+    private String formatoFecha;
+
     @Autowired
     private final AuditoriaServicioCat auditoriaServicioCat;
+
     @Autowired
     private final TokenRepositorio tokenRepositorio;
-    @Autowired
-    private final ParametroServicio parametroServicio;
-    @Autowired
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final ParametroServicioCat parametroServicioCat;
+
+    @Autowired
+    private final NotificacionServicioCat notificacionServicioCat;
+
+    private static final Bundles BUNDLES = BundleFactory.crearBundle("info");
 
     /**
      * Metodo para buscar por idToken.
@@ -69,16 +84,20 @@ public class TokenServicio {
      * @return
      */
     public Token guardarToken(Token token, String usuario, String usuarioPrograma) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = GeneradorClaves.getPassword(GeneradorClaves.KEY_ALFANUMERICOS, 10);
+
+        token.setTokenPassword(passwordEncoder.encode(password));
         token.setEstado(ConstantesCA00100.TOKEN_ESTADO_ACTIVO);
         token.setValidador(
                 Hash.crearHash(String.valueOf(token.getIdUsuario()), token.getTipo(), token.getSocialNick()));
         token.setUsuario(StringUtils.truncate(usuario, 128));
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
-        return tokenRepositorio.save(token);
 
-        
+        return tokenRepositorio.save(token);
     }
+
     /**
      * Metodo para borrar un token de manera logico.
      * 
@@ -115,22 +134,58 @@ public class TokenServicio {
      * Toma el usuario desde el token
      * Envia notificacion por mail
      */
-    public boolean enviarToken(String correo, String ip, String userAgent, String usuarioPrograma) {
-        Token token = tokenRepositorio.findByCorreo(correo);
+    public boolean enviarToken(String nick, String usuario, String ip, String userAgent, String usuarioPrograma) {
+        Token token = tokenRepositorio.findBySocialNickAndTipo(nick, ConstantesCA00100.TOKEN_TIPO_CORREO);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (token == null) {
-            auditarSolicitudesFallidos(correo, ip, userAgent, usuarioPrograma);
+            auditarSolicitudesFallidos(nick, usuario, ip, userAgent, usuarioPrograma);
             return false;
         }
 
         String password = GeneradorClaves.getPassword(GeneradorClaves.KEY_ALFANUMERICOS, 10);
         token.setEstado(ConstantesCA00100.TOKEN_ESTADO_CREADO);
         token.setTokenPassword(passwordEncoder.encode(password));
+        token.setUsuario(usuario);
         token.setUsuarioFecha(new Date());
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
         tokenRepositorio.save(token);
 
-        //TODO: Enviar correo
-        log.warn("Se envia correo a: {} con el password {} ",  correo, password);
+        enviarNotificacionCrearClave(token.getCorreo(), password, ip, userAgent, nick, usuarioPrograma);
+        return true;
+    }
+
+    /**
+     * Metodo para cambiar la clave con validaciones diversas y una vez terminado
+     * envia un correo sobre el cambio.
+     * 
+     * 
+     * @param datosClave
+     * @return
+     */
+    public boolean cambiarToken(UsuarioClave datosClave) {
+
+        Token token = tokenRepositorio.findBySocialNickAndTipo(datosClave.getSocialNick(),
+                ConstantesCA00100.TOKEN_TIPO_CORREO);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (token == null) {
+            auditarSolicitudesFallidos(datosClave.getSocialNick(), datosClave.getSocialNick(), datosClave.getIp(),
+                    datosClave.getUserAgent(),
+                    datosClave.getUsuarioPrograma());
+            return false;
+        }
+
+        if (passwordEncoder.matches(datosClave.getClaveActual(), token.getTokenPassword())) {
+            return false;
+        }
+        token.setEstado(ConstantesCA00100.TOKEN_ESTADO_CREADO);
+        token.setTokenPassword(passwordEncoder.encode(datosClave.getClaveNueva()));
+        token.setUsuarioFecha(new Date());
+        token.setUsuario(datosClave.getSocialNick());
+        token.setUsuarioPrograma(StringUtils.truncate(datosClave.getUsuarioPrograma(), 256));
+        tokenRepositorio.save(token);
+
+        enviarNotificacionCambiarClave(token.getCorreo(), datosClave.getIp(), datosClave.getUserAgent(),
+                datosClave.getSocialNick(), datosClave.getUsuarioPrograma());
         return true;
     }
 
@@ -143,12 +198,91 @@ public class TokenServicio {
      * @param usuarioPrograma
      * 
      */
-    private void auditarSolicitudesFallidos(String correo, String ip, String userAgent, String usuarioPrograma) {
-        auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", "", usuarioPrograma);
-        auditoriaServicioCat.agregarParametro("correo", correo, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+    private void auditarSolicitudesFallidos(String nick, String usuario, String ip, String userAgent,
+            String usuarioPrograma) {
+        auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", usuario, usuarioPrograma);
+        auditoriaServicioCat.agregarParametro("nick", nick, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma,
+                ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
+    }
+
+    /**
+     * Metodo para enviar notificaciones de crear correo.
+     * 
+     * Obtiene los parametros con los indices 300 y 50
+     * Crea los asuntos y contenidos
+     * 
+     * Agrega los parametros de hora ip y dispositivo
+     * 
+     * Pone en la cola de envios de correos.
+     * 
+     * @param correo
+     * @param password
+     * @param ip
+     * @param userAgent
+     * @param usuario
+     * @param usuarioPrograma
+     * 
+     */
+    private void enviarNotificacionCrearClave(String correo, String password, String ip, String userAgent,
+            String usuario, String usuarioPrograma) {
+
+        Long idFormato = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero01();
+        Long idServicio = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero02();
+        String urlSitio = parametroServicioCat.findByIdModuloAndIndice(appName, "50").getValorTexto01();
+
+        String asunto = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.asunto");
+        String contenido = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.cuerpo", usuario, password,
+                urlSitio);
+        Date fecha = new Date();
+
+        SimpleDateFormat dateFormatoFecha = new SimpleDateFormat(formatoFecha);
+        Map<String, String> mapaParametros = new HashMap<String, String>();
+        mapaParametros.put("hora", dateFormatoFecha.format(fecha));
+        mapaParametros.put("ip", ip);
+        mapaParametros.put("dispositivo", userAgent);
+        notificacionServicioCat.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
+                ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
+    }
+
+    /**
+     * Metodo para enviar notificaciones de crear correo.
+     * 
+     * Obtiene los parametros con los indices 300 y 50
+     * Crea los asuntos y contenidos
+     * 
+     * Agrega los parametros de hora ip y dispositivo
+     * 
+     * Pone en la cola de envios de correos.
+     * 
+     * @param correo
+     * @param password
+     * @param ip
+     * @param userAgent
+     * @param usuario
+     * @param usuarioPrograma
+     * 
+     */
+    private void enviarNotificacionCambiarClave(String correo, String ip, String userAgent,
+            String usuario, String usuarioPrograma) {
+
+        Long idFormato = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero01();
+        Long idServicio = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero02();
+        String urlSitio = parametroServicioCat.findByIdModuloAndIndice(appName, "50").getValorTexto01();
+
+        String asunto = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.asunto");
+        String contenido = BUNDLES.getString("tokenServicio.enviarNotificacionCrearClave.cuerpo", usuario, urlSitio);
+        Date fecha = new Date();
+
+        SimpleDateFormat dateFormatoFecha = new SimpleDateFormat(formatoFecha);
+        Map<String, String> mapaParametros = new HashMap<String, String>();
+        mapaParametros.put("hora", dateFormatoFecha.format(fecha));
+        mapaParametros.put("ip", ip);
+        mapaParametros.put("dispositivo", userAgent);
+        notificacionServicioCat.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
+                ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
     }
 
     /**

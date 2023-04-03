@@ -22,7 +22,6 @@ import com.qapaq.ca00100.servicio.VPermisoRolServicioCat;
 import com.qapaq.filter.AuthenticationFilter;
 import com.qapaq.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para configurar la seguridad de la aplicación.
@@ -34,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
  * @see security
  * 
  */
-@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

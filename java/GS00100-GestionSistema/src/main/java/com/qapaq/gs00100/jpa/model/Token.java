@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,12 +47,17 @@ public class Token implements Serializable {
     @Column(name = "id_token")
     private Long idToken;
 
+    @NotNull(message = "E-GS00100-2")
     @Column(name = "id_usuario")
     private Long idUsuario;
 
+    @NotNull(message = "E-GS00100-2")
+    @NotBlank(message = "E-GS00100-3")
     @Column(name = "tipo", length = 8)
     private String tipo;
     
+    @NotNull(message = "E-GS00100-2")
+    @NotBlank(message = "E-GS00100-3")
     @Column(name = "social_nick", length = 256)
     private String socialNick;
     
@@ -79,4 +86,5 @@ public class Token implements Serializable {
     @OneToMany
     @JoinColumn(name = "id_token", referencedColumnName = "id_token")
     private List<TokenServidor> tokenServidorList;
+
 }

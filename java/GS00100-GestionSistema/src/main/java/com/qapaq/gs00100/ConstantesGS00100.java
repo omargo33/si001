@@ -22,7 +22,6 @@ public class ConstantesGS00100 {
     public static final String PARAMETRO_NOTIFICACION_NUEVA_CLAVE="300";
     public static final String PARAMETRO_NOTIFICACION_CREAR_CREAR="301";
     public static final String PARAMETRO_CAMBIO_CLAVE="302";
-
     
     public static final String MODULO_ESTADO_INACTIVO="I";
     public static final String MODULO_ESTADO_ACTIVO="A";    

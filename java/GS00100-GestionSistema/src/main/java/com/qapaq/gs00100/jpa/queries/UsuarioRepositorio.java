@@ -76,4 +76,6 @@ public interface UsuarioRepositorio extends PagingAndSortingRepository<Usuario, 
         @Modifying
         @Query("UPDATE Usuario u SET u.estado = 'X' WHERE u.idUsuario = ?1")
         public void deleteByIdUsuario(Long idUsuario);
+
+        
 }

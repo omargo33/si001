@@ -6,7 +6,7 @@
 ## Login
 @url=192.168.1.2:8080/lg_001_10/login
 @username=admin
-@password=ZHVpHGVukB
+@password=yqZEQy97VC
 @email=omargo@hotmail.com
 @servicio=192.168.1.2:8082/gs_001_10/menuspermisos
 ###
