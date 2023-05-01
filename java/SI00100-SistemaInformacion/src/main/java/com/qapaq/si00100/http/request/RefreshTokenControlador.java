@@ -58,6 +58,7 @@ public class RefreshTokenControlador extends ComonRefreshTokenControlador implem
     @GetMapping(value = "/refresh")
     @Override
     public void refresh(HttpServletRequest request, HttpServletResponse response) {
-        super.refresh(request, response);
+        //TODO cambio por seguridades a keycloack
+        //super.refresh(request, response);
     }
 }

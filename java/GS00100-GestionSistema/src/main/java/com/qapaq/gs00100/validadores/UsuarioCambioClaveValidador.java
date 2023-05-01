@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
 import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.jpa.pojo.UsuarioClave;
@@ -29,9 +27,13 @@ public class UsuarioCambioClaveValidador implements ConstraintValidator<UsuarioC
     @Autowired
     private ParametroServicio parametroServicio;
 
-    @Autowired
-    private AuditoriaServicioCat auditoriaServicioCat;
-
+    // TODO cambiar la auditoria
+    /*
+     * vaciar audotira
+     * 
+     * @Autowired
+     * private AuditoriaServicioCat auditoriaServicioCat;
+     */
     @Value("${spring.application.name}")
     private String appName;
 
@@ -43,9 +45,11 @@ public class UsuarioCambioClaveValidador implements ConstraintValidator<UsuarioC
     /**
      * Metodo para validar que un cambio de clave es aceptado.
      * 
-     * Guarda la auditoria del servicio antes que entre a validacion para que no se pierda la informacion de ingreso.
+     * Guarda la auditoria del servicio antes que entre a validacion para que no se
+     * pierda la informacion de ingreso.
      * 
-     * Si la clave actual es igual a la nueva clave, se valida que la nueva clave sea igual a la confirmacion de la nueva clave.
+     * Si la clave actual es igual a la nueva clave, se valida que la nueva clave
+     * sea igual a la confirmacion de la nueva clave.
      * 
      * @param usuarioClave
      * @param context
@@ -82,12 +86,19 @@ public class UsuarioCambioClaveValidador implements ConstraintValidator<UsuarioC
      * @param usuarioPrograma
      */
     private void auditoriaServicio(String ip, String userAgent, String usuario, String usuarioPrograma) {
-        auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "cambiarTokenCompleto()", usuario,
-                usuarioPrograma);
-        auditoriaServicioCat.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
-        auditoriaServicioCat.agregarParametro("nick", usuario, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
-        auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma,
-                ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+        // TODO vaciar auditoria
+        /*
+         * auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null,
+         * "cambiarTokenCompleto()", usuario,
+         * usuarioPrograma);
+         * auditoriaServicioCat.agregarEnvento(userAgent,
+         * ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
+         * auditoriaServicioCat.agregarParametro("nick", usuario,
+         * ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+         * auditoriaServicioCat.agregarParametro("ip", ip,
+         * ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+         * auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma,
+         * ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
+         */
     }
 }

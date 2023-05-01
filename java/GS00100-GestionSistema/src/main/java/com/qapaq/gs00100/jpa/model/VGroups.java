@@ -23,7 +23,7 @@ import lombok.ToString;
  */
 @Entity
 @IdClass(VGroupsPK.class)
-@Table(name = "v_groups", schema = "GS_001_00")
+@Table(name = "v_groups")
 @Getter
 @Setter
 @ToString

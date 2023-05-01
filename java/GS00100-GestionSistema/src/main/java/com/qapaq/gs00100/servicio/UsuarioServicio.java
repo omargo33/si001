@@ -6,28 +6,21 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.gs00100.ConstantesGS00100;
 import com.qapaq.gs00100.jpa.model.Parametro;
 import com.qapaq.gs00100.jpa.model.Usuario;
 import com.qapaq.gs00100.jpa.queries.UsuarioRepositorio;
-import com.qapaq.security.Hash;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.jpa.model.DireccionCat;
 import com.qapaq.gs00100.jpa.model.Token;
-import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
-import com.qapaq.ca00100.servicio.DireccionServicioCat;
 
 /**
  * Objeto para dar soporte a servicio REST de usuario.
@@ -48,15 +41,18 @@ public class UsuarioServicio {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+    //TODO: cambio por auditoria
+    /*
     @Autowired
     private final TokenServicio tokenServicio;
+    
     
     @Autowired
     private final DireccionServicioCat direccionServicioCat;
     
     @Autowired
     private final AuditoriaServicioCat auditoriaServicioCat;
-    
+     */
     @Autowired
     private final ParametroServicio parametroServicio;
 
@@ -113,6 +109,10 @@ public class UsuarioServicio {
      * @return
      */
     public Usuario guardarUsuario(Usuario usuario, String usuarioManager, String usuarioPrograma) {
+       //TODO
+
+       /*
+       
         if (usuario.getIdUsuario() == null || usuario.getIdUsuario() <= 0) {
             usuario.setEstado(ConstantesCA00100.USUARIO_ESTADO_INACTIVO);
             usuario.setContadorIngreso(0);
@@ -123,6 +123,8 @@ public class UsuarioServicio {
         usuario.setUsuarioPrograma(usuarioPrograma);
         usuario.setValidador(Hash.crearHash(usuario.getNick()));
         return usuarioRepositorio.save(usuario);
+         */
+        return null;
     }
 
     /**
@@ -132,6 +134,8 @@ public class UsuarioServicio {
      * @param elemento
      */
     public String validarUsuarioLogin(String userName) {
+        //TODO cambio por auditoria
+        /*
         Usuario usuario = usuarioRepositorio.findByNick(userName);
         
         if (usuario == null) {
@@ -155,6 +159,8 @@ public class UsuarioServicio {
         }
         
         return tokenUsuario.getEstado();
+         */
+        return null;
     }
 
     /**
@@ -171,6 +177,8 @@ public class UsuarioServicio {
      * @param usuarioPrograma
      */
     public void usuarioRechazado(String ip, String userAgent, String userName, String usuarioPrograma) {
+        //TODO cambio por auditoria
+        /*
         try {
             auditarIngresosFallidos("login", "usuarioRechazado()", ip, userAgent, userName, usuarioPrograma);
             Usuario usuario = findByNick(userName);
@@ -187,6 +195,7 @@ public class UsuarioServicio {
         } catch (Exception e) {
             log.error("E-GS00100-9 {}", userName);
         }
+         */
     }
 
     /**
@@ -205,12 +214,15 @@ public class UsuarioServicio {
             String usuario,
             String usuarioPrograma) {
 
+        //TODO cambio por auditoria
+        /*         
         auditoriaServicioCat.createAuditoria(nombre, "<NO APLICA>", null, elemento, usuario, usuarioPrograma);
         auditoriaServicioCat.agregarParametro("nick", nombre, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("userAgent", userAgent, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarEnvento("auditarIngresosFallidos()", ConstantesCA00100.AUDITORIA_EVENTO_TIPO_CUIDADO);
+        */        
     }
 
     /**

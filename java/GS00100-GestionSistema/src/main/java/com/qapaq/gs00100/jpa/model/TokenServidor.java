@@ -27,7 +27,7 @@ import lombok.ToString;
  * 
  */
 @Entity
-@Table(name = "token_servidor", schema = "GS_001_00")
+@Table(name = "token_servidor")
 @Getter
 @Setter
 @ToString

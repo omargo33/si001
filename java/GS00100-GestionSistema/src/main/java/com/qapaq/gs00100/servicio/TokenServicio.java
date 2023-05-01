@@ -1,31 +1,20 @@
 package com.qapaq.gs00100.servicio;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/*
 import com.qapaq.bundle.BundleFactory;
 import com.qapaq.bundle.Bundles;
-import com.qapaq.ca00100.ConstantesCA00100;
-import com.qapaq.ca00100.servicio.AuditoriaServicioCat;
-import com.qapaq.ca00100.servicio.NotificacionServicioCat;
-import com.qapaq.ca00100.servicio.ParametroServicioCat;
+ */
 import com.qapaq.gs00100.jpa.model.Token;
 import com.qapaq.gs00100.jpa.pojo.UsuarioClave;
 import com.qapaq.gs00100.jpa.queries.TokenRepositorio;
-import com.qapaq.security.GeneradorClaves;
-import com.qapaq.security.Hash;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,19 +36,26 @@ public class TokenServicio {
     @Value("${spring.mvc.format.date-time}")
     private String formatoFecha;
 
+    //TODO cambio por auditoria
+    /*
     @Autowired
     private final AuditoriaServicioCat auditoriaServicioCat;
+ */
 
     @Autowired
     private final TokenRepositorio tokenRepositorio;
+
+
+    //TODO cambio por auditoria
+    /*
 
     @Autowired
     private final ParametroServicioCat parametroServicioCat;
 
     @Autowired
     private final NotificacionServicioCat notificacionServicioCat;
-
-    private static final Bundles BUNDLES = BundleFactory.crearBundle("info");
+*/
+    //private static final Bundles BUNDLES = BundleFactory.crearBundle("info");
 
     /**
      * Metodo para buscar por idToken.
@@ -84,6 +80,8 @@ public class TokenServicio {
      * @return
      */
     public Token guardarToken(Token token, String usuario, String usuarioPrograma) {
+        //TODO cambio de parametros
+        /* 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = GeneradorClaves.getPassword(GeneradorClaves.KEY_ALFANUMERICOS, 10);
 
@@ -96,6 +94,8 @@ public class TokenServicio {
         token.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
 
         return tokenRepositorio.save(token);
+        */
+        return null;
     }
 
     /**
@@ -135,6 +135,8 @@ public class TokenServicio {
      * Envia notificacion por mail
      */
     public boolean enviarToken(String nick, String usuario, String ip, String userAgent, String usuarioPrograma) {
+        //TODO cambio para parametros
+        /*
         Token token = tokenRepositorio.findBySocialNickAndTipo(nick, ConstantesCA00100.TOKEN_TIPO_CORREO);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (token == null) {
@@ -143,7 +145,8 @@ public class TokenServicio {
         }
 
         String password = GeneradorClaves.getPassword(GeneradorClaves.KEY_ALFANUMERICOS, 10);
-        token.setEstado(ConstantesCA00100.TOKEN_ESTADO_CREADO);
+        //TODO cambio para parametros
+        //token.setEstado(ConstantesCA00100.TOKEN_ESTADO_CREADO);
         token.setTokenPassword(passwordEncoder.encode(password));
         token.setUsuario(usuario);
         token.setUsuarioFecha(new Date());
@@ -151,6 +154,7 @@ public class TokenServicio {
         tokenRepositorio.save(token);
 
         enviarNotificacionCrearClave(token.getCorreo(), password, ip, userAgent, nick, usuarioPrograma);
+         */
         return true;
     }
 
@@ -163,7 +167,8 @@ public class TokenServicio {
      * @return
      */
     public boolean cambiarToken(UsuarioClave datosClave) {
-
+        //todo cambio por parametros
+        /*
         Token token = tokenRepositorio.findBySocialNickAndTipo(datosClave.getSocialNick(),
                 ConstantesCA00100.TOKEN_TIPO_CORREO);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -186,7 +191,8 @@ public class TokenServicio {
 
         enviarNotificacionCambiarClave(token.getCorreo(), datosClave.getIp(), datosClave.getUserAgent(),
                 datosClave.getSocialNick(), datosClave.getUsuarioPrograma());
-        return true;
+         */
+                return true;
     }
 
     /**
@@ -200,12 +206,16 @@ public class TokenServicio {
      */
     private void auditarSolicitudesFallidos(String nick, String usuario, String ip, String userAgent,
             String usuarioPrograma) {
+        
+        //TODO cambio de auditoria
+        /*
         auditoriaServicioCat.createAuditoria(appName, "<NO APLICA>", null, "enviarToken", usuario, usuarioPrograma);
         auditoriaServicioCat.agregarParametro("nick", nick, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("ip", ip, ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarParametro("objeto", usuarioPrograma,
                 ConstantesCA00100.AUDITORIA_PARAMETRO_DIRECCION_IN);
         auditoriaServicioCat.agregarEnvento(userAgent, ConstantesCA00100.AUDITORIA_EVENTO_TIPO_SEGURIDADES);
+     */
     }
 
     /**
@@ -229,6 +239,10 @@ public class TokenServicio {
     private void enviarNotificacionCrearClave(String correo, String password, String ip, String userAgent,
             String usuario, String usuarioPrograma) {
 
+        //TODO cambio por parametros
+        
+        /*
+
         Long idFormato = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero01();
         Long idServicio = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero02();
         String urlSitio = parametroServicioCat.findByIdModuloAndIndice(appName, "50").getValorTexto01();
@@ -245,6 +259,7 @@ public class TokenServicio {
         mapaParametros.put("dispositivo", userAgent);
         notificacionServicioCat.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
                 ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
+     */
     }
 
     /**
@@ -268,6 +283,9 @@ public class TokenServicio {
     private void enviarNotificacionCambiarClave(String correo, String ip, String userAgent,
             String usuario, String usuarioPrograma) {
 
+                //todo cambio de parametros
+                /*
+
         Long idFormato = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero01();
         Long idServicio = parametroServicioCat.findByIdModuloAndIndice(appName, "300").getValorNumero02();
         String urlSitio = parametroServicioCat.findByIdModuloAndIndice(appName, "50").getValorTexto01();
@@ -283,7 +301,8 @@ public class TokenServicio {
         mapaParametros.put("dispositivo", userAgent);
         notificacionServicioCat.createNotificacion(idFormato, idServicio, asunto, contenido, correo,
                 ConstantesCA00100.NOTIFICACION_ANULAR, fecha, usuario, usuarioPrograma, mapaParametros, null);
-    }
+     */
+            }
 
     /**
      * Metodo para validar si el social_nick y tipo.

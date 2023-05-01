@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
 @ComponentScan(basePackages = {
 	"com.qapaq.ga00100.http.request",
 	"com.qapaq.ga00100.servicio",	
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 	//"com.qapaq.ar00100.jpa.model",
 })
 @SpringBootApplication
+@EnableEurekaClient
 public class GA00100Application {
 
 	public static void main(String[] args) {

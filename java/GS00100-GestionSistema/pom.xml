@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.9</version>
+		<version>2.5.14</version>
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
@@ -51,18 +51,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-		<!-- spring seguridad -->
-		<!-- @see security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<!--jwt por autho0 -->
-		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>3.18.1</version>
-		</dependency>
 		<!-- dependencia para string utils -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -89,12 +77,7 @@
 			<artifactId>tools</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<!-- dependencia de JPA Base de auditoria -->
-		<dependency>
-			<groupId>com.qapaq</groupId>
-			<artifactId>ca00100</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+
 		<!-- dependencia de springdoc-openapi-ui -->
 		<!-- https://www.baeldung.com/spring-rest-openapi-documentation?__s=sq10bediar2yw3hb6yrc -->
 		<dependency>
@@ -103,6 +86,12 @@
 			<version>1.6.14</version>
 		</dependency>
 
+		<!-- dependencia para manejo de netflix eureka -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>3.0.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

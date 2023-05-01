@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
@@ -23,16 +22,16 @@ import com.qapaq.si00100.jpa.queries.MonitorRepositorio;
 public class MonitorServicio {
 
     private final MonitorRepositorio monitorRepositorio;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructor de la clase.
      * 
      * @param monitorRepositorio
      */
-    public MonitorServicio(MonitorRepositorio monitorRepositorio, PasswordEncoder passwordEncoder) {
+    public MonitorServicio(MonitorRepositorio monitorRepositorio /* , PasswordEncoder passwordEncoder*/) {
         this.monitorRepositorio = monitorRepositorio;
-        this.passwordEncoder = passwordEncoder;
+       // this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -48,7 +47,7 @@ public class MonitorServicio {
         monitor.setUsuario(StringUtils.truncate(usuario,128));
         monitor.setUsuarioFecha(new Date());
         monitor.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma,256));
-        monitor.setClave(passwordEncoder.encode(monitor.getClave()));
+       // monitor.setClave(passwordEncoder.encode(monitor.getClave()));
         return monitorRepositorio.save(monitor);
     }
 
