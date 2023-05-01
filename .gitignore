@@ -7,5 +7,13 @@ tizen/usb/videos/video002.mp4
 tizen/usb/images/info001.jpg
 tizen/usb/images/info002.jpg
 java/SI00100/target/
+java/ApiGateway/target/
+java/AR00100-Auditoria/target/
+java/Background/target/
+java/DiscoveryService/target/
+java/GA00100-ArchivosNotificaciones/target/
+java/GS00100-GestionSistema/target/
+java/SI00100-SistemaInformacion/target/
+java/Tools/target/
 seguridadesEjemplo/
 *.mp4
