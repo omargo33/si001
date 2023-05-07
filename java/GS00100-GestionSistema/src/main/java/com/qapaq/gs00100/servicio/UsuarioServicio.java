@@ -65,7 +65,7 @@ public class UsuarioServicio {
     public void init() {
         log.info(":p UsuarioServicio.init() {}", appName);
         
-        mapaParametros = parametroServicio.findByIndiceModulo(appName);
+        //mapaParametros = parametroServicio.findByIndiceModulo(appName);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 **Autor:** *o.velez@qapaq.io*
 
-El ejecucion de este documento se encuetra basado en los ejemplos del la siguiente lista de reproduccion de [youtube][1, yu se debe de tener las siguietnes dependencias al archivo pom.xml
+El ejecucion de este documento se encuetra basado en los ejemplos del la siguiente lista de reproduccion de [youtube][1], y se debe de tener las siguietnes dependencias al archivo pom.xml
 
 ```xml
 <dependencies>

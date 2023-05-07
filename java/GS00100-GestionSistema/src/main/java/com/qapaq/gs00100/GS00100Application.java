@@ -42,5 +42,4 @@ public class GS00100Application {
     public static void main(String[] args) {
         SpringApplication.run(GS00100Application.class, args);
     }
-
 }

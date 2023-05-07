@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.14</version>
+		<version>2.5.7</version>
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.qapaq</groupId>
 	<artifactId>gs00100</artifactId>
 	<version>1.0.0</version>
-	<name>gs00100</name>
+	<name>gs_001_10</name>
 	<description>REST GS00100 General Setup</description>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -92,6 +92,8 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>3.0.4</version>
 		</dependency>
+
+
 	</dependencies>
 	<build>
 		<plugins>
