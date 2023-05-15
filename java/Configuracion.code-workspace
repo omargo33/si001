@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "DiscoveryService"
+		},
+		{
+			"path": "../Dockers/Keycloak"
 		}
 	],
 	"settings": {
