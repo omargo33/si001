@@ -1,18 +1,34 @@
 package com.qapaq.gs00100.configuracion;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+import lombok.extern.slf4j.Slf4j;
+
 @EnableWebSecurity
-public class SecurityConfig   extends WebSecurityConfigurerAdapter {
+@Slf4j
+public class SecurityConfig {
 
-    @Override
-    public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+     /**
+     * For the backend-resources, I indicate that all the endpoints are protected.
+     * To request any endpoint, the OAuth2 protocol is necessary, using the server configured and with the given scope.
+     * Thus, a JWT will be used to communicate between the backend-resources and backend-auth when backend-resources
+     * needs to validate the authentication of a request.
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+      log.info(http.toString());
+        http.antMatcher("/**")
+                .authorizeRequests(requests -> requests
+                        .antMatchers("/").permitAll()
+                        .antMatchers("/parametros")
+                        .hasAuthority("SCOPE_parametros"))
+                .oauth2ResourceServer(server -> server
+                        .jwt());
+                
+        return http.build();
     }
 }
