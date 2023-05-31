@@ -4,7 +4,7 @@ package com.qapaq.security;
  * Clase para ofuscar cadenas de texto.
  * 
  * @author o.velez@qapaq.io
- * @date 2022-09-20
+ * @since 2022-09-20
  * 
  */
 public class Ofuscar {

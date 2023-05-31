@@ -4,7 +4,7 @@ package com.qapaq;
  *  Constantes de seguridades.
  * 
  * @author o.velez@qapaq.io
- * @date 2020-10-28
+ * @since 2020-10-28
  * 
  */
 public class ConstantesTools {

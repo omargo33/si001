@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * Clase para controlar las peticiones de las ciudades.
  * 
  * @author o.velez@qapaq.io
- * @date 2020-10-04
+ * @since 2020-10-04
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * Interface para controlar las peticiones de las ciudades.
  * 
  * @author o.velez@qapaq.io
- * @date 2020-11-23
+ * @since 2020-11-23
  * 
  */
 public interface TokenRefreshControlador {

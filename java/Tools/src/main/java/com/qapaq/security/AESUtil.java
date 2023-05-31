@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  * Clase para encriptar y desencriptar cadenas de texto.
  * 
  * @author o.velez@qapaq.io
- * @date 2019-10-11
+ * @since 2019-10-11
  * @see https://stackoverflow.com/questions/72601586/encryption-in-flutter-and-decryption-in-java-aes-256
  * 
  */

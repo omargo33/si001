@@ -1,18 +1,16 @@
-package com.qapaq.gs00100.http.request;
+package com.qapaq.gs00101.http.request;
 
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qapaq.gs00100.jpa.model.Parametro;
-import com.qapaq.gs00100.servicio.ParametroServicio;
-
+import com.qapaq.gs00101.jpa.model.Parametro;
+import com.qapaq.gs00101.servicio.ParametroServicio;
 import com.qapaq.http.request.ComonControlador;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ import lombok.RequiredArgsConstructor;
  * Objeto para dar soporte a servicio REST de parametro
  * 
  * @author o.velez@qapaq.io
- * @date 2020-09-11
+ * @since 2020-09-11
  * 
  */
 @RestController
@@ -65,7 +63,7 @@ public class ParametroControlador extends ComonControlador {
       return parametroService.findByIdModulo(indice);
 
    }
-
+/* 
 private void d(){
 
    KeycloakAuthenticationToken authentication = 
@@ -81,7 +79,7 @@ private void d(){
      userIdByMapper = token.getOtherClaims().get("user_id").toString();
  }
 
-}
+}*/
 
    /**
     * Metodo para buscar lista de parametros por nombre.

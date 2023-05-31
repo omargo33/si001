@@ -4,7 +4,7 @@ package com.qapaq.security;
  * Clase para generar claves de forma randomica
  * 
  * @author o.velez@qapaq.io
- * @date 2020-10-30
+ * @since 2020-10-30
  * 
  */
 public class GeneradorClaves {

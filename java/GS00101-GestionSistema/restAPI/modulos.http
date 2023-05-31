@@ -1,0 +1,71 @@
+##
+## o.velez@qapaq.io
+##
+## @see https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+## 
+## Login
+@url=192.168.1.2:8080/lg_001_10/login
+@username=admin
+@password=ZHVpHGVukB
+@email=omargo@hotmail.com
+@servicio=192.168.1.2:8082/gs_001_10/modulos
+###
+# @name rdpAuth
+
+post http://{{url}}
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+### listar todos
+get http://{{servicio}}/
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### pagina 0 dos elementos y ordenado por nombre
+get http://{{servicio}}/?page=0&size=2&sort=nombre,desc
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### por indice que contenga la letra "i"
+get http://{{servicio}}/indice=0
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### por indice que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/indice=0?page=0&size=3&sort=nombre,desc
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### por nombre que contenga la letra "i", paginada y ordenada
+get http://{{servicio}}/nombre=0?page=0&size=3&sort=nombre,desc
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### buscar por indice unico
+get http://{{servicio}}/1
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+### crear un nuevo modulo
+POST http://{{servicio}}/ 
+Content-Type: application/json
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+{   
+  "indice": "test123",
+  "nombre": "test123",
+  "contexto": "http://test",
+  "usuarioPrograma": "manual"
+}
+
+### actualizar
+put http://{{servicio}}/
+Content-Type: application/json
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}
+
+{
+  "idModulo": 9,
+  "indice": "test123",
+  "nombre": "123",
+  "contexto": "http://test",  
+  "usuarioPrograma": "manual"
+}
+
+### eliminar por indice
+delete http://{{servicio}}/1
+Authorization: Bearer {{rdpAuth.response.headers.access-token}}

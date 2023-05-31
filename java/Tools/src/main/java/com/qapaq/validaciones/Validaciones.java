@@ -4,7 +4,7 @@ package com.qapaq.validaciones;
  * Clase que permite validaciones varias.
  * 
  * @author o.velez@qapaq.io
- * @date 2022-10-04
+ * @since 2022-10-04
  * 
  */
 public class Validaciones {

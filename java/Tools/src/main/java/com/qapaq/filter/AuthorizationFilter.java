@@ -13,7 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * Clase para personalizar el filtro de autorización.
  * 
  * @author o.velez@qapaq.io
- * @date 2020-10-23
+ * @since 2020-10-23
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security

@@ -4,7 +4,7 @@ package com.qapaq.jpa.exception;
  * Clase para crear un error personalizado para existencia para aseguramiento del aplicativo.
  * 
  * @author o.velez
- * @date 2020-10-09
+ * @since 2020-10-09
  * 
  * @see https://www.youtube.com/watch?v=VVn9OG9nfH0
  * @see security

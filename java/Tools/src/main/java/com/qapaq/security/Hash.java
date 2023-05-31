@@ -6,7 +6,7 @@ import java.util.StringJoiner;
  * Clase para crear el hash de los parametros.
  * 
  * @author o.velez@qapaq.io
- * @date 2020-12-09
+ * @since 2020-12-09
  * 
  */
 public class Hash {

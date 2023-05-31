@@ -24,7 +24,7 @@ import javax.net.ssl.X509TrustManager;
  * salida
  *
  * @author o.velez@qapaq.io
- * @date 2020-08-17
+ * @since 2020-08-17
  * 
  */
 public class SolicitarRESTURL {
