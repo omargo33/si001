@@ -7,16 +7,21 @@
 			"path": "GA00100-ArchivosNotificaciones"
 		},
 		{
-			"path": "GS00100-GestionSistema"
-		},
-		{
 			"path": "SI00100-SistemaInformacion"
 		},
 		{
 			"path": "Tools"
+		},
+		{
+			"path": "GS00101-GestionSistema"
 		}
 	],
 	"settings": {
-		"java.compile.nullAnalysis.mode": "automatic"
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.project.sourcePaths": [
+			""
+		],
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.debug.settings.onBuildFailureProceed": true
 	}
 }

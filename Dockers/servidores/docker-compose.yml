@@ -1,0 +1,85 @@
+##
+## Docker para servidor de arquitectura externa para el proyecto de QAPAQ
+##
+## Base Datos Mysql lastest
+## Servidor de seguirdades Keycloak lastest
+## Servidor Redis lastest
+
+version: '3'
+
+volumes:
+  mysql_data:
+  keycloak_data:
+  redis_data:
+  
+networks:
+  qapaq-net:
+
+services:
+  mysql:
+    image: mysql:latest
+    build: ./mysql_build
+    container_name: mysql
+    ## restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      ##- ./mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
+      - ./mysql_backup:/home/backup
+    environment:
+      TZ: "America/Guayaquil"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: keycloak
+    networks:
+      - qapaq-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.1
+    container_name: keycloak
+    ## restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak_data:/opt/jboss/keycloak/standalone/data
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+    depends_on:
+      - mysql
+    networks:
+      - qapaq-net
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ## restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - qapaq-net
+    env_file:
+      - ./redis_conf/redis.env
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
+
+##
+## docker exec -it mysql bash
+##
+## respaldar
+## ./home/backup/backup.sh GS_001_01
+##
+## restaurar
+## ./home/backup/restore.sh GS_001_01

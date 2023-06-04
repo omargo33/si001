@@ -7,17 +7,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RouteConfig {
-    
 
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
         return builder.routes()
-        .route(r -> r.path("/parametros/**")
-                .uri("lb://GS00110"))
+                .route(r -> r.path("/parametros/**")
+                        .uri("lb://GS00101"))
 
-        .route(r -> r.path("/consumer/**")
-                .uri("lb://SECOND-SERVICE"))
-        .build();
+                .route(r -> r.path("/modulos/**")
+                        .uri("lb://GS00101"))
+
+                .route(r -> r.path("/consumer/**")
+                        .uri("lb://SECOND-SERVICE"))
+                .build();
     }
 }

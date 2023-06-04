@@ -6,7 +6,7 @@ version: '3'
 services:
   springboot:
     image: qapaq/spring-boot:latest
-    container_name: GS00100
+    container_name: GS00101
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./target:/app
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://192.168.1.2:3306/GS_001_00?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/GS_001_01?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456s
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver

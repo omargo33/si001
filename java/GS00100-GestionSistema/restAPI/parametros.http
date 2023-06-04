@@ -1,6 +1,0 @@
-@urlToken=http://localhost:8090/auth/realms/my-realm/protocol/openid-connect/token
-# @name rdpAuth
-
-post http://{{urlToken}}
-Content-Type: application/x-www-form-urlencoded
-

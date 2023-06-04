@@ -17,3 +17,4 @@ java/SI00100-SistemaInformacion/target/
 java/Tools/target/
 seguridadesEjemplo/
 *.mp4
+Dockers/servidores/redis_data/dump.rdb

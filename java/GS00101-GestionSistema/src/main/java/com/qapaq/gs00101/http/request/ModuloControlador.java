@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,7 +51,8 @@ public class ModuloControlador extends ComonControlador {
    /**
     * Metodo para mostrar un modulo por id.
     */
-   @GetMapping("/{id}")
+    @Cacheable(value = "modulos", key = "#id")
+    @GetMapping("/{id}")
    public Modulo getModuloById(@PathVariable Long id) {
       return moduloService.findByIdModulo(id);
    }

@@ -3,13 +3,14 @@ package com.qapaq.gs00101.servicio;
 import java.util.Date;
 import java.util.List;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qapaq.gs00101.ConstantesGS00100;
+import com.qapaq.gs00101.ConstantesGS00101;
 import com.qapaq.gs00101.jpa.model.Modulo;
 import com.qapaq.gs00101.jpa.queries.ModuloRepositorio;
 
@@ -84,7 +85,7 @@ public class ModuloServicio {
      * @return
      */
     public Modulo guardarModulo(Modulo modulo, String usuario, String usuarioPrograma) {
-        modulo.setEstado(ConstantesGS00100.MODULO_ESTADO_ACTIVO);        
+        modulo.setEstado(ConstantesGS00101.MODULO_ESTADO_ACTIVO);        
         modulo.setUsuario(StringUtils.truncate(usuario, 128));        
         modulo.setUsuarioFecha(new Date());
         modulo.setUsuarioPrograma(StringUtils.truncate(usuarioPrograma, 256));
