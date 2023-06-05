@@ -11,14 +11,16 @@ volumes:
   mysql_data:
   keycloak_data:
   redis_data:
-  
+
+
 networks:
   qapaq-net:
+
 
 services:
   mysql:
     image: mysql:latest
-    build: ./mysql_build
+    ## build: ./mysql_build
     container_name: mysql
     ## restart: always
     ports:
@@ -28,7 +30,7 @@ services:
       - mysql_data:/var/lib/mysql
       - ./mysql_backup:/home/backup
     environment:
-      TZ: "America/Guayaquil"
+      ## TZ: "America/Guayaquil"
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: keycloak
       MYSQL_USER: keycloak
@@ -43,7 +45,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./keycloak_data:/opt/jboss/keycloak/standalone/data
+      - keycloak_data:/opt/jboss/keycloak/standalone/data
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: mysql
@@ -68,7 +70,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./redis_data:/data
+      - redis_data:/data
     networks:
       - qapaq-net
     env_file:

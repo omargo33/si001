@@ -86,12 +86,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- dependencia para manejo de netflix eureka 
+		<!-- dependencia para manejo de netflix eureka -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>3.0.4</version>
-		</dependency>-->
+		</dependency>
 		<!-- dependencias de seguridad 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -110,12 +110,10 @@
 		</dependency>
 		-->
 		<!-- dependencia para cache por redis -->
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		
 	</dependencies>
 	<build>
 		<plugins>
