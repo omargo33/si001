@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.0</version>
+		<version>2.5.14</version>
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
@@ -86,12 +86,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- dependencia para manejo de netflix eureka -->
+		<!-- dependencia para manejo de netflix eureka 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>3.0.4</version>
 		</dependency>
+		-->
 		<!-- dependencias de seguridad 
 		<dependency>
 			<groupId>org.springframework.security</groupId>

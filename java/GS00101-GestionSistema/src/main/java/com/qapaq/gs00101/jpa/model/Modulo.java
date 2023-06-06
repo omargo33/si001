@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ModuloIndice(titulo = "indice", message = "E-GS00100-4")
 @ModuloNombre(titulo = "nombre", message = "E-GS00100-4")
-@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "codigoDefinidoUsuarioList", "parametroList", "menuList"  })
+//@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "codigoDefinidoUsuarioList", "parametroList", "menuList" })
+
+@JsonIgnoreProperties({ "estado", "usuario", "usuarioFecha", "codigoDefinidoUsuarioList","parametroList" })
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -88,14 +91,14 @@ public class Modulo implements Serializable {
     private String estado;
 
     @OneToMany(targetEntity = CodigoDefinidoUsuario.class)
-    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", insertable = false, updatable = false)
     private List<CodigoDefinidoUsuario> codigoDefinidoUsuarioList;
 
-    @OneToMany(targetEntity = Parametro.class)
-    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    @OneToMany(targetEntity = Parametro.class )
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", insertable = false, updatable = false)
     private List<Parametro> parametroList;
 
-    @OneToMany(targetEntity = Menu.class)
-    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    @OneToMany(targetEntity = Menu.class, fetch = FetchType.EAGER )
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", insertable = false, updatable = false)
     private List<Menu> menuList;
 }
