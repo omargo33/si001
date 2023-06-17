@@ -1,0 +1,78 @@
+<mxfile host="65bd71144e">
+    <diagram id="24VNrhqicRig3nu45Oje" name="Página-1">
+        <mxGraphModel dx="1893" dy="595" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="34" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="19" target="20" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="ApiGateway" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.api_gateway;fillColor=#D9A741;gradientColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="390.73" width="76.5" height="93" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Clientes" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Devices_Groups.svg;" parent="1" vertex="1">
+                    <mxGeometry x="-290" y="390.73" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="28" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="150" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="38" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="28" target="22" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="Flutter Web" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/CustomDomain.svg;" parent="1" vertex="1">
+                    <mxGeometry x="25" y="560" width="90" height="75.6" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="10" y="125" width="233.5" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Keycloak" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/aspect=fixed;html=1;perimeter=none;align=center;shadow=0;dashed=0;image;fontSize=12;image=img/lib/mscae/Azure_Database_for_MariaDB_servers.svg;" parent="30" vertex="1">
+                    <mxGeometry x="103.5" y="17" width="38" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Temas" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/generic_node.svg;" parent="30" vertex="1">
+                    <mxGeometry x="163.5" y="17" width="50" height="49" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="" style="swimlane;startSize=0;" parent="30" vertex="1">
+                    <mxGeometry x="73.5" width="160" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Keycloak" style="html=1;strokeColor=none;fillColor=#0079D6;labelPosition=center;verticalLabelPosition=middle;verticalAlign=top;align=center;fontSize=12;outlineConnect=0;spacingTop=-6;fontColor=#FFFFFF;sketch=0;shape=mxgraph.sitemap.security;" parent="30" vertex="1">
+                    <mxGeometry y="100" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="" style="swimlane;startSize=0;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="319.99999999999994" width="340.21" height="234.46" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Discovery" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.application_discovery_service;fillColor=#5294CF;gradientColor=none;" parent="31" vertex="1">
+                    <mxGeometry x="-40" y="70.73" width="76.5" height="93" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Kubernetes_Services.svg;" parent="31" vertex="1">
+                    <mxGeometry x="60" y="55.839999999999996" width="165.9" height="122.77" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="XX-001-00" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/aspect=fixed;html=1;perimeter=none;align=center;shadow=0;dashed=0;image;fontSize=12;image=img/lib/mscae/Azure_Database_for_MariaDB_servers.svg;" parent="31" vertex="1">
+                    <mxGeometry x="260" y="29.460000000000036" width="38" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Redis" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.cache_node;fillColor=#2E73B8;gradientColor=none;" parent="31" vertex="1">
+                    <mxGeometry x="249" y="134.46000000000004" width="60" height="63" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="35" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="35" target="22" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;" parent="1" source="35" target="28" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="35" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="Firewall Balancer" style="image;html=1;image=img/lib/clip_art/networking/Firewall_02_128x128.png" parent="1" vertex="1">
+                    <mxGeometry x="-130" y="393" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" parent="1" source="22" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
