@@ -30,7 +30,7 @@ services:
       - mysql_data:/var/lib/mysql
       - ./mysql_backup:/home/backup
     environment:
-      ## TZ: "America/Guayaquil"
+      TZ: "America/Guayaquil"
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: keycloak
       MYSQL_USER: keycloak
