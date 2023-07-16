@@ -1,0 +1,7 @@
+##
+## Build para Discovery con openjdk 11
+##
+FROM eclipse-temurin:11
+RUN mkdir /opt/discovery
+COPY discovery-service-1.0.0.jar /opt/discovery
+ENTRYPOINT ["java","-jar","/opt/discovery/discovery-service-1.0.0.jar"]

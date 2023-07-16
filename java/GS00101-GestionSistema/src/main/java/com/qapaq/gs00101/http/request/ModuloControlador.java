@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  * 
  */
 @RestController
-@RequestMapping(value = "/modulos")
+@RequestMapping(value = "/v1/modulos")
 @RequiredArgsConstructor
 public class ModuloControlador extends ComonControlador {
 

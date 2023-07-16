@@ -4,6 +4,7 @@
 ## Base Datos Mysql lastest
 ## Servidor de seguirdades Keycloak lastest
 ## Servidor Redis lastest
+## Servidor Discovery Eureka lastest
 
 version: '3'
 
@@ -12,14 +13,18 @@ volumes:
   keycloak_data:
   redis_data:
 
-
 networks:
   qapaq-net:
 
-
 services:
+  ## base de datos mysql
   mysql:
     image: mysql:latest
+    ## limite de memoria
+    mem_reservation: 256m
+    mem_limit: 512m
+    ## limite de cpu
+    cpus: 0.5
     ## build: ./mysql_build
     container_name: mysql
     ## restart: always
@@ -30,16 +35,22 @@ services:
       - mysql_data:/var/lib/mysql
       - ./mysql_backup:/home/backup
     environment:
-      TZ: "America/Guayaquil"
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: keycloak
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: keycloak
+      - TZ=America/Guayaquil
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=keycloak
     networks:
       - qapaq-net
 
+  ## servidor de seguridad keycloak
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.1
+    ## limite de memoria
+    mem_reservation: 256m
+    mem_limit: 512m
+    ## limite de cpu
+    cpus: 0.5
     container_name: keycloak
     ## restart: always
     ports:
@@ -47,15 +58,16 @@ services:
     volumes:
       - keycloak_data:/opt/jboss/keycloak/standalone/data
     environment:
-      DB_VENDOR: MYSQL
-      DB_ADDR: mysql
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: keycloak
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      - TZ=America/Guayaquil
+      - DB_VENDOR=MYSQL
+      - DB_ADDR=mysql
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_PASSWORD=keycloak
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
     command:
       - start-dev
     depends_on:
@@ -63,8 +75,14 @@ services:
     networks:
       - qapaq-net
 
+  ## servidor redis
   redis:
     image: redis:latest
+    ## limite de memoria
+    mem_reservation: 32m
+    mem_limit: 128m
+    ## limite de cpu
+    cpus: 0.5
     container_name: redis
     ## restart: always
     ports:
@@ -73,9 +91,38 @@ services:
       - redis_data:/data
     networks:
       - qapaq-net
+    environment:
+      - TZ=America/Guayaquil
+    depends_on:
+      - keycloak
     env_file:
       - ./redis_conf/redis.env
     command: /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
+
+  ## servidor discovery eureka
+  discover:
+    image: discovery-0.0.1
+    ## configuration recursos
+    mem_limit: 384m
+    mem_reservation: 64M
+    cpus: 2
+    container_name: discover
+    ## restart: always
+    build: discovery_build
+    ports:
+      - 8761:8761
+    environment:
+      - SPRING_SERVER_PORT=8761
+      - SPRING_APPLICATION_NAME=discovery
+      - SPRING_CLOUD_CONFIG_IMPORT-CHECK-ENABLED=false
+      - SPRING_EUREKA_INSTANCE_HOSTNAME=discover
+      - SPRING_EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://discover:8761/eureka
+      - SPRING_EUREKA_CLIENT_FETCH-REGISTRY=false
+      - SPRING_EUREKA_CLIENT_REGISTER-WITH-EUREKA=false
+      ## logging
+      - LOGGING_LEVEL_ROOT=warn
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=warn
+      - LOGGING_LEVEL_EC_FIN=warn
 
 ##
 ## docker exec -it mysql bash
