@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.qapaq.manager.ManagerApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.81 s - in com.qapaq.manager.ManagerApplicationTests

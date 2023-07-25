@@ -1,0 +1,7 @@
+##
+## Build para Discovery con openjdk 11
+##
+FROM eclipse-temurin:11
+RUN mkdir /opt/manager
+COPY manager-0.0.1.jar /opt/manager
+ENTRYPOINT ["java","-jar","/opt/manager/manager-0.0.1.jar"]
