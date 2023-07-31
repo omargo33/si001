@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "GS00101-GestionSistema"
+		},
+		{
+			"path": "ApiGateway"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

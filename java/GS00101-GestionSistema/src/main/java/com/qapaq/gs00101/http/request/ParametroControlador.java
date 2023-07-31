@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  * 
  */
 @RestController
-@RequestMapping(value = "/v1/parametros")
+@RequestMapping(value = "/v1/9parametros")
 @RequiredArgsConstructor
 public class ParametroControlador extends ComonControlador {
 

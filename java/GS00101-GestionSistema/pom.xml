@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.14</version>
+		<version>2.5.15</version>
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
@@ -16,9 +16,8 @@
 	<name>gs_001_01</name>
 	<description>REST GS00100 General Setup</description>
 	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version>
+		<spring-cloud.version>2021.0.2</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<!-- Spring dependencias basica -->
