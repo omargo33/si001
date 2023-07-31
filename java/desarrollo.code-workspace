@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "ApiGateway"
+		},
+		{
+			"path": "../reactjs/my-app"
 		}
 	],
 	"settings": {

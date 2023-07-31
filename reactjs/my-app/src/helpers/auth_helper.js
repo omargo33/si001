@@ -1,11 +1,13 @@
 import { UserManager } from 'oidc-client';
 
+/* scope: "openid profile message.read",*/
+
 const settings = {
-  authority: "http://backend-keycloak-auth:8080/auth/realms/my_realm/",
-  client_id: "my_client",
+  authority: "http://localhost:8080/realms/my-realm",
+  client_id: "my-client",
   redirect_uri: "http://localhost:3000/signin-callback.html",
   response_type: 'code',
-  scope: "openid profile message.read",
+  scope: "email",
 };
 
 const userManager = new UserManager(settings);

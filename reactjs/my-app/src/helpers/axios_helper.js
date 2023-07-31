@@ -8,8 +8,14 @@ const _callApi = (token) => {
         Authorization: "Bearer " + token
     };
 
-    return axios.get("http://backend-gateway-client:8083/messages", { headers });
-}
+    //axios get console or response
+    // return axios.get("http://localhost:8084/actuator", { headers }).then(response => {
+    //     console.log(response);
+    // return axios.get("http://localhost:8084/actuator", { headers, mode: 'cors' });
+     axios.get("http://localhost:8084/v1/modulos/", { headers }).then(response => { console.log(response) });
+
+     return "{ 'name': 'test' }";
+    }
 
 export const callApi = () => {
     return getUser().then(user => {
