@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+                // http.cors().disable();
+                http.csrf().disable();
                 http.authorizeRequests(authorizeRequests -> authorizeRequests
                                 .antMatchers("/actuator/**")
                                 .permitAll()
@@ -42,21 +44,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .authenticated())
                                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
-                http.cors().and().csrf().disable();
         }
-
-        @Bean
-        CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-                configuration.setAllowedMethods(
-                                Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
-                configuration.setAllowCredentials(true);
-                configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
-                configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
-                configuration.setMaxAge(3600L);
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-        }
+        /*
+         * @Bean
+         * CorsConfigurationSource corsConfigurationSource() {
+         * CorsConfiguration configuration = new CorsConfiguration();
+         * configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+         * configuration.setAllowedMethods(
+         * Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+         * configuration.setAllowCredentials(true);
+         * configuration.setAllowedHeaders(Arrays.asList("Authorization",
+         * "Requestor-Type"));
+         * configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+         * configuration.setMaxAge(3600L);
+         * UrlBasedCorsConfigurationSource source = new
+         * UrlBasedCorsConfigurationSource();
+         * source.registerCorsConfiguration("/**", configuration);
+         * return source;
+         * }
+         */
 }
